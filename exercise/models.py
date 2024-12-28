@@ -1,0 +1,22 @@
+from django.db import models
+from user.models import User
+# Create your models here.
+class Tag(models.model): # simply things like "strength/cardio/Back/Legs. things like this, categories essentially"
+    name = models.CharField(max_length=50) 
+
+    def __str__(self):
+        return self.name  
+
+class Exercise(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    PersonalRecord = models.DecimalField(max_digits=5, default=0)
+    LifetimeReps = models.IntegerFieldField(default=0)
+
+    favorited_by = models.ManyToManyField(User, blank=True)
+
+    tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.name
+
