@@ -6,8 +6,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     confirm_password = serializers.CharField(write_only=True)
     class Meta:
-        Model = User
-    fields = ['username', 'email', 'password', 'confirm_password', 'UserWeight', 'UserHeight']
+        model = User
+        fields = ['username', 'email', 'password', 'confirm_password', 'UserWeight', 'UserHeight']
 
     def validate(self, data):
         password = data['password']
@@ -22,8 +22,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return data
     
     def create(self, validated_data):
-        validated_data.pop('confirm_password')
-        password = validated_data.pop('password')
+        validated_data.pop('confirm_password', None)
+        password = validated_data.pop('password', None)
         user = User(**validated_data)
         user.set_password(password)
         user.save()
