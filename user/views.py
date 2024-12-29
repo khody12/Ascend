@@ -1,13 +1,15 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import generics
+from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
 from serializers import UserLoginSerializer, UserRegistrationSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
+from .models import User
+from rest_framework.authentication import TokenAuthentication
 
 class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
@@ -25,5 +27,14 @@ class UserLoginAPIView(GenericAPIView):
                 #search up the users information in this session when its necessary.
             return Response({"error": "invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserCreationAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
+    authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
+
+    
+
 
 
