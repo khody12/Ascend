@@ -4,3 +4,5 @@ react
 postgresql
 requests
 node
+django-cors-headers
+axios
