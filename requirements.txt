@@ -1,8 +1,9 @@
 django
 djangorestframework
-react
 postgresql
 requests
 node
 django-cors-headers
+react
 axios
+react-router-dom

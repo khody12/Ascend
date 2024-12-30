@@ -1,13 +1,15 @@
 
 from user.models import User
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-    confirm_password = serializers.CharField(write_only=True)
+    password = serializers.CharField(required=True, write_only=True)
+    confirm_password = serializers.CharField(required=True, write_only=True)
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'confirm_password', 'UserWeight', 'UserHeight']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'confirm_password', 'UserWeight', 'UserHeight', 'UserGender']
 
     def validate(self, data):
         password = data['password']
