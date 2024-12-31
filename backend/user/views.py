@@ -13,10 +13,8 @@ from rest_framework.authentication import TokenAuthentication
 
 class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
-    print("hello")
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        print("hello")
         if serializer.is_valid():
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
@@ -37,6 +35,7 @@ class UserCreationAPIView(generics.CreateAPIView):
     authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
 
     
-
+class UserDashboardAPIView(GenericAPIView):
+    pass
 
 

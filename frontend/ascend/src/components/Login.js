@@ -35,7 +35,7 @@ const Login = () => {
         <div id="login-container">
             <h2>Ascend</h2>
             <form onSubmit={handleSubmit}>
-                <div class="input-container">
+                <div className="input-container">
                     <label>Username</label>
                     <input
                         type="text"
@@ -44,7 +44,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <div class="input-container">
+                <div className="input-container">
                     <label>Password</label>
                     <input
                         type="password"

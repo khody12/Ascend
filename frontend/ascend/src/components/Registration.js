@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import "./Registration.css"
+
+import React, { useState, useContext } from "react";
 import axios from "axios" 
 
+import { AuthContext } from "../AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
+    const navigate = useNavigate()
+    const { setAuthData } = useContext(AuthContext)
     const [first_name, setFirstname] = useState("");
     const [last_name, setLastname] = useState("");
     const [email, setEmail] = useState("");
@@ -16,6 +22,7 @@ const Registration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("starting registration")
         try {
             const response = await axios.post("http://127.0.0.1:8000/api/register/", {
                 first_name,
@@ -28,7 +35,25 @@ const Registration = () => {
                 UserHeight,
                 UserGender
             });
-            setMessage(response.data.message);
+            if (response.status === 201) {
+                console.log("Registration succesful", response.data)
+                const data = response.data
+
+                setAuthData({
+                    token: data.token,
+                    userId: data.user_id,
+                })
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("userId", data.user_id);
+
+                console.log("Successfully registered, navigating to /dashboard...");
+                console.log("Navigation completed.");
+
+                setMessage("Succesful registration");
+
+                navigate("/dashboard")
+            }
+            
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setMessage("invalid username or password");
@@ -42,10 +67,10 @@ const Registration = () => {
     };
 
     return (
-        <div>
+        <div id="registration-container">
             <h2>Welcome to Ascend, let's get you set up!</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div class="input-container">
                     <label>First name:</label>
                     <input
                         type="text"
@@ -54,7 +79,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Last name:</label>
                     <input
                         type="text"
@@ -63,7 +88,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Email:</label>
                     <input
                         type="text"
@@ -72,7 +97,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Username:</label>
                     <input
                         type="text"
@@ -81,7 +106,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Password:</label>
                     <input
                         type="password"
@@ -90,7 +115,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Confirm Password:</label>
                     <input
                         type="password"
@@ -99,7 +124,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Weight:</label>
                     <input
                         type="text"
@@ -108,7 +133,7 @@ const Registration = () => {
                         required
                     />
                 </div>
-                <div>
+                <div class="input-container">
                     <label>Height:</label>
                     <input
                         type="text"
