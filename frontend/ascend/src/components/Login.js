@@ -1,3 +1,4 @@
+import "./Login.css"
 import React, { useState } from "react"; // imports react library, 
 //usestate is react hook that lets you add data that changes to your components
 import axios from "axios" 
@@ -31,11 +32,11 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
+        <div id="login-container">
+            <h2>Ascend</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
+                <div class="input-container">
+                    <label>Username</label>
                     <input
                         type="text"
                         value={username}
@@ -43,8 +44,8 @@ const Login = () => {
                         required
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div class="input-container">
+                    <label>Password</label>
                     <input
                         type="password"
                         value={password}
@@ -52,7 +53,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit">Continue</button>
             </form>
             {message && <p>{message}</p>}
         </div>

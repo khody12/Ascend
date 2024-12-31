@@ -1,0 +1,84 @@
+body{
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:start;
+    
+    height:100%;
+    width:100%;
+    background-color:#f5f5f5;
+}
+#root {
+    width:40%;
+    max-width:400px;
+    
+}
+
+#login-container {
+    margin-top:10vh;
+    
+    flex:0 1 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    max-width: 800px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
+    
+
+}
+.input-container label {
+    display:block;
+    margin-bottom:5px;
+    font-size:14px;
+    color:#333;
+}
+.input-container {
+    margin-bottom:10px;
+    width:100%;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing:border-box;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-container input:focus {
+    border-color: #007bff; /* Changes border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff; /* Button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker on hover */
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow */
+  }
+  
+  /* Message styles */
+  p {
+    color: red;
+    margin-top: 10px;
+  }
