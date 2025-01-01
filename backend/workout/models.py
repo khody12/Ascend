@@ -7,8 +7,8 @@ class Workout(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    exercises = models.ManyToManyField(Exercise)
+    user = models.ForeignKey(User, related_name='workouts', on_delete=models.CASCADE)
+    exercises = models.ManyToManyField(Exercise, related_name='exercises')
 
     def __str__(self):
         return f"{self.name} created by {self.user.username}"

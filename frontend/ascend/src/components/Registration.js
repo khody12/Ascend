@@ -24,7 +24,7 @@ const Registration = () => {
         e.preventDefault();
         console.log("starting registration")
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/register/", {
+            const response = await axios.post("http://127.0.0.1:8000/register/", {
                 first_name,
                 last_name,
                 email,
@@ -41,10 +41,11 @@ const Registration = () => {
 
                 setAuthData({
                     token: data.token,
-                    userId: data.user_id,
+                    userId: data.id,
                 })
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("userId", data.user_id);
+                
+                localStorage.setItem("token", data.token); 
+                localStorage.setItem("userId", data.id); // primary key for data retrieval in the future. 
 
                 console.log("Successfully registered, navigating to /dashboard...");
                 console.log("Navigation completed.");

@@ -8,6 +8,7 @@ function Dashboard() {
 
     useEffect(() => {
         const fetchUserProfile = async () => {
+            console.log(authData);
             if (authData) {
                 try {
                     const response = await fetch(`http://127.0.0.1:8000/api/user/${authData.userId}/`, { 
@@ -15,17 +16,19 @@ function Dashboard() {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            Authorization: `Token ${authData.token}`, // Include the token in the request
+                            'Authorization': `Token ${authData.token}`, // Include the token in the request
                         },
                     });
 
                     if (response.ok) {
+                        console.log("successfully acquired profile.")
                         const profile = await response.json();
                         setUserProfile(profile); // Save the fetched profile data
                         // all this data is now available within the userProfile variable
                         //userProfile.email, userProfile.first_name etc. 
+                        console.log("profile response from API: ", profile);
                     } else {
-                        console.error('Failed to fetch user profile.');
+                        console.error('Failed to fetch user profile.', response.status, await response.text());
                     }
                 } catch (error) {
                     console.error('Error fetching user profile:', error);
@@ -45,7 +48,7 @@ function Dashboard() {
             <h1>Dashboard</h1>
             {userProfile ? (
                 <div>
-                    <p>Welcome, {userProfile.name}</p>
+                    <p>Welcome, {userProfile.username}</p>
                     <p>Email: {userProfile.email}</p>
                     <p>Weight: {userProfile.weight}</p>
                     <p>Height: {userProfile.height}</p>

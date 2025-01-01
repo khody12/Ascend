@@ -3,13 +3,15 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserLoginSerializer, UserRegistrationSerializer
+from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 
 class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
@@ -34,8 +36,29 @@ class UserCreationAPIView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
     authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
 
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        user = User.objects.get(id=response.data['id'])
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response({
+            "token": token.key,
+            "id": user.id,
+            "message" : "registration successful!"
+        }, status=status.HTTP_201_CREATED)
+    # by default, createAPI View will return serialized data of new object and 
+
+class UserDashboardAPIView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserDashboardSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
     
-class UserDashboardAPIView(GenericAPIView):
-    pass
+
+
+
+
 
 

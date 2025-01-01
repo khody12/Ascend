@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import User
+
 # Create your models here.
 class Tag(models.Model): # simply things like "strength/cardio/Back/Legs. things like this, categories essentially"
     name = models.CharField(max_length=50) 
@@ -12,8 +12,6 @@ class Exercise(models.Model):
     description = models.TextField(blank=True, null=True)
     PersonalRecord = models.DecimalField(max_digits=5, default=0,decimal_places=1)
     LifetimeReps = models.IntegerField(default=0)
-
-    favorited_by = models.ManyToManyField(User, blank=True)
 
     tags = models.ManyToManyField(Tag)
 

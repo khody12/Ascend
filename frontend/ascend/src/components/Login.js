@@ -1,5 +1,8 @@
 import "./Login.css"
-import React, { useState } from "react"; // imports react library, 
+import React, { useState, useContext } from "react"; // imports react library, 
+import { AuthContext } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
+
 //usestate is react hook that lets you add data that changes to your components
 import axios from "axios" 
 // "state" in react is used to store and track dynamic data that affects what the UI displays
@@ -7,6 +10,7 @@ import axios from "axios"
 // use state initializes the value, so we have an initial value of ""
 
 const Login = () => {
+    const { setAuthData } = useContext(AuthContext)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -18,6 +22,19 @@ const Login = () => {
                 username, // these user name password are equivalent to the fields we need to fill in within our api view in django
                 password,
             });
+            if (response.status === 200) {
+                console.log("Log in successful", response.data)
+                const data = response.data
+
+                setAuthData({
+                    token: data.token,
+                    userId: data.user_id,   
+                })
+
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("userId", data.user_id);
+
+            }
             setMessage(response.data.message);
         } catch (error) {
             if (error.response && error.response.status === 401) {
