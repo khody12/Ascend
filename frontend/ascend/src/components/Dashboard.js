@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthContext';
+import "./Dashboard.css"
 
 
 function Dashboard() {
@@ -42,22 +43,40 @@ function Dashboard() {
     if (!authData) {
         return <p>Please log in to view your dashboard.</p>;
     }
-
+    const workoutSquares = userProfile ? userProfile.workouts.slice(0, 4) : [];
     return (
-        <div>
-            <h1>Dashboard</h1>
-            {userProfile ? (
-                <div>
-                    <p>Welcome, {userProfile.username}</p>
-                    <p>Email: {userProfile.email}</p>
-                    <p>Weight: {userProfile.weight}</p>
-                    <p>Height: {userProfile.height}</p>
+        <div id="dashboard-container">
+            <div id="grid-container">
+                {userProfile ? (
+                    
+                    userProfile.workouts.map((workout, index) => (
+                        <div key={workout.id} className="grid-item square">
+                            <h3>{workout.name}</h3>
+                            <p>{workout.description}</p>
+                        </div>
+                    ))
+                
+                ) : (
+                    <p>Loading user profile...</p>
+                )}
+
+                <div className="grid-item vertical-rectangle">
+                    <h3>stats</h3>
+                    <p>some graphs or whatever</p>
                 </div>
-            ) : (
-                <p>Loading user profile...</p>
-            )}
+
+                <div className="grid-item wide-rectangle">
+                    <h3>up coming goals</h3>
+                    <p>planner</p>
+                </div>
+            </div>
         </div>
     );
+}
+function getGridClass(index) {
+    if (index === 4) return "vertical-rectangle";
+    if (index === 5) return "wide-rectangle";
+    return "square";
 }
 
 export default Dashboard;

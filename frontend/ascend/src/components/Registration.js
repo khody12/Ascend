@@ -7,8 +7,8 @@ import { AuthContext } from "../AuthContext";
 import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
-    const navigate = useNavigate()
-    const { setAuthData } = useContext(AuthContext)
+    const navigate = useNavigate();
+    const { setAuthData } = useContext(AuthContext);
     const [first_name, setFirstname] = useState("");
     const [last_name, setLastname] = useState("");
     const [email, setEmail] = useState("");
@@ -68,84 +68,86 @@ const Registration = () => {
     };
 
     return (
-        <div id="registration-container">
-            <h2>Welcome to Ascend, let's get you set up!</h2>
-            <form onSubmit={handleSubmit}>
-                <div class="input-container">
-                    <label>First name:</label>
-                    <input
-                        type="text"
-                        value={first_name}
-                        onChange={(e) => setFirstname(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Last name:</label>
-                    <input
-                        type="text"
-                        value={last_name}
-                        onChange={(e) => setLastname(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Confirm Password:</label>
-                    <input
-                        type="password"
-                        value={confirm_password}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Weight:</label>
-                    <input
-                        type="text"
-                        value={UserWeight}
-                        onChange={(e) => setUserWeight(e.target.value)}
-                        required
-                    />
-                </div>
-                <div class="input-container">
-                    <label>Height:</label>
-                    <input
-                        type="text"
-                        value={UserHeight}
-                        onChange={(e) => setUserHeight(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div id="registration-page-container">
+            <div id="registration-container">
+                <h2>Welcome to Ascend, let's get you set up!</h2>
+                <form onSubmit={handleSubmit}>
+                    <div class="input-container">
+                        <label>First name:</label>
+                        <input
+                            type="text"
+                            value={first_name}
+                            onChange={(e) => setFirstname(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Last name:</label>
+                        <input
+                            type="text"
+                            value={last_name}
+                            onChange={(e) => setLastname(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Email:</label>
+                        <input
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Username:</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Confirm Password:</label>
+                        <input
+                            type="password"
+                            value={confirm_password}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Weight:</label>
+                        <input
+                            type="text"
+                            value={UserWeight}
+                            onChange={(e) => setUserWeight(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Height:</label>
+                        <input
+                            type="text"
+                            value={UserHeight}
+                            onChange={(e) => setUserHeight(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 

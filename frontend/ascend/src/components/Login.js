@@ -10,7 +10,8 @@ import axios from "axios"
 // use state initializes the value, so we have an initial value of ""
 
 const Login = () => {
-    const { setAuthData } = useContext(AuthContext)
+    const navigate = useNavigate();
+    const { setAuthData } = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/login/", {
+            const response = await axios.post("http://127.0.0.1:8000/login/", {
                 username, // these user name password are equivalent to the fields we need to fill in within our api view in django
                 password,
             });
@@ -28,11 +29,17 @@ const Login = () => {
 
                 setAuthData({
                     token: data.token,
-                    userId: data.user_id,   
+                    userId: data.id,   
                 })
 
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userId", data.user_id);
+
+                console.log("successfully set data, navigating to /dashboard")
+
+                setMessage("successful login")
+
+                navigate("/dashboard")
 
             }
             setMessage(response.data.message);
@@ -49,30 +56,32 @@ const Login = () => {
     };
 
     return (
-        <div id="login-container">
-            <h2>Ascend</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="input-container">
-                    <label>Username</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="input-container">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Continue</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div id="login-page-container">
+            <div id="login-container">
+                <h2>Ascend</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-container">
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="input-container">
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Continue</button>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 

@@ -41,7 +41,7 @@ class UserLoginSerializer(serializers.Serializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ["id, name"]
+        fields = ['id', 'name']
 
 class WorkoutSerializer(serializers.ModelSerializer):
     exercises = ExerciseSerializer(many=True)

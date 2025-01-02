@@ -24,7 +24,7 @@ class UserLoginAPIView(GenericAPIView):
             print(user)
             if user:
                 token, created = Token.objects.get_or_create(user=user)
-                return Response({"token": token.key, "user_id":user.id, "message": "Login successful!"}, status=status.HTTP_200_OK) 
+                return Response({"token": token.key, "id":user.id, "message": "Login successful!"}, status=status.HTTP_200_OK) 
                 # we return the token authenticating the session and the user id, this user id will allow us to 
                 #search up the users information in this session when its necessary.
             return Response({"error": "invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
