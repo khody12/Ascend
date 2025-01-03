@@ -46,6 +46,7 @@ const Registration = () => {
                 
                 localStorage.setItem("token", data.token); 
                 localStorage.setItem("userId", data.id); // primary key for data retrieval in the future. 
+                localStorage.setItem("username", data.username);
 
                 console.log("Successfully registered, navigating to /dashboard...");
                 console.log("Navigation completed.");
