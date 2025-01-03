@@ -1,10 +1,14 @@
 
-
+.app-header{
+    padding-bottom: 20px;
+}
 .nav {
     background-color: #80e8d6; /* Background color for the header */
     padding: 10px 20px; /* Space inside the header */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for aesthetics */
     width: 100%; /* Make sure nav spans the full width */
+    display:flex;
+    justify-content: start;
 }
 
 .nav-list {
@@ -14,10 +18,23 @@
     list-style: none; /* Remove bullets from the list */
     margin: 0; /* Reset default margin */
     padding: 0; /* Reset default padding */
+    gap:30px;
 }
 
 .nav-list li {
     margin: 0 10px; /* Add spacing between links */
+}
+.nav-logo {
+    display:flex;
+    height:50px;
+    width:auto;
+    object-fit:contain;
+    margin:10px;
+    
+    
+}
+.nav-logo > img {
+    border-radius:50%;
 }
 
 .nav-list a {
