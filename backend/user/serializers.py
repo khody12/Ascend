@@ -57,3 +57,9 @@ class UserDashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'workouts', 'favorite_exercises']
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
+                  'UserWeight', 'UserHeight', 'UserGender', 'lifetimeWeightLifted']

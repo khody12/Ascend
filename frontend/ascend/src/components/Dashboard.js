@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthContext';
+import { useNavigate } from "react-router-dom"
 import "./Dashboard.css"
 
 
 function Dashboard() {
+    const navigate = useNavigate();
     const { authData } = useContext(AuthContext); // Access authData from context
     const [userProfile, setUserProfile] = useState(null);
 
@@ -12,6 +14,7 @@ function Dashboard() {
             console.log(authData);
             if (authData) {
                 try {
+                    console.log(authData.userId);
                     const response = await fetch(`http://127.0.0.1:8000/api/user/${authData.userId}/`, { 
                         // fetch data from a Get data api view in backend
                         method: 'GET',
@@ -41,6 +44,7 @@ function Dashboard() {
     }, [authData]);
 
     if (!authData) {
+        navigate("/login")
         return <p>Please log in to view your dashboard.</p>;
     }
     const workoutSquares = userProfile ? userProfile.workouts.slice(0, 4) : [];
