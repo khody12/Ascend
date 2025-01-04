@@ -1,7 +1,7 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios" 
-
+import "./Profile.css"
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from 'react-router-dom';
 
@@ -82,11 +82,12 @@ function Profile() {
 }
 
     return (
-        <div>
+        <div id="edit-page-container">
+            <div id="edit-container">
             <h1>Edit Profile</h1>
             {userProfile ? (
                 <form onSubmit={handleSubmit}>
-                    <div>
+                    <div class="input-container">
                         <label>Username:</label>
                         <input
                             type="text"
@@ -96,7 +97,7 @@ function Profile() {
                             readOnly={!isEditing} // Toggle read-only
                         />
                     </div>
-                    <div>
+                    <div class="input-container">
                         <label>First Name:</label>
                         <input
                             type="text"
@@ -106,7 +107,7 @@ function Profile() {
                             readOnly={!isEditing}
                         />
                     </div>
-                    <div>
+                    <div class="input-container">
                         <label>Last Name:</label>
                         <input
                             type="text"
@@ -116,7 +117,7 @@ function Profile() {
                             readOnly={!isEditing}
                         />
                     </div>
-                    <div>
+                    <div class="input-container">
                         <label>Email:</label>
                         <input
                             type="email"
@@ -148,6 +149,7 @@ function Profile() {
             ) : (
                 <p>Loading...</p>
             )}
+            </div>
         </div>
     );
 

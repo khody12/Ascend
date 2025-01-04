@@ -1,7 +1,8 @@
 import "./Login.css"
 import React, { useState, useContext } from "react"; // imports react library, 
 import { AuthContext } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import backgroundVideo from './ascend-backgroundTwo.mp4';
 
 //usestate is react hook that lets you add data that changes to your components
 import axios from "axios" 
@@ -57,31 +58,54 @@ const Login = () => {
     };
 
     return (
+        
+
         <div id="login-page-container">
-            <div id="login-container">
-                <h2>Ascend</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="input-container">
-                        <label>Username</label>
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="input-container">
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <button type="submit">Continue</button>
-                </form>
-                {message && <p>{message}</p>}
+            <div id="video-container">
+                <video autoPlay loop muted id="background-video">
+                    <source src={backgroundVideo}/>
+                </video>
+                <div id="overlay"></div>
+            </div>
+
+            <div id="form-container">
+                <div id="login-container">
+                    <h2>Ascend</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-container">
+                            <label>Username</label>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="input-container">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit">Continue</button>
+                    </form>
+                    
+                    {message && <p>{message}</p>}
+                </div>
+
+                <div id="divider"></div>
+
+                <div id="register-container">
+                    <h3>New Here?</h3>
+                    <Link to="/register">
+                        <button>
+                            Get started
+                        </button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
