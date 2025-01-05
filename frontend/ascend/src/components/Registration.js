@@ -78,7 +78,7 @@ const Registration = () => {
                     <h2>Welcome to Ascend, let's get you set up!</h2>
                     <form onSubmit={handleSubmit}>
                         <div class="input-container">
-                            <label>First name:</label>
+                            <label>First name</label>
                             <input
                                 type="text"
                                 value={first_name}
@@ -87,7 +87,7 @@ const Registration = () => {
                             />
                         </div>
                         <div class="input-container">
-                            <label>Last name:</label>
+                            <label>Last name</label>
                             <input
                                 type="text"
                                 value={last_name}
@@ -96,7 +96,7 @@ const Registration = () => {
                             />
                         </div>
                         <div class="input-container">
-                            <label>Email:</label>
+                            <label>Email</label>
                             <input
                                 type="text"
                                 value={email}
@@ -105,7 +105,7 @@ const Registration = () => {
                             />
                         </div>
                         <div class="input-container">
-                            <label>Username:</label>
+                            <label>Username</label>
                             <input
                                 type="text"
                                 value={username}
@@ -114,7 +114,7 @@ const Registration = () => {
                             />
                         </div>
                         <div class="input-container">
-                            <label>Password:</label>
+                            <label>Password</label>
                             <input
                                 type="password"
                                 value={password}
@@ -132,7 +132,7 @@ const Registration = () => {
                             />
                         </div>
                         <div class="input-container">
-                            <label>Weight:</label>
+                            <label>Weight</label>
                             <input
                                 type="text"
                                 value={UserWeight}
@@ -141,7 +141,7 @@ const Registration = () => {
                             />
                         </div>
                         <div class="input-container">
-                            <label>Height:</label>
+                            <label>Height</label>
                             <input
                                 type="text"
                                 value={UserHeight}

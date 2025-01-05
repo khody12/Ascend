@@ -118,3 +118,8 @@ button {
     color: red;
     margin-top: 10px;
   }
+
+  .input-container > label {
+    font-weight:bold;
+    font-size:25px;
+  }

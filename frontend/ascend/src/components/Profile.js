@@ -88,7 +88,7 @@ function Profile() {
             {userProfile ? (
                 <form onSubmit={handleSubmit}>
                     <div class="input-container">
-                        <label>Username:</label>
+                        <label>Username</label>
                         <input
                             type="text"
                             name="username"
@@ -98,7 +98,7 @@ function Profile() {
                         />
                     </div>
                     <div class="input-container">
-                        <label>First Name:</label>
+                        <label>First Name</label>
                         <input
                             type="text"
                             name="first_name"
@@ -108,7 +108,7 @@ function Profile() {
                         />
                     </div>
                     <div class="input-container">
-                        <label>Last Name:</label>
+                        <label>Last Name</label>
                         <input
                             type="text"
                             name="last_name"
@@ -118,7 +118,7 @@ function Profile() {
                         />
                     </div>
                     <div class="input-container">
-                        <label>Email:</label>
+                        <label>Email</label>
                         <input
                             type="email"
                             name="email"
@@ -127,9 +127,42 @@ function Profile() {
                             readOnly={!isEditing}
                         />
                     </div>
+                    <div class="input-container">
+                        <label>Gender</label>
+                        <select 
+                            id="gender-dropdown"
+                            name="gender"
+                            value={userProfile.gender || ""}
+                            onChange={handleChange}
+                            disabled={!isEditing}>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <label>Weight</label>
+                        <input
+                            type="text"
+                            name="weight"
+                            value={userProfile.UserWeight || ""}
+                            onChange={handleChange}
+                            readOnly={!isEditing}
+                        />
+                    </div>
+                    <div class="input-container">
+                        <label>Height</label>
+                        <input
+                            type="text"
+                            name="Height"
+                            value={userProfile.UserHeight || ""}
+                            onChange={handleChange}
+                            readOnly={!isEditing}
+                        />
+                    </div>
                     {isEditing ? (
                         <>
-                            <button type="submit">Save</button>
+                            <button className="save-button" type="submit">Save</button>
                             <button
                                 type="button"
                                 onClick={() => setIsEditing(false)} // Exit edit mode

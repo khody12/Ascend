@@ -53,9 +53,15 @@ function Dashboard() {
             <div id="grid-container">
                 {userProfile ? (
                     
-                    userProfile.workouts.map((workout, index) => (
+                    userProfile.workouts.map((workout, workoutIndex) => (
                         <div key={workout.id} className="grid-item square">
                             <h3>{workout.name}</h3>
+                            { workout.exercises.map((exercise, exerciseIndex) => (
+                                <div key={exerciseIndex}>
+                                    <h4 class="exercise-text">{exercise.name}</h4>
+                                    <h4 class="exercise-text">{exercise.description}</h4>
+                                </div>
+                            ))}
                             <p>{workout.description}</p>
                         </div>
                     ))
@@ -77,10 +83,10 @@ function Dashboard() {
         </div>
     );
 }
-function getGridClass(index) {
-    if (index === 4) return "vertical-rectangle";
-    if (index === 5) return "wide-rectangle";
-    return "square";
-}
+// function getGridClass(index) {
+//     if (index === 4) return "vertical-rectangle";
+//     if (index === 5) return "wide-rectangle";
+//     return "square";
+// }
 
 export default Dashboard;

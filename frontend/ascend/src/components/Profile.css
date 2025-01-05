@@ -25,7 +25,7 @@
 .input-container label {
     display:block;
     margin-bottom:5px;
-    font-size:14px;
+    font-size:17px;
     color:#333;
 }
 .input-container {
@@ -68,4 +68,23 @@ button {
   button:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow */
+  }
+
+  #gender-dropdown {
+    
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: none;
+    cursor: pointer;
+
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    
+  }
+
+  .save-button {
+    margin-bottom:10px;
+    
+    
   }
