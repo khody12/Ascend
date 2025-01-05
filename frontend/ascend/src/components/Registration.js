@@ -16,14 +16,16 @@ const Registration = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirm_password, setConfirmPassword] = useState("");
-    const [UserWeight, setUserWeight] = useState("");
-    const [UserHeight, setUserHeight] = useState("");
-    const [UserGender, setUserGender] = useState("");
+    const [user_weight, setUserWeight] = useState("");
+    const [user_height, setUserHeight] = useState("");
+    const [user_gender, setUserGender] = useState("");
     const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("starting registration")
+        
+        console.log(typeof user_height, typeof user_weight)
         try {
             const response = await axios.post("http://127.0.0.1:8000/register/", {
                 first_name,
@@ -32,9 +34,9 @@ const Registration = () => {
                 username, // these user name password are equivalent to the fields we need to fill in within our api view in django
                 password,
                 confirm_password,
-                UserWeight,
-                UserHeight,
-                UserGender
+                user_weight,
+                user_height,
+                user_gender
             });
             if (response.status === 201) {
                 console.log("Registration succesful", response.data)
@@ -134,18 +136,18 @@ const Registration = () => {
                         <div class="input-container">
                             <label>Weight</label>
                             <input
-                                type="text"
-                                value={UserWeight}
-                                onChange={(e) => setUserWeight(e.target.value)}
+                                type="number"
+                                value={user_weight}
+                                onChange={(e) => setUserWeight(Number(e.target.value))}
                                 required
                             />
                         </div>
                         <div class="input-container">
                             <label>Height</label>
                             <input
-                                type="text"
-                                value={UserHeight}
-                                onChange={(e) => setUserHeight(e.target.value)}
+                                type="number"
+                                value={user_height}
+                                onChange={(e) => setUserHeight(Number(e.target.value))}
                                 required
                             />
                         </div>
@@ -153,13 +155,14 @@ const Registration = () => {
                             <label>Gender</label>
                             <input
                                 type="text"
-                                value={UserGender}
+                                value={user_gender}
                                 onChange={(e) => setUserGender(e.target.value)}
                                 required
                             />
                         </div>
-                        </form>
                         <button type="submit">Register</button>
+                        </form>
+                        
                 </div>
                 {message && <p>{message}</p>}
                 <div id="divider"></div>

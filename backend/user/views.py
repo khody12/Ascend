@@ -37,6 +37,16 @@ class UserCreationAPIView(generics.CreateAPIView):
     authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
 
     def create(self, request, *args, **kwargs):
+        # print("incoming data:", request.data)
+        # request.data["user_height"] = 50
+        # request.data["user_weight"] = 50
+        # print(request.data)
+
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print("Validation errors:", serializer.errors)  # Log validation errors
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
         response = super().create(request, *args, **kwargs)
         user = User.objects.get(id=response.data['id'])
         token, created = Token.objects.get_or_create(user=user)

@@ -144,8 +144,8 @@ function Profile() {
                         <label>Weight</label>
                         <input
                             type="text"
-                            name="weight"
-                            value={userProfile.UserWeight || ""}
+                            name="user_weight"
+                            value={userProfile.user_weight || ""}
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
@@ -154,8 +154,8 @@ function Profile() {
                         <label>Height</label>
                         <input
                             type="text"
-                            name="Height"
-                            value={userProfile.UserHeight || ""}
+                            name="user_height"
+                            value={userProfile.user_height || ""}
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
