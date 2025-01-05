@@ -45,7 +45,38 @@
 .wide-rectangle {
     grid-column:1 / span 2;
     grid-row: 3 / 4;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    position:relative;
+    cursor:pointer;
+    
+
 }
+.wide-rectangle:hover {
+    background-color:rgb(33, 212, 9);
+}
+
+.wide-rectangle::before {
+    content: "+"; /* The plus sign */
+    
+    font-size: 48px;
+    margin-left:8px;
+    font-weight: bold;
+    color: #ffffff;
+    opacity: 0; /* Initially hidden */
+    transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; /* Smooth fade-in */
+}
+.wide-rectangle:hover::before {
+    opacity: 1;
+}
+.wide-rectangle > h3 {
+    margin:0;
+    flex-grow: 1;
+    text-align:center;
+}
+
 
 .exercise-text {
     display: inline-block;
@@ -71,6 +102,7 @@
     width: 100%; 
     opacity: 1;  
 }
+
 
 .exercise-text::after {
     transition: width 0.3s ease, opacity 0.3s ease;

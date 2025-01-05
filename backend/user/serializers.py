@@ -1,6 +1,6 @@
 
 from user.models import User
-from workout.models import Workout
+from workout.models import Workout, WorkoutSet
 from exercise.models import Exercise
 
 from rest_framework import serializers
@@ -43,12 +43,20 @@ class ExerciseSerializer(serializers.ModelSerializer):
         model = Exercise
         fields = ['id', 'name']
 
+
+class WorkoutSetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WorkoutSet
+        fields = ['id', 'workout', 'exercise', 'sets', 'reps', 'weight']
+
 class WorkoutSerializer(serializers.ModelSerializer):
-    exercises = ExerciseSerializer(many=True)
+    workout_sets = WorkoutSetSerializer(many=True)
 
     class Meta:
         model = Workout
-        fields = ['id', 'name', 'date', 'exercises']
+        fields = ['id', 'name', 'date', 'workout_exercises']
+
 
 class UserDashboardSerializer(serializers.ModelSerializer):
     workouts = WorkoutSerializer(many=True)
@@ -62,4 +70,4 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
-                  'UserWeight', 'UserHeight', 'UserGender', 'lifetimeWeightLifted']
+                  'user_weight', 'user_height', 'user_gender', 'lifetime_weight_lifted']

@@ -10,10 +10,10 @@ class Tag(models.Model): # simply things like "strength/cardio/Back/Legs. things
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    PersonalRecord = models.DecimalField(max_digits=5, default=0,decimal_places=1)
-    LifetimeReps = models.IntegerField(default=0)
+    personal_record = models.DecimalField(max_digits=5, default=0,decimal_places=1)
+    lifetime_reps = models.IntegerField(default=0)
 
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name="exercises")
 
     def __str__(self):
         return self.name

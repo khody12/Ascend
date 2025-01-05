@@ -76,17 +76,11 @@ function Dashboard() {
                 </div>
 
                 <div className="grid-item wide-rectangle">
-                    <h3>up coming goals</h3>
-                    <p>planner</p>
+                    <h3>New Workout</h3>
                 </div>
             </div>
         </div>
     );
 }
-// function getGridClass(index) {
-//     if (index === 4) return "vertical-rectangle";
-//     if (index === 5) return "wide-rectangle";
-//     return "square";
-// }
 
 export default Dashboard;
