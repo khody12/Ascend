@@ -63,29 +63,55 @@
 
 
 
-.input-container label {
-    display:block;
-    margin-bottom:5px;
-    font-size:14px;
-    color:#333;
+.input-registration-container label {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Align with input padding */
+    font-size: 16px;
+    color: #999;
+    pointer-events: none; /* Prevent interaction with the label */
+    transform: translateY(-50%); /* Vertically center inside the input */
+    transition: all 0.3s ease; /* Smooth transition for movement */
+    background: white; /* Optional: creates a seamless blend with the input border */
+    padding: 0 5px; /* Padding to visually separate the label */
 }
-.input-container {
+.input-registration-container {
     margin-bottom:10px;
     width:100%;
+    position:relative;
+
 }
 
-.input-container input {
+.input-registration-container input, .input-registration-container select {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
+    padding: 12px 10px;
+    margin:5px;
+    font-size: 16px;
+    border: 2px solid #ccc;
     border-radius: 5px;
     box-sizing:border-box;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.input-container input:focus {
+.input-registration-container input:focus, .input-registration-container select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+
+
+}
+
+
+.input-registration-container input:focus + label,
+.input-registration-container input:not(:placeholder-shown) + label,
+.input-registration-container select:focus + label,
+.input-registration-container select:not([value=""]) + label {
+    top: -2px;
+    font-size: 16px;
+    color: #007bff;
+}
+
+.input-registration-container input:focus {
     border-color: #007bff; /* Changes border color on focus */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect */
 }

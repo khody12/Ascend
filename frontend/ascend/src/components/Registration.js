@@ -79,86 +79,95 @@ const Registration = () => {
                 <div id="registration-form-container">
                     <h2>Welcome to Ascend, let's get you set up!</h2>
                     <form onSubmit={handleSubmit}>
-                        <div class="input-container">
-                            <label>First name</label>
+                        <div class="input-registration-container">
                             <input
                                 type="text"
                                 value={first_name}
                                 onChange={(e) => setFirstname(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>First name</label>
                         </div>
-                        <div class="input-container">
-                            <label>Last name</label>
+                        <div class="input-registration-container">
                             <input
                                 type="text"
                                 value={last_name}
                                 onChange={(e) => setLastname(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>Last name</label>
                         </div>
-                        <div class="input-container">
-                            <label>Email</label>
+                        <div class="input-registration-container">
                             <input
                                 type="text"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>Email</label>
                         </div>
-                        <div class="input-container">
-                            <label>Username</label>
+                        <div class="input-registration-container">
                             <input
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>Username</label>
                         </div>
-                        <div class="input-container">
-                            <label>Password</label>
+                        <div class="input-registration-container">
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>Password</label>
                         </div>
-                        <div class="input-container">
-                            <label>Confirm Password:</label>
+                        <div class="input-registration-container">
                             <input
                                 type="password"
                                 value={confirm_password}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>Confirm Password:</label>
                         </div>
-                        <div class="input-container">
-                            <label>Weight</label>
+                        <div class="input-registration-container">
                             <input
                                 type="number"
                                 value={user_weight}
                                 onChange={(e) => setUserWeight(Number(e.target.value))}
                                 required
+                                placeholder = " "
                             />
+                            <label>Weight</label>
                         </div>
-                        <div class="input-container">
-                            <label>Height</label>
+                        <div class="input-registration-container">
                             <input
                                 type="number"
                                 value={user_height}
                                 onChange={(e) => setUserHeight(Number(e.target.value))}
                                 required
+                                placeholder = " "
                             />
+                            <label>Height</label>
                         </div>
-                        <div class="input-container">
-                            <label>Gender</label>
+                        <div class="input-registration-container">
                             <input
                                 type="text"
                                 value={user_gender}
                                 onChange={(e) => setUserGender(e.target.value)}
                                 required
+                                placeholder = " "
                             />
+                            <label>Gender</label>
                         </div>
                         <button type="submit">Register</button>
                         </form>

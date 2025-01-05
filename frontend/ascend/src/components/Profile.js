@@ -88,50 +88,54 @@ function Profile() {
             {userProfile ? (
                 <form onSubmit={handleSubmit}>
                     <div class="input-container">
-                        <label>Username</label>
                         <input
                             type="text"
                             name="username"
+                            placeholder = " "
                             value={userProfile.username}
                             onChange={handleChange}
                             readOnly={!isEditing} // Toggle read-only
                         />
+                        <label>Username</label>
                     </div>
                     <div class="input-container">
-                        <label>First Name</label>
                         <input
                             type="text"
                             name="first_name"
+                            placeholder = " "
                             value={userProfile.first_name || ""} // Handle empty fields
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
+                        <label>First Name</label>
                     </div>
                     <div class="input-container">
-                        <label>Last Name</label>
                         <input
                             type="text"
                             name="last_name"
+                            placeholder = " "
                             value={userProfile.last_name || ""}
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
+                        <label>Last Name</label>
                     </div>
                     <div class="input-container">
-                        <label>Email</label>
                         <input
                             type="email"
                             name="email"
+                            placeholder = " "
                             value={userProfile.email || ""}
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
+                        <label>Email</label>
                     </div>
                     <div class="input-container">
-                        <label>Gender</label>
                         <select 
                             id="gender-dropdown"
                             name="gender"
+                            
                             value={userProfile.gender || ""}
                             onChange={handleChange}
                             disabled={!isEditing}>
@@ -139,26 +143,30 @@ function Profile() {
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
                         </select>
+                        <label>Gender</label>
                     </div>
                     <div class="input-container">
-                        <label>Weight</label>
                         <input
                             type="text"
                             name="user_weight"
+                            placeholder = " "
                             value={userProfile.user_weight || ""}
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
+                        <label>Weight</label>
                     </div>
                     <div class="input-container">
-                        <label>Height</label>
+                        
                         <input
                             type="text"
                             name="user_height"
+                            placeholder = " "
                             value={userProfile.user_height || ""}
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
+                        <label>Height</label>
                     </div>
                     {isEditing ? (
                         <>

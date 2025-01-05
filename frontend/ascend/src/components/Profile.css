@@ -22,12 +22,7 @@
     
 
 }
-.input-container label {
-    display:block;
-    margin-bottom:5px;
-    font-size:17px;
-    color:#333;
-}
+
 .input-container {
     margin-bottom:10px;
     width:100%;
@@ -42,6 +37,12 @@
     box-sizing:border-box;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.input-container label {
+    display:block;
+    margin-bottom:5px;
+    font-size:17px;
+    color:#333;
 }
 
 .input-container input:focus {
