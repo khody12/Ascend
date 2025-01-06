@@ -123,7 +123,7 @@
 }
 
 
-button {
+#register-container > button {
     background: linear-gradient(45deg, #42a5f5, #478ed1);
     width: 100%;
     padding: 10px;
@@ -137,11 +137,11 @@ button {
   }
   
   
-  button:hover {
+  #register-container > button:hover {
     background-color: #0056b3; /* Darker on hover */
   }
   
-  button:focus {
+  #register-container > button:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow */
   }

@@ -12,7 +12,9 @@ function Profile() {
     
     const [isEditing, setIsEditing] = useState(false);
 
-    useEffect(() => {
+    useEffect(() => { 
+        // async is a keyword in js that makes a function asynchronous allowing it to perform tasks that take time to complete without blocking the other code
+        // from running, things that take time are things like fetching data. 
         const fetchUserProfile = async () => {
             if (authData) {
                 try {

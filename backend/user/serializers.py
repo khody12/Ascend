@@ -48,18 +48,18 @@ class WorkoutSetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkoutSet
-        fields = ['id', 'workout', 'exercise', 'sets', 'reps', 'weight']
+        fields = ['id', 'workout', 'exercise','reps', 'weight']
 
-class WorkoutSerializer(serializers.ModelSerializer):
+class CreateWorkoutSerializer(serializers.ModelSerializer):
     workout_sets = WorkoutSetSerializer(many=True)
 
     class Meta:
         model = Workout
-        fields = ['id', 'name', 'date', 'workout_exercises']
+        fields = ['id', 'name', 'date', 'workout_sets']
 
 
 class UserDashboardSerializer(serializers.ModelSerializer):
-    workouts = WorkoutSerializer(many=True)
+    workouts = CreateWorkoutSerializer(many=True)
     favorite_exercises = ExerciseSerializer(many=True)
     
     class Meta:
@@ -71,3 +71,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
                   'user_weight', 'user_height', 'user_gender', 'lifetime_weight_lifted']
+        
+

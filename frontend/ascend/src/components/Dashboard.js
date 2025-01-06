@@ -8,7 +8,8 @@ function Dashboard() {
     const navigate = useNavigate();
     const { authData } = useContext(AuthContext); // Access authData from context
     const [userProfile, setUserProfile] = useState(null);
-
+    // use useEffect functions when needing to fetch data from an API, use regular functions when we just need to submit data or do other miscellaneous things
+    // useEffect is for purposes of using side effects which are operations that interact with the outside world
     useEffect(() => {
         const fetchUserProfile = async () => {
             console.log(authData);

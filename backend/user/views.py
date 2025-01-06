@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer
+from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -62,7 +62,8 @@ class UserCreationAPIView(generics.CreateAPIView):
 class UserDashboardAPIView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserDashboardSerializer
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated] # only uses who have been authenticated via token authentication have access to this api view
 
     def get_object(self):
         return self.request.user
@@ -70,10 +71,17 @@ class UserDashboardAPIView(generics.RetrieveAPIView):
 class UserProfileAPIView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserProfileSerializer
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return self.request.user # dont need to look up a user, authenticated user is available in self.request.user, so thats what we return.
+
+class CreateWorkoutAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = CreateWorkoutSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
 
