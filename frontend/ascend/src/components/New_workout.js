@@ -1,7 +1,7 @@
-import "./New_workout.css"
+import "./New_workout.css";
 
-import React, { useState, useContext } from "react";
-import axios from "axios" 
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from 'react-router-dom';
@@ -12,15 +12,16 @@ function New_workout() {
     const [workoutSets, setWorkoutSets] = useState([]);
     const [currentSet, setCurrentSet] = useState({reps: "", weight: "", exercise: ""});
     const [exercises, setUserExercises] = useState(null);
+    const [workoutTitle, setWorkoutTitle] = useState("");
 
     const [message, setMessage] = useState("");
 
-    useEffect(() => {
+    useEffect(() => { // get exercise data from API.
         const fetchExercises = async () => {
             if (authData){
                 try {
                     console.log("fetching exercises");
-                    const response = await fetch("http://127.0.0.1:8000/exercises/", {
+                    const response = await fetch("http://127.0.0.1:8000/api/exercises/", {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -31,7 +32,7 @@ function New_workout() {
 
                     if (response.ok) {
                         console.log("response good");
-                        const exercises = await response.json();
+                        const exercises = await response.json(); // api will send back exercises
                         setUserExercises(exercises)
                     }
                 } catch (error) {
@@ -42,7 +43,8 @@ function New_workout() {
 
 
         }
-    }, [authdata]);
+        fetchExercises();
+    }, [authData]);
 
     const handleSetChange = (e) => {
         const { name, value } = e.target;
@@ -51,29 +53,28 @@ function New_workout() {
         } else {
             setCurrentSet({ ...currentSet, [name]: value});
         }
-        
     }
 
     const handleAddSet = () => {
-
-
+        setWorkoutSets([...setCurrentSet, currentSet]);
+        setCurrentSet({reps: "", weight: "", exercise: ""});
     }
 
 
 
+
+    // this is what we will send as a post at the very end, this creates our workout, and exits us out of the
+    //workout interface
     const saveWorkout = async (e) => {
         e.preventDefault(); // prevents browser from reloading a page when we submit an exercise.
         const payload = {
             name: workoutTitle,
-            date: newDate().toISOString().split("T")[0],
+            date: new Date().toISOString().split("T")[0],
             workout_sets: workoutSets,
         }; 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/user/create-workout/", {
-
-            });
-
-
+            const response = await axios.post("http://127.0.0.1:8000/user/create-workout/", payload);
+            console.log("workout saved:", response.data)
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setMessage("Invalid username/password");

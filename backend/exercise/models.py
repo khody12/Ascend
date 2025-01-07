@@ -13,7 +13,7 @@ class Exercise(models.Model):
     personal_record = models.DecimalField(max_digits=5, default=0,decimal_places=1)
     lifetime_reps = models.IntegerField(default=0)
 
-    tags = models.ManyToManyField(Tag, related_name="exercises")
+    tags = models.ManyToManyField(Tag, related_name="tags")
 
     def __str__(self):
         return self.name
