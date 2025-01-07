@@ -75,7 +75,7 @@ function Dashboard() {
                     <h3>stats</h3>
                     <p>some graphs or whatever</p>
                 </div>
-                <Link to="/new-workout" style={{display: 'contents'}}>
+                <Link to="/new_workout" style={{display: 'contents'}}>
                     <div className="grid-item wide-rectangle">
                         <h3>New workout</h3>
                     </div>
