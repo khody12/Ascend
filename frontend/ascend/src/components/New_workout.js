@@ -10,8 +10,9 @@ function New_workout() {
     const navigate = useNavigate();
     const { authData } = useContext(AuthContext);
     const [workoutSets, setWorkoutSets] = useState([]);
+    const [selectedExercise, setSelectedExercise] = useState("");
     const [currentSet, setCurrentSet] = useState({reps: "", weight: "", exercise: ""});
-    const [exercises, setUserExercises] = useState(null);
+    const [exercises, setUserExercises] = useState([]);
     const [workoutTitle, setWorkoutTitle] = useState("");
 
     const [message, setMessage] = useState("");
@@ -46,18 +47,25 @@ function New_workout() {
         fetchExercises();
     }, [authData]);
 
-    const handleSetChange = (e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === "exercise") {
             const selectedExercise = exercises.find((ex) => ex.id === parseInt(value));
+            setSelectedExercise(selectedExercise);
+            setCurrentSet({ ...currentSet, exercise: selectedExercise });
         } else {
             setCurrentSet({ ...currentSet, [name]: value});
         }
     }
 
-    const handleAddSet = () => {
-        setWorkoutSets([...setCurrentSet, currentSet]);
-        setCurrentSet({reps: "", weight: "", exercise: ""});
+    const handleAddSet = (e) => {
+        e.preventDefault();
+
+        
+        console.log("adding set")
+        setWorkoutSets([...workoutSets, currentSet]);
+        setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
+        console.log(workoutSets);
     }
 
 
@@ -90,7 +98,50 @@ function New_workout() {
 
 
     return (
-        <h1>Hello</h1>
+        <div id="workout-page-container">
+            <div id="workout-container">
+                <div id="new-workout-container">
+                    <h2>Current sets</h2>
+                    <ul>
+                        {workoutSets.map((set, index) => (
+                            <li key={index}>
+                                {set.exercise.name} - {set.reps} reps at {set.weight} lbs
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div id="add-new-workout">
+                    <form>
+                        
+                        <select name="exercise"
+                        id="exercise-dropdown" 
+                        value={selectedExercise?.id || ""} 
+                        onChange={handleInputChange}>
+                            <option value=""> Select an exercise</option>
+                            {exercises.map((exercise) =>(
+                                <option key={exercise.id} value={exercise.id}>
+                                    {exercise.name}
+                                </option>
+                            ))}
+                        </select>
+                        <input
+                        type="number"
+                        name="reps"
+                        placeholder="reps"
+                        value={currentSet.reps}
+                        onChange={handleInputChange}/>
+                        <input
+                        type="number"
+                        name="weight"
+                        placeholder="Weight"
+                        value={currentSet.weight}
+                        onChange={handleInputChange}/>
+                        <button onClick={handleAddSet}>Add set</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
     );
     
 };

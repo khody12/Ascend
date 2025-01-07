@@ -1,0 +1,76 @@
+
+#workout-page-container {
+
+}
+
+#workout-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+
+}
+
+
+
+
+
+/* INPUT BOX CSS */
+.add-new-workout label {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Align with input padding */
+    font-size: 16px;
+    color: #999;
+    pointer-events: none; /* Prevent interaction with the label */
+    transform: translateY(-50%); /* Vertically center inside the input */
+    transition: all 0.3s ease; /* Smooth transition for movement */
+    background: white; /* Optional: creates a seamless blend with the input border */
+    padding: 0 5px; /* Padding to visually separate the label */
+    
+}
+.add-new-workout {
+    margin-bottom:10px;
+    width:100%;
+    position:relative;
+    
+
+}
+
+#add-new-workout input, #add-new-workout select {
+    width: 100%;
+    
+    padding: 10px 10px;
+    margin:5px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-sizing:border-box;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    
+}
+
+#add-new-workoutinput:focus, #add-new-workout select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+
+
+}
+
+
+#add-new-workout input:focus + label,
+#add-new-workout input:not(:placeholder-shown) + label,
+#add-new-workout select:focus + label,
+#add-new-workout select:not([value=""]) + label {
+    top: -2px;
+    font-size: 16px;
+    color: #007bff;
+}
+
+#add-new-workout input:focus {
+    border-color: #007bff; /* Changes border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect */
+}
