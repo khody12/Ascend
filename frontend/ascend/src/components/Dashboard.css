@@ -107,4 +107,7 @@
 .exercise-text::after {
     transition: width 0.3s ease, opacity 0.3s ease;
 } 
-   
+.wide-rectangle > h3{
+    color:black;
+
+}

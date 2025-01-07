@@ -1,4 +1,4 @@
-import "./New-workout.css"
+import "./New_workout.css"
 
 import React, { useState, useContext } from "react";
 import axios from "axios" 
@@ -11,9 +11,10 @@ function New_workout() {
 
 
 
-    
+
     return (
         <h1>Hello</h1>
     )
     
-}
+};
+export default New_workout;

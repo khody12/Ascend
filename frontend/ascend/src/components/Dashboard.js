@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from "react-router-dom"
 import "./Dashboard.css"
-
+import { Link } from "react-router-dom"
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -75,10 +75,11 @@ function Dashboard() {
                     <h3>stats</h3>
                     <p>some graphs or whatever</p>
                 </div>
-
-                <div className="grid-item wide-rectangle">
-                    <h3>New Workout</h3>
-                </div>
+                <Link to="/new-workout" style={{display: 'contents'}}>
+                    <div className="grid-item wide-rectangle">
+                        <h3>New workout</h3>
+                    </div>
+                </Link>
             </div>
         </div>
     );
