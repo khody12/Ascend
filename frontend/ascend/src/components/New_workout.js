@@ -96,48 +96,46 @@ function New_workout() {
     }
 
 
-
+  // customize this with font awesome later to add in little icons to make it more aesthetic
     return (
         <div id="workout-page-container">
             <div id="workout-container">
                 <div id="new-workout-container">
                     <h2>Current sets</h2>
-                    <ul>
+                    <div id="set-list">
                         {workoutSets.map((set, index) => (
-                            <li key={index}>
+                            <div id="set" key={index}>
                                 {set.exercise.name} - {set.reps} reps at {set.weight} lbs
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
                 <div id="add-new-workout">
-                    <form>
-                        
-                        <select name="exercise"
-                        id="exercise-dropdown" 
-                        value={selectedExercise?.id || ""} 
-                        onChange={handleInputChange}>
-                            <option value=""> Select an exercise</option>
-                            {exercises.map((exercise) =>(
-                                <option key={exercise.id} value={exercise.id}>
-                                    {exercise.name}
-                                </option>
-                            ))}
-                        </select>
-                        <input
-                        type="number"
-                        name="reps"
-                        placeholder="reps"
-                        value={currentSet.reps}
-                        onChange={handleInputChange}/>
-                        <input
-                        type="number"
-                        name="weight"
-                        placeholder="Weight"
-                        value={currentSet.weight}
-                        onChange={handleInputChange}/>
-                        <button onClick={handleAddSet}>Add set</button>
-                    </form>
+                    <select name="exercise"
+                    id="exercise-dropdown" 
+                    value={selectedExercise?.id || ""} 
+                    onChange={handleInputChange}>
+                        <option value=""> Select an exercise</option>
+                        {exercises.map((exercise) =>(
+                            <option key={exercise.id} value={exercise.id}>
+                                {exercise.name}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                    type="number"
+                    name="reps"
+                    placeholder="reps"
+                    value={currentSet.reps}
+                    onChange={handleInputChange}/>
+                    <input
+                    type="number"
+                    name="weight"
+                    placeholder="Weight"
+                    value={currentSet.weight}
+                    onChange={handleInputChange}/>
+                    <button onClick={handleAddSet}>+</button>
+                    
                 </div>
             </div>
         </div>

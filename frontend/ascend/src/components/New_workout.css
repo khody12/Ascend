@@ -14,63 +14,45 @@
 }
 
 
+#add-new-workout {
+    display:flex;
+    gap:15px;
+    border-radius:15px;
+   
+    padding:10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items:center;
+    
 
+}
 
-
-/* INPUT BOX CSS */
-.add-new-workout label {
-    position: absolute;
-    top: 50%;
-    left: 10px; /* Align with input padding */
+#add-new-workout input, #add-new-workout select, #add-new-workout button{
+    border: none;
+    outline:none;
+    padding: 15px;
+    margin:10px;
     font-size: 16px;
-    color: #999;
-    pointer-events: none; /* Prevent interaction with the label */
-    transform: translateY(-50%); /* Vertically center inside the input */
-    transition: all 0.3s ease; /* Smooth transition for movement */
-    background: white; /* Optional: creates a seamless blend with the input border */
-    padding: 0 5px; /* Padding to visually separate the label */
-    
-}
-.add-new-workout {
-    margin-bottom:10px;
-    width:100%;
-    position:relative;
-    
-
-}
-
-#add-new-workout input, #add-new-workout select {
-    width: 100%;
-    
-    padding: 10px 10px;
-    margin:5px;
-    font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-sizing:border-box;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    flex:1;
+    border-right:1px solid #ccc;
     
 }
 
-#add-new-workoutinput:focus, #add-new-workout select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-
+#add-new-workout > button {
+    background-color:white;
+    color: rgb(11, 203, 33); /* White text */
+    border: none; /* Remove border */
+    border-radius: 50%; /* Make it a circle */
+    width: 40px; /* Width of the button */
+    height: 40px; /* Height of the button */
+    display: flex; /* Center align the plus sign */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 50px; /* Size of the plus sign */
 
 }
 
-
-#add-new-workout input:focus + label,
-#add-new-workout input:not(:placeholder-shown) + label,
-#add-new-workout select:focus + label,
-#add-new-workout select:not([value=""]) + label {
-    top: -2px;
-    font-size: 16px;
-    color: #007bff;
-}
-
-#add-new-workout input:focus {
-    border-color: #007bff; /* Changes border color on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect */
+#add-new-workout > button:hover {
+    color: #014d13; /* Darker green on hover */
 }
