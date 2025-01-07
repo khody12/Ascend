@@ -25,7 +25,6 @@ const Registration = () => {
         e.preventDefault();
         console.log("starting registration")
         
-        console.log(typeof user_height, typeof user_weight)
         try {
             const response = await axios.post("http://127.0.0.1:8000/register/", {
                 first_name,
