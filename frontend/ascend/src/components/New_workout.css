@@ -2,7 +2,26 @@
 #workout-page-container {
 
 }
+#sets-container {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:50%;
 
+}
+#set-list {
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+}
+#set {
+    border-top:1px solid;
+    width:50%;
+
+}
 #workout-container{
     width:100%;
     display:flex;

@@ -61,12 +61,25 @@ function New_workout() {
     const handleAddSet = (e) => {
         e.preventDefault();
 
+        if (!selectedExercise || !currentSet.reps || !currentSet.weight) {
+            console.log("fill it all out!")
+            setMessage("Please fill out all fields before adding a set.");
+            return;
+        }
+
         
         console.log("adding set")
         setWorkoutSets([...workoutSets, currentSet]);
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
         console.log(workoutSets);
     }
+
+    const groupedSets = workoutSets.reduce((acc, set) => {
+        const { exercise } = set;
+        acc[exercise.name] = acc[exercise.name] || [];
+        acc[exercise.name].push(set);
+        return acc;
+    }, {});
 
 
 
@@ -100,16 +113,23 @@ function New_workout() {
     return (
         <div id="workout-page-container">
             <div id="workout-container">
-                <div id="new-workout-container">
-                    <h2>Current sets</h2>
-                    <div id="set-list">
-                        {workoutSets.map((set, index) => (
-                            <div id="set" key={index}>
-                                {set.exercise.name} - {set.reps} reps at {set.weight} lbs
-                            </div>
-                        ))}
-                    </div>
+                <div id="sets-container">
+                    {Object.entries(groupedSets).map(([exerciseName, sets], index) => (
+                        <div key={index} className="exercise-group">
+                            <h4>{exerciseName}</h4>
+                            <ul>
+                                {sets.map((set, idx) => (
+                                    <li key={idx}>
+                                        {set.reps} reps at {set.weight} lbs
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                    
+
                 </div>
+                
                 <div id="add-new-workout">
                     <select name="exercise"
                     id="exercise-dropdown" 
@@ -135,7 +155,6 @@ function New_workout() {
                     value={currentSet.weight}
                     onChange={handleInputChange}/>
                     <button onClick={handleAddSet}>+</button>
-                    
                 </div>
             </div>
         </div>
@@ -144,3 +163,15 @@ function New_workout() {
     
 };
 export default New_workout;
+
+
+{/*             <div id="sets-container">
+                    <h2>Current sets</h2>
+                    <div id="set-list">
+                        {workoutSets.map((set, index) => (
+                            <div id="set" key={index}>
+                                {set.exercise.name} - {set.reps} reps at {set.weight} lbs
+                            </div>
+                        ))}
+                    </div>
+                </div> */}
