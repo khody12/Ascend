@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 function New_workout() {
     const navigate = useNavigate();
+    const [time, setTime] = useState(0);
+    const [isRunning, setIsRunning] = useState(true);
     const { authData } = useContext(AuthContext);
     const [workoutSets, setWorkoutSets] = useState([]);
     const [selectedExercise, setSelectedExercise] = useState("");
@@ -16,6 +18,14 @@ function New_workout() {
     const [workoutTitle, setWorkoutTitle] = useState("");
 
     const [message, setMessage] = useState("");
+
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    };
+
 
     useEffect(() => { // get exercise data from API.
         const fetchExercises = async () => {
@@ -41,6 +51,15 @@ function New_workout() {
                 }
             
             }
+            let timer;
+
+            if (isRunning) {
+                timer = setInterval(() => {
+                    setTime((prevTime) => prevTime + 1);
+
+                }, 1000);
+            }
+            return () => clearInterval(timer);
 
 
         }
@@ -73,7 +92,7 @@ function New_workout() {
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
         console.log(workoutSets);
     }
-
+    // this code groups our workout sets by their exercise
     const groupedSets = workoutSets.reduce((acc, set) => {
         const { exercise } = set;
         acc[exercise.name] = acc[exercise.name] || [];
@@ -112,24 +131,24 @@ function New_workout() {
   // customize this with font awesome later to add in little icons to make it more aesthetic
     return (
         <div id="workout-page-container">
+            <div className="workout-info-header">
+                <h5>{formatTime(time)}</h5>
+            </div>
             <div id="workout-container">
                 <div id="sets-container">
                     {Object.entries(groupedSets).map(([exerciseName, sets], index) => (
                         <div key={index} className="exercise-group">
                             <h4>{exerciseName}</h4>
-                            <ul>
-                                {sets.map((set, idx) => (
-                                    <li key={idx}>
-                                        {set.reps} reps at {set.weight} lbs
-                                    </li>
-                                ))}
-                            </ul>
+                            
+                            {sets.map((set, idx) => (
+                                <div className="workout-component" key={idx}>
+                                    <div>{idx + 1}.</div> <div>Reps: {set.reps}</div>  <div>{set.weight} lbs</div> 
+                                </div>
+                            ))}
+                            
                         </div>
                     ))}
-                    
-
                 </div>
-                
                 <div id="add-new-workout">
                     <select name="exercise"
                     id="exercise-dropdown" 
