@@ -10,6 +10,7 @@ class Workout(models.Model):
     comment = models.TextField(blank=True, null=True) # user can comment how they felt, yada yada
     user = models.ForeignKey(User, related_name='workouts', on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now, null=True, blank=True)
+    elapsed_time = models.TimeField(default="00:00:00")
 
     def __str__(self):
         return f"{self.name} created by {self.user.username}"

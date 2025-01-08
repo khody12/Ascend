@@ -55,7 +55,7 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workout
-        fields = ['id', 'name', 'date', 'workout_sets']
+        fields = ['id', 'name', 'date', 'workout_sets', 'elapsed_time', 'comment']
     
     def create(self, validated_data): # we need to override create because we are saving the workout at 
         # the very end of the users workout. but we need to do nested writes

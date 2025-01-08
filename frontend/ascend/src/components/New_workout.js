@@ -16,6 +16,8 @@ function New_workout() {
     const [currentSet, setCurrentSet] = useState({reps: "", weight: "", exercise: ""});
     const [exercises, setUserExercises] = useState([]);
     const [workoutTitle, setWorkoutTitle] = useState("");
+    const [workoutComment, setWorkoutComment] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [message, setMessage] = useState("");
 
@@ -25,7 +27,20 @@ function New_workout() {
         const remainingSeconds = seconds % 60;
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     };
+    const alterTimer = () => setIsRunning(!isRunning);
+    const resetTimer = () => {
+        setIsRunning(false);
+        setTime(0);
+    };
+    const secondsToTimeString = (time) => {
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const seconds = time % 60;
 
+        return [hours, minutes, seconds]
+            .map((unit) => String(unit).padStart(2, "0"))
+            .join(":")
+    }
 
     useEffect(() => { // get exercise data from API.
         const fetchExercises = async () => {
@@ -49,9 +64,14 @@ function New_workout() {
                 } catch (error) {
                     console.error("Error fetching exercises:", error)
                 }
-            
             }
-            let timer;
+        }
+        fetchExercises();
+    }, [authData]); // this array he is called dependency array and basically react will rerun useEffect fucniton only if one
+    // of these dependencies change.
+
+    useEffect(() => {
+        let timer;
 
             if (isRunning) {
                 timer = setInterval(() => {
@@ -59,12 +79,10 @@ function New_workout() {
 
                 }, 1000);
             }
-            return () => clearInterval(timer);
+            return () => {clearInterval(timer)};
 
 
-        }
-        fetchExercises();
-    }, [authData]);
+    }, [isRunning])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -87,7 +105,8 @@ function New_workout() {
         }
 
         
-        console.log("adding set")
+        console.log("adding set");
+        
         setWorkoutSets([...workoutSets, currentSet]);
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
         console.log(workoutSets);
@@ -105,12 +124,18 @@ function New_workout() {
 
     // this is what we will send as a post at the very end, this creates our workout, and exits us out of the
     //workout interface
+    const openModal = (e) => {
+        e.preventDefault()
+        setIsModalOpen(true);
+    }
     const saveWorkout = async (e) => {
         e.preventDefault(); // prevents browser from reloading a page when we submit an exercise.
         const payload = {
             name: workoutTitle,
             date: new Date().toISOString().split("T")[0],
             workout_sets: workoutSets,
+            elapsed_time: secondsToTimeString(time),
+            comments: workoutComment,
         }; 
         try {
             const response = await axios.post("http://127.0.0.1:8000/user/create-workout/", payload);
@@ -131,7 +156,41 @@ function New_workout() {
   // customize this with font awesome later to add in little icons to make it more aesthetic
     return (
         <div id="workout-page-container">
+            {isModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Save Workout</h3>
+                        <input
+                            type="text"
+                            placeholder="Workout Title"
+                            value={workoutTitle}
+                            onChange={(e) => setWorkoutTitle(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Comments"
+                            value={workoutComment}
+                            onChange={(e) => setWorkoutComment(e.target.value)}
+                        />
+                        <div className="modal-buttons">
+                            <button onClick={() => setIsModalOpen(false)}><i class="fa-solid fa-xmark"></i></button>
+                            <button onClick={saveWorkout}><i class="fa-solid fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="workout-info-header">
+                <div id="end-workout">
+                    <button className="end-button"
+                    onClick={openModal}>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+                <div id="pause-workout">
+                    <button className="pause-button">
+                        <i className="fas fa-pause"></i>
+                    </button></div>
                 <h5>{formatTime(time)}</h5>
             </div>
             <div id="workout-container">
@@ -175,6 +234,7 @@ function New_workout() {
                     onChange={handleInputChange}/>
                     <button onClick={handleAddSet}>+</button>
                 </div>
+
             </div>
         </div>
         
