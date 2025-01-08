@@ -110,6 +110,8 @@ function New_workout() {
         setWorkoutSets([...workoutSets, currentSet]);
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
         console.log(workoutSets);
+
+        
     }
     // this code groups our workout sets by their exercise
     const groupedSets = workoutSets.reduce((acc, set) => {
@@ -135,10 +137,18 @@ function New_workout() {
             date: new Date().toISOString().split("T")[0],
             workout_sets: workoutSets,
             elapsed_time: secondsToTimeString(time),
-            comments: workoutComment,
+            comment: workoutComment,
         }; 
+        console.log(payload);
         try {
-            const response = await axios.post("http://127.0.0.1:8000/user/create-workout/", payload);
+            const response = await axios.post("http://127.0.0.1:8000/user/create-workout/", payload,
+                {
+                    headers: {
+                        "Authorization": `Token ${authData.token}`,
+                        "Content-Type": "application/json"
+                    },
+                }
+            );
             console.log("workout saved:", response.data)
         } catch (error) {
             if (error.response && error.response.status === 401) {

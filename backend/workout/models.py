@@ -16,15 +16,12 @@ class Workout(models.Model):
         return f"{self.name} created by {self.user.username}"
     
 class WorkoutSet(models.Model):
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='workout_sets')
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     reps = models.PositiveIntegerField()
     weight  = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     rest_time = models.PositiveIntegerField(blank=True, null=True)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['workout', 'exercise'], name='unique_workout_exercise')
-        ]
+    
 
 

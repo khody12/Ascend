@@ -32,6 +32,7 @@ function Dashboard() {
                         // all this data is now available within the userProfile variable
                         //userProfile.email, userProfile.first_name etc. 
                         console.log("profile response from API: ", profile);
+                        console.log(profile.workouts[0].workout_sets)
                     } else {
                         console.error('Failed to fetch user profile.', response.status, await response.text());
                     }
@@ -57,7 +58,7 @@ function Dashboard() {
                     userProfile.workouts.map((workout, workoutIndex) => (
                         <div key={workout.id} className="grid-item square">
                             <h3>{workout.name}</h3>
-                            { workout.exercises.map((exercise, exerciseIndex) => (
+                            { workout.workout_sets.map((exercise, exerciseIndex) => (
                                 <div key={exerciseIndex}>
                                     <h4 class="exercise-text">{exercise.name}</h4>
                                     <h4 class="exercise-text">{exercise.description}</h4>

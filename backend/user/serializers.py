@@ -1,7 +1,7 @@
 
 from user.models import User
 from workout.models import Workout, WorkoutSet
-from exercise.models import Exercise
+from exercise.models import Exercise, Tag
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -37,21 +37,36 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=150)
     password = serializers.CharField(max_length=128, write_only=True)
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'name']
 
 class ExerciseSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True)
     class Meta:
         model = Exercise
         fields = ['id', 'name', 'tags']
 
 
 class WorkoutSetSerializer(serializers.ModelSerializer):
+    exercise = ExerciseSerializer()
 
     class Meta:
         model = WorkoutSet
-        fields = ['id', 'workout', 'exercise', 'reps', 'weight']
+        fields = ['id','exercise', 'reps', 'weight']
+
+
+class WorkoutReadSerializer(serializers.ModelSerializer):
+    workout_sets = WorkoutSetSerializer(many=True)
+
+    class Meta:
+        model = Workout
+        fields = ['id', 'name', 'date', 'workout_sets', 'elapsed_time', 'comment']
+
 
 class CreateWorkoutSerializer(serializers.ModelSerializer):
-    workout_sets = WorkoutSetSerializer(many=True)
+    workout_sets = WorkoutSetSerializer(many=True, required=False)
 
     class Meta:
         model = Workout
@@ -61,13 +76,38 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
         # the very end of the users workout. but we need to do nested writes
         # i.e. we need to write WorkoutSets within the Workout creation. 
         workout_sets_data = validated_data.pop('workout_sets')
-        workout = Workout.objects.create(**validated_data) # create main workout instance
+        print("Workout Sets Data:", workout_sets_data)
+
+        user = self.context['request'].user
+        workout = Workout.objects.create(user=user, **validated_data) # create main workout instance
+        print("Workout Created:", workout)
         for set_data in workout_sets_data:
-            WorkoutSet.objects.create(workout=workout, **set_data)
+            print("setdata:", set_data)
+
+            exercise_data = set_data.pop('exercise')
+            tags_data = exercise_data.pop('tags', [])
+            print("Exercise Data:", exercise_data, "Tags Data:", tags_data)
+
+            exercise, created = Exercise.objects.get_or_create(**exercise_data)
+            print(f"Exercise {'Created' if created else 'Retrieved'}:", exercise)
+            
+            for tag_data in tags_data:
+                print("tag data:", tag_data)
+                tag, created = Tag.objects.get_or_create(**tag_data)
+                print(f"Tag {'Created' if created else 'Retrieved'}:", tag)
+                exercise.tags.add(tag)
+            WorkoutSet.objects.create(workout=workout,
+                                      exercise=exercise,
+                                      reps=set_data['reps'],
+                                      weight=set_data['weight'],
+                                      )
+        print("validated Data for workout,", validated_data)
+        
+
         return workout
 
 class UserDashboardSerializer(serializers.ModelSerializer):
-    workouts = CreateWorkoutSerializer(many=True)
+    workouts = WorkoutReadSerializer(many=True)
     favorite_exercises = ExerciseSerializer(many=True)
     
     class Meta:
