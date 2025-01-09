@@ -58,10 +58,10 @@ function Dashboard() {
                     userProfile.workouts.map((workout, workoutIndex) => (
                         <div key={workout.id} className="grid-item square">
                             <h3>{workout.name}</h3>
-                            { workout.workout_sets.map((exercise, exerciseIndex) => (
+                            { workout.workout_sets.map((set, exerciseIndex) => (
                                 <div key={exerciseIndex}>
-                                    <h4 class="exercise-text">{exercise.name}</h4>
-                                    <h4 class="exercise-text">{exercise.description}</h4>
+                                    <h4 class="exercise-text">{set.exercise.name}</h4>
+                                    <h4 class="exercise-text"> Reps: {set.reps}</h4>
                                 </div>
                             ))}
                             <p>{workout.description}</p>
