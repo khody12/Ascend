@@ -7,3 +7,6 @@ django-cors-headers
 react
 axios
 react-router-dom
+scikit-learn
+pandas
+pytorch
