@@ -122,7 +122,7 @@ def train_model(params, X_train, y_train, X_test, y_test, epochs=1000):
     loss_fn = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    epochs = 1000
+    epochs = 2500
     for epoch in range(epochs):
         model.train()
         y_probs = model(X_train)

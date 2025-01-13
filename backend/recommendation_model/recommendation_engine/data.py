@@ -5,9 +5,10 @@
 import csv
 data = []
 
-
+full_data = "data.csv"
+leg_data = "leg_data.csv"
 def data_processing():
-    with open("data.csv", newline="") as csvfile:
+    with open(leg_data, newline="") as csvfile:
         csv_reader = csv.reader(csvfile)
 
         for line in csv_reader:
