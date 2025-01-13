@@ -56,7 +56,7 @@ Chest,15,1,Incline Push Ups,1,95
 Chest,50,1,Machine Chest Press,5,75
 Chest,72,1,Cable Flies,5,59
 Chest,79,1,Weighted Dips,10,29
-Chest,33,1,Push Ups,3,67
+Chest,25,1,Push Ups,3,58
 Chest,90,1,Cable Crossovers,7,57
 Chest,8,2,Weighted Dips,10,3
 Chest,22,2,Bench Press,9,15
@@ -167,7 +167,7 @@ Chest,15,1,Incline Push Ups,1,95
 Chest,60,1,Dumbbell Pullover,3,74
 Chest,5,1,Weighted Dips,10,1
 Chest,60,2,Weighted Dips,10,33
-Chest,33,1,Push Ups,3,67
+Chest,35,1,Push Ups,3,67
 Chest,49,5,Cable Flies,5,87
 Chest,93,4,Weighted Dips,10,94
 Chest,50,3,Dumbbell Pullover,3,72
@@ -180,7 +180,7 @@ Chest,90,5,Bench Press,9,93
 Chest,12,3,Weighted Dips,10,15
 Chest,12,1,Incline Push Ups,1,95
 Chest,98,1,Weighted Dips,10,35
-Chest,100,5,Weighted Dips,10,100
+Chest,94,5,Weighted Dips,10,98
 Chest,2,4,Weighted Dips,10,1
 Chest,14,2,Bench Press,9,18
 Chest,12,1,Cable Crossovers,7,15
@@ -193,8 +193,8 @@ Chest,90,4,Weighted Dips,10,95
 Chest,40,3,Push Ups,3,70
 Chest,65,3,Push Ups,3,96
 Chest,20,3,Push Ups,3,65
-Chest,50,1,Push Ups,3,55
+Chest,50,1,Push Ups,3,70
 Chest,63,2,Machine Chest Press,5,65
 Chest,30,5,Incline Press,9,49
-Chest,32,5,Incline Push Ups,1,65
+Chest,32,5,Incline Push Ups,1,78
 Chest,7,1,Bench Press,9,3
