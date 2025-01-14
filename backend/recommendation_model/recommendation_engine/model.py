@@ -7,7 +7,8 @@ import sys
 
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
-from data import data
+from data_reader import data
+from sklearn.model_selection import train_test_split
 
 torch.manual_seed(42)
 
@@ -20,6 +21,8 @@ print("data:", data)
 df = pd.DataFrame(data, columns=["Muscle", "Sleep Score", "Feeling", "Workout Name", "Workout Difficulty", "Relevance Score"])
 for col in ["Sleep Score", "Feeling", "Workout Difficulty", "Relevance Score"]:
     df[col] = pd.to_numeric(df[col], errors="coerce")
+
+#df = df.sample(frac=1) # shuffle our rows so trains equally on all muscle groups.
 
 
 
@@ -51,11 +54,17 @@ print("type", y.dtype)
 
 
 
-X_train = X_tensor[:training_split]
-X_test = X_tensor[training_split:]
+# X_train = X_tensor[:training_split]
+# X_test = X_tensor[training_split:]
 
-y_train = y_tensor[:training_split]
-y_test = y_tensor[training_split:]
+# y_train = y_tensor[:training_split]
+# y_test = y_tensor[training_split:]
+
+# train_test split from sklearn shuffles datarows. 
+X_train, X_test, y_train, y_test = train_test_split(
+    X_tensor, y_tensor, test_size=0.2, random_state=42
+)
+
 
 print(y_tensor.min(), y_tensor.max())
 
@@ -72,7 +81,7 @@ print(rows_with_sleep_9)
 
 
 param_grid = {
-    "learning_rate": [0.01, 0.001, 0.0001],
+    "learning_rate": [0.01, 0.001],
     "neurons_per_layer": [4, 8, 16],
     "num_layers": [2, 3, 4]
 }

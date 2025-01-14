@@ -1,8 +1,7 @@
 Chest,10,1,Weighted Dips,10,5
 Chest,12,1,Incline Push Ups,1,95
-Chest,25,1,Push Ups,3,75
-Chest,30,1,Weighted Dips,10,7
-Chest,95,1,Weighted Dips,10,45
+Chest,30,1,Weighted Dips,10,13
+Chest,95,1,Weighted Dips,10,50
 Chest,45,1,Dumbbell Pullover,3,75
 Chest,5,1,Bench Press,9,3
 Chest,66,1,Machine Chest Press,5,47
@@ -198,3 +197,406 @@ Chest,63,2,Machine Chest Press,5,65
 Chest,30,5,Incline Press,9,49
 Chest,32,5,Incline Push Ups,1,78
 Chest,7,1,Bench Press,9,3
+Leg,50,1,Squat,2,81
+Leg,15,2,Back Squat,9,5
+Leg,35,1,Leg Extension,6,48
+Leg,60,3,Back Squat,9,49
+Leg,70,3,Calf Raise,1,55
+Leg,70,5,Leg Curl,6,89
+Leg,20,1,Hip Abductor,3,95
+Leg,80,4,Dead Lift,10,88
+Leg,60,3,Bulgarian Split Squat,9,54
+Leg,95,4,Squat Jump,4,51
+Leg,90,5,Calf Raise,1,21
+Leg,50,1,Leg Press,7,31
+Leg,78,5,Back Squat,9,86
+Leg,75,5,Bulgarian Split Squat,9,84
+Leg,90,4,Leg Curl,6,74
+Leg,50,3,Leg Extension,6,81
+Leg,40,2,Calf Raise,1,91
+Leg,80,4,Leg Press,7,94
+Leg,90,5,Hip Abductor,3,17
+Leg,60,3,Squat Jump,4,89
+Leg,50,2,Hip Abductor,3,95
+Leg,10,2,Leg Extension,6,20
+Leg,55,4,Leg Extension,6,93
+Leg,63,3,Leg Curl,6,95
+Leg,35,2,Squat Jump,4,85
+Leg,80,3,Squat,2,21
+Leg,85,4,Hip Abductor,3,25
+Leg,37,1,Back Squat,9,14
+Leg,50,1,Dead Lift,10,18
+Leg,65,4,Squat,2,53
+Leg,68,3,Leg Press,7,84
+Leg,75,3,Hip Abductor,3,65
+Leg,85,4,Bulgarian Split Squat,9,95
+Leg,70,4,Squat Jump,4,71
+Leg,45,1,Bulgarian Split Squat,9,21
+Leg,19,2,Bulgarian Split Squat,9,9
+Leg,63,3,Leg Extension,6,96
+Leg,40,2,Leg Press,7,35
+Leg,80,5,Leg Extension,6,75
+Leg,90,5,Leg Press,7,90
+Leg,10,1,Calf Raise,1,97
+Leg,10,2,Leg Curl,6,18
+Leg,30,2,Dead Lift,10,14
+Leg,89,5,Dead Lift,10,92
+Leg,20,2,Squat,2,98
+Leg,55,2,Leg Curl,6,73
+Leg,50,1,Squat Jump,4,84
+Leg,95,5,Squat,2,5
+Leg,65,3,Dead Lift,10,41
+Leg,55,4,Calf Raise,1,55
+Leg,74,4,Squat Jump,4,60
+Leg,50,3,Back Squat,9,37
+Leg,95,5,Dead Lift,10,98
+Leg,70,3,Calf Raise,1,38
+Leg,25,2,Bulgarian Split Squat,9,13
+Leg,85,4,Hip Abductor,3,23
+Leg,12,1,Squat,2,94
+Leg,72,4,Dead Lift,10,81
+Leg,59,3,Bulgarian Split Squat,9,50
+Leg,20,2,Dead Lift,10,12
+Leg,10,1,Calf Raise,1,96
+Leg,60,3,Leg Extension,6,92
+Leg,75,3,Squat Jump,4,47
+Leg,66,4,Hip Abductor,3,44
+Leg,35,1,Leg Extension,6,41
+Leg,55,3,Leg Curl,6,93
+Leg,5,1,Dead Lift,10,3
+Leg,30,2,Leg Press,7,26
+Leg,90,5,Back Squat,9,95
+Leg,50,3,Dead Lift,10,48
+Leg,55,2,Leg Extension,6,67
+Leg,8,1,Leg Curl,6,19
+Leg,95,5,Calf Raise,1,3
+Leg,95,5,Leg Press,7,84
+Leg,41,2,Squat Jump,4,94
+Leg,64,4,Bulgarian Split Squat,9,81
+Leg,70,4,Leg Extension,6,96
+Leg,85,5,Leg Curl,6,85
+Leg,50,3,Squat Jump,4,93
+Leg,90,5,Back Squat,9,94
+Leg,20,2,Hip Abductor,3,83
+Leg,95,5,Bulgarian Split Squat,9,94
+Leg,45,3,Back Squat,9,34
+Leg,10,1,Squat Jump,4,30
+Leg,20,1,Calf Raise,1,93
+Leg,90,5,Squat,2,12
+Leg,50,3,Leg Press,7,65
+Leg,95,5,Leg Curl,6,71
+Leg,30,2,Dead Lift,10,9
+Leg,55,4,Leg Extension,6,94
+Leg,60,3,Bulgarian Split Squat,9,54
+Leg,5,1,Back Squat,9,6
+Leg,74,4,Leg Press,7,96
+Leg,45,3,Bulgarian Split Squat,9,37
+Leg,66,4,Leg Curl,6,95
+Leg,12,1,Back Squat,9,5
+Leg,85,5,Bulgarian Split Squat,9,92
+Leg,50,3,Squat,2,80
+Leg,55,4,Leg Curl,6,95
+Leg,25,2,Squat,2,96
+Leg,20,2,Hip Abductor,3,97
+Leg,31,2,Hip Abductor,3,98
+Leg,85,5,Back Squat,9,97
+Leg,40,1,Dead Lift,10,15
+Leg,66,4,Leg Extension,6,89
+Leg,5,1,Calf Raise,1,97
+Leg,90,5,Dead Lift,10,98
+Leg,59,3,Squat Jump,4,92
+Leg,20,2,Dead Lift,10,10
+Leg,83,5,Squat,2,12
+Leg,72,1,Hip Abductor,3,69
+Leg,15,1,Leg Press,7,8
+Leg,45,4,Leg Curl,6,71
+Leg,92,5,Bulgarian Split Squat,9,99
+Leg,37,2,Squat,2,88
+Leg,10,1,Back Squat,9,5
+Leg,53,3,Leg Curl,6,85
+Leg,88,5,Calf Raise,1,15
+Leg,70,4,Squat Jump,4,60
+Leg,25,2,Leg Extension,6,39
+Leg,55,3,Back Squat,9,45
+Leg,65,3,Leg Press,7,78
+Leg,92,5,Leg Curl,6,75
+Leg,34,2,Leg Press,7,19
+Leg,78,5,Bulgarian Split Squat,9,87
+Leg,45,1,Squat,2,93
+Leg,99,5,Calf Raise,1,3
+Leg,42,3,Bulgarian Split Squat,9,38
+Leg,28,2,Calf Raise,1,92
+Leg,85,4,Leg Press,7,87
+Leg,10,1,Leg Extension,6,25
+Leg,55,4,Squat Jump,4,74
+Leg,62,3,Hip Abductor,3,96
+Leg,90,4,Back Squat,9,89
+Leg,30,2,Dead Lift,10,12
+Leg,75,5,Dead Lift,10,83
+Leg,40,2,Squat,2,85
+Leg,65,5,Leg Curl,6,91
+Leg,56,3,Bulgarian Split Squat,9,54
+Leg,7,1,Back Squat,9,4
+Leg,80,4,Leg Extension,6,85
+Leg,68,3,Squat Jump,4,73
+Leg,12,2,Leg Press,7,14
+Leg,78,5,Calf Raise,1,11
+Leg,55,2,Bulgarian Split Squat,9,22
+Leg,65,3,Leg Extension,6,97
+Leg,85,5,Squat Jump,4,33
+Leg,14,2,Leg Curl,6,29
+Leg,95,5,Back Squat,9,97
+Leg,27,1,Hip Abductor,3,94
+Leg,60,3,Leg Press,7,76
+Leg,70,3,Squat,2,41
+Leg,80,4,Leg Press,7,91
+Leg,12,1,Dead Lift,10,4
+Leg,68,3,Leg Curl,6,93
+Leg,33,1,Calf Raise,1,91
+Leg,97,5,Back Squat,9,98
+Leg,66,2,Leg Extension,6,85
+Leg,20,2,Bulgarian Split Squat,9,15
+Leg,76,4,Squat Jump,4,71
+Leg,8,1,Back Squat,9,5
+Leg,100,5,Dead Lift,10,100
+Leg,22,2,Squat,2,91
+Leg,60,3,Hip Abductor,3,59
+Leg,88,5,Squat,2,18
+Leg,47,2,Dead Lift,10,18
+Leg,72,5,Leg Press,7,93
+Leg,15,1,Squat Jump,4,71
+Leg,66,3,Bulgarian Split Squat,9,51
+Leg,5,1,Leg Curl,6,14
+Leg,83,4,Back Squat,9,89
+Leg,25,2,Calf Raise,1,91
+Leg,95,5,Bulgarian Split Squat,9,97
+Leg,37,3,Squat Jump,4,95
+Leg,10,1,Hip Abductor,3,95
+Leg,55,3,Leg Press,7,61
+Leg,90,5,Leg Curl,6,50
+Leg,45,1,Dead Lift,10,19
+Leg,65,4,Leg Extension,6,88
+Leg,75,5,Back Squat,9,89
+Leg,28,2,Leg Extension,6,57
+Leg,35,1,Squat,2,94
+Leg,50,3,Bulgarian Split Squat,9,49
+Leg,99,5,Calf Raise,1,2
+Leg,62,4,Squat Jump,4,70
+Leg,24,1,Back Squat,9,9
+Leg,70,3,Leg Extension,6,88
+Leg,84,5,Bulgarian Split Squat,9,94
+Leg,40,2,Hip Abductor,3,96
+Leg,5,1,Leg Press,7,6
+Leg,93,4,Dead Lift,10,90
+Leg,29,1,Calf Raise,1,87
+Leg,78,5,Leg Press,7,96
+Leg,12,2,Squat,2,90
+Leg,67,3,Back Squat,9,52
+Leg,85,5,Calf Raise,1,18
+Leg,30,2,Dead Lift,10,11
+Leg,56,3,Leg Curl,6,87
+Leg,91,4,Back Squat,9,88
+Leg,65,3,Squat Jump,4,79
+Leg,7,1,Squat,2,96
+Leg,55,4,Leg Curl,6,87
+Leg,42,2,Leg Press,7,43
+Arm,91,5,Preacher Curls,6,80
+Arm,83,4,Resistance Band Curls,2,49
+Arm,17,5,Preacher Curls,6,59
+Arm,28,3,Skull Crushers,9,34
+Arm,14,3,Bicep Curls,5,40
+Arm,60,3,Hammer Curls,5,88
+Arm,55,3,Assisted Pull-Ups,3,65
+Arm,23,4,Bicep Curls,5,71
+Arm,40,1,Hammer Curls,5,72
+Arm,93,3,Close Grip Bench Press,10,76
+Arm,59,5,Assisted Pull-Ups,3,56
+Arm,49,2,Concentration Curls,4,89
+Arm,5,1,Bicep Curls,5,52
+Arm,72,2,Hammer Curls,5,87
+Arm,39,1,Preacher Curls,6,68
+Arm,96,1,Bicep Curls,5,47
+Arm,73,4,Resistance Band Curls,2,21
+Arm,58,5,Tricep Dips,7,89
+Arm,78,4,Skull Crushers,9,84
+Arm,62,1,Reverse Curls,4,79
+Arm,39,5,Reverse Curls,4,82
+Arm,16,3,Close Grip Bench Press,10,11
+Arm,27,1,Bicep Curls,5,62
+Arm,38,1,Overhead Tricep Extension,6,61
+Arm,93,5,Tricep Dips,7,86
+Arm,99,3,Overhead Tricep Extension,6,81
+Arm,49,5,Bicep Curls,5,83
+Arm,73,1,Concentration Curls,4,51
+Arm,60,2,Chin-Ups,8,49
+Arm,72,2,Skull Crushers,9,23
+Arm,24,3,Bicep Curls,5,60
+Arm,84,3,Preacher Curls,6,76
+Arm,54,4,Bicep Curls,5,93
+Arm,71,4,Overhead Tricep Extension,6,90
+Arm,15,2,Assisted Pull-Ups,3,94
+Arm,95,2,Reverse Curls,4,49
+Arm,45,1,Chin-Ups,8,49
+Arm,5,2,Concentration Curls,4,43
+Arm,4,3,Concentration Curls,4,47
+Arm,22,1,Hammer Curls,5,48
+Arm,41,4,Bicep Curls,5,91
+Arm,78,3,Concentration Curls,4,41
+Arm,89,5,Concentration Curls,4,25
+Arm,8,1,Concentration Curls,4,65
+Arm,97,1,Assisted Pull-Ups,3,34
+Arm,61,4,Assisted Pull-Ups,3,53
+Arm,42,2,Tricep Dips,7,34
+Arm,77,1,Overhead Tricep Extension,6,78
+Arm,84,1,Concentration Curls,4,58
+Arm,78,3,Close Grip Bench Press,10,75
+Arm,22,3,Tricep Dips,7,23
+Arm,90,3,Skull Crushers,9,80
+Arm,82,2,Assisted Pull-Ups,3,39
+Arm,7,4,Tricep Dips,7,12
+Arm,54,5,Resistance Band Curls,2,78
+Arm,44,3,Reverse Curls,4,98
+Arm,62,2,Tricep Dips,7,72
+Arm,70,4,Assisted Pull-Ups,3,64
+Arm,79,5,Close Grip Bench Press,10,84
+Arm,31,1,Close Grip Bench Press,10,18
+Arm,96,1,Skull Crushers,9,76
+Arm,6,4,Bicep Curls,5,27
+Arm,24,1,Chin-Ups,8,16
+Arm,72,3,Tricep Dips,7,89
+Arm,90,5,Skull Crushers,9,95
+Arm,63,5,Reverse Curls,4,76
+Arm,77,4,Bicep Curls,5,77
+Arm,57,5,Concentration Curls,4,81
+Arm,9,5,Bicep Curls,5,52
+Arm,45,3,Tricep Dips,7,64
+Arm,49,2,Close Grip Bench Press,10,32
+Arm,99,3,Close Grip Bench Press,10,95
+Arm,96,4,Close Grip Bench Press,10,98
+Arm,54,3,Hammer Curls,5,95
+Arm,91,5,Assisted Pull-Ups,3,29
+Arm,88,4,Preacher Curls,6,59
+Arm,19,5,Reverse Curls,4,78
+Arm,86,4,Preacher Curls,6,77
+Arm,64,5,Close Grip Bench Press,10,61
+Arm,28,4,Chin-Ups,8,35
+Arm,28,1,Close Grip Bench Press,10,16
+Arm,40,5,Close Grip Bench Press,10,50
+Arm,40,2,Skull Crushers,9,49
+Arm,11,2,Resistance Band Curls,2,93
+Arm,15,4,Close Grip Bench Press,10,21
+Arm,7,5,Chin-Ups,8,19
+Arm,4,2,Chin-Ups,8,10
+Arm,19,4,Resistance Band Curls,2,82
+Arm,100,1,Concentration Curls,4,53
+Arm,77,3,Close Grip Bench Press,10,74
+Arm,50,1,Bicep Curls,5,89
+Arm,86,1,Reverse Curls,4,47
+Arm,91,1,Assisted Pull-Ups,3,39
+Arm,65,2,Concentration Curls,4,78
+Arm,12,5,Overhead Tricep Extension,6,29
+Arm,11,1,Chin-Ups,8,7
+Arm,47,3,Skull Crushers,9,47
+Arm,83,4,Resistance Band Curls,2,26
+Arm,70,3,Concentration Curls,4,54
+Arm,2,4,Resistance Band Curls,2,95
+Arm,75,5,Overhead Tricep Extension,6,45
+Arm,64,1,Close Grip Bench Press,10,37
+Arm,41,3,Close Grip Bench Press,10,34
+Arm,48,2,Concentration Curls,4,93
+Arm,77,3,Preacher Curls,6,87
+Arm,29,4,Concentration Curls,4,85
+Arm,81,1,Reverse Curls,4,58
+Arm,8,2,Chin-Ups,8,19
+Arm,45,5,Chin-Ups,8,47
+Arm,85,4,Reverse Curls,4,51
+Arm,22,2,Resistance Band Curls,2,98
+Arm,10,4,Resistance Band Curls,2,83
+Arm,75,2,Skull Crushers,9,81
+Arm,17,4,Assisted Pull-Ups,3,83
+Arm,99,3,Skull Crushers,9,85
+Arm,16,3,Skull Crushers,9,14
+Arm,39,4,Bicep Curls,5,84
+Arm,58,3,Resistance Band Curls,2,76
+Arm,2,2,Preacher Curls,6,12
+Arm,44,3,Reverse Curls,4,95
+Arm,43,5,Skull Crushers,9,58
+Arm,98,3,Preacher Curls,6,70
+Arm,97,2,Hammer Curls,5,52
+Arm,86,2,Overhead Tricep Extension,6,72
+Arm,33,3,Concentration Curls,4,89
+Arm,98,2,Chin-Ups,8,82
+Arm,49,2,Tricep Dips,7,62
+Arm,48,1,Concentration Curls,4,87
+Arm,34,2,Close Grip Bench Press,10,20
+Arm,55,5,Resistance Band Curls,2,71
+Arm,90,1,Reverse Curls,4,63
+Arm,69,5,Overhead Tricep Extension,6,93
+Arm,69,3,Hammer Curls,5,81
+Arm,5,2,Hammer Curls,5,44
+Arm,47,3,Chin-Ups,8,49
+Arm,25,4,Tricep Dips,7,48
+Arm,21,5,Hammer Curls,5,68
+Arm,58,1,Overhead Tricep Extension,6,77
+Arm,67,4,Assisted Pull-Ups,3,54
+Arm,39,3,Hammer Curls,5,90
+Arm,1,1,Resistance Band Curls,2,98
+Arm,40,4,Skull Crushers,9,46
+Arm,100,4,Hammer Curls,5,40
+Arm,76,5,Bicep Curls,5,47
+Arm,81,1,Overhead Tricep Extension,6,70
+Arm,92,4,Resistance Band Curls,2,20
+Arm,8,5,Concentration Curls,4,59
+Arm,95,1,Skull Crushers,9,73
+Arm,34,2,Skull Crushers,9,31
+Arm,69,4,Hammer Curls,5,80
+Arm,39,2,Chin-Ups,8,36
+Arm,74,1,Close Grip Bench Press,10,50
+Arm,68,1,Overhead Tricep Extension,6,80
+Arm,88,3,Chin-Ups,8,88
+Arm,15,4,Bicep Curls,5,53
+Arm,87,5,Overhead Tricep Extension,6,75
+Arm,10,2,Reverse Curls,4,61
+Arm,12,2,Overhead Tricep Extension,6,45
+Arm,37,1,Preacher Curls,6,74
+Arm,24,3,Resistance Band Curls,2,86
+Arm,1,1,Tricep Dips,7,9
+Arm,33,2,Tricep Dips,7,47
+Arm,80,5,Assisted Pull-Ups,3,18
+Arm,98,4,Overhead Tricep Extension,6,81
+Arm,71,2,Concentration Curls,4,65
+Arm,72,3,Assisted Pull-Ups,3,49
+Arm,1,5,Bicep Curls,5,47
+Arm,63,5,Assisted Pull-Ups,3,54
+Arm,6,4,Assisted Pull-Ups,3,86
+Arm,39,4,Concentration Curls,4,83
+Arm,22,2,Resistance Band Curls,2,90
+Arm,39,2,Concentration Curls,4,86
+Arm,99,5,Overhead Tricep Extension,6,73
+Arm,69,5,Hammer Curls,5,70
+Arm,27,1,Assisted Pull-Ups,3,95
+Arm,38,5,Reverse Curls,4,70
+Arm,10,1,Skull Crushers,9,8
+Arm,3,1,Tricep Dips,7,13
+Arm,54,3,Resistance Band Curls,2,72
+Arm,93,5,Hammer Curls,5,53
+Arm,59,5,Assisted Pull-Ups,3,49
+Arm,20,3,Tricep Dips,7,50
+Arm,87,3,Assisted Pull-Ups,3,18
+Arm,72,5,Reverse Curls,4,46
+Arm,53,2,Close Grip Bench Press,10,48
+Arm,2,3,Chin-Ups,8,12
+Arm,9,5,Close Grip Bench Press,10,13
+Arm,65,5,Resistance Band Curls,2,54
+Arm,34,4,Skull Crushers,9,45
+Arm,79,4,Bicep Curls,5,66
+Arm,85,3,Overhead Tricep Extension,6,78
+Arm,18,3,Close Grip Bench Press,10,13
+Arm,23,2,Tricep Dips,7,39
+Arm,48,1,Close Grip Bench Press,10,33
+Arm,6,2,Concentration Curls,4,47
+Arm,66,2,Reverse Curls,4,72
+Arm,37,4,Assisted Pull-Ups,3,83
+Arm,99,5,Tricep Dips,7,70
+Arm,52,1,Close Grip Bench Press,10,44
+Arm,28,5,Resistance Band Curls,2,70
