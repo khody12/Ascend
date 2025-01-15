@@ -33,6 +33,8 @@ function Profile() {
                         // profile is now basically a dictionary holding these, so profile.username will give us the username value
                         // and this is basically held in storage so we can access it in this page. 
                         setUserProfile(profile);
+                        console.log(profile)
+                        
 
                     } else {
                         console.error("Failted to fetch user profile", response.status, await response.text())
@@ -74,6 +76,7 @@ function Profile() {
 
         if (response.ok) {
             console.log("Profile updated successfully!");
+            console.log(userProfile)
             setIsEditing(false);
         } else {
             console.error("Failed to update profile");
@@ -89,7 +92,8 @@ function Profile() {
             <h1>Edit Profile</h1>
             {userProfile ? (
                 <form onSubmit={handleSubmit}>
-                    <div class="input-container">
+                    <div class="input-profile-container">
+                        
                         <input
                             type="text"
                             name="username"
@@ -99,8 +103,10 @@ function Profile() {
                             readOnly={!isEditing} // Toggle read-only
                         />
                         <label>Username</label>
+                        
                     </div>
-                    <div class="input-container">
+                    <div class="input-profile-container">
+                        
                         <input
                             type="text"
                             name="first_name"
@@ -110,8 +116,10 @@ function Profile() {
                             readOnly={!isEditing}
                         />
                         <label>First Name</label>
+                       
                     </div>
-                    <div class="input-container">
+                    <div class="input-profile-container">
+                        
                         <input
                             type="text"
                             name="last_name"
@@ -121,8 +129,10 @@ function Profile() {
                             readOnly={!isEditing}
                         />
                         <label>Last Name</label>
+                        
                     </div>
-                    <div class="input-container">
+                    <div class="input-profile-container">
+                        
                         <input
                             type="email"
                             name="email"
@@ -132,22 +142,27 @@ function Profile() {
                             readOnly={!isEditing}
                         />
                         <label>Email</label>
+                        
                     </div>
-                    <div class="input-container">
+                    <div class="input-profile-container">
+                    
                         <select 
                             id="gender-dropdown"
-                            name="gender"
-                            
-                            value={userProfile.gender || ""}
+                            name="user_gender"
+                            value={userProfile.user_gender || ""}
                             onChange={handleChange}
                             disabled={!isEditing}>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option value="" disabled>Select your gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                             <option value="Other">Other</option>
+                            
                         </select>
                         <label>Gender</label>
+                        
                     </div>
-                    <div class="input-container">
+                    <div class="input-profile-container">
+                        
                         <input
                             type="text"
                             name="user_weight"
@@ -156,10 +171,9 @@ function Profile() {
                             onChange={handleChange}
                             readOnly={!isEditing}
                         />
-                        <label>Weight</label>
+                        <label>Weight</label>   
                     </div>
-                    <div class="input-container">
-                        
+                    <div class="input-profile-container">
                         <input
                             type="text"
                             name="user_height"

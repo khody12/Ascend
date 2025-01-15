@@ -23,12 +23,14 @@
 
 }
 
-.input-container {
+.input-profile-container {
     margin-bottom:10px;
     width:100%;
+    position:relative;
+    margin:15px;
 }
 
-.input-container input {
+.input-profile-container input {
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -38,14 +40,22 @@
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.input-container label {
-    display:block;
+.input-profile-container label {
+   top:-10px;
+    
+    left:10px;
+    
+    
     margin-bottom:5px;
     font-size:17px;
-    color:#333;
+    color:#999;
+    position:absolute;
+    transform:translateY(-50%);
+    transition:all 0.3s ease;
+    
 }
 
-.input-container input:focus {
+.input-profile-container input:focus {
     border-color: #007bff; /* Changes border color on focus */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect */
 }
@@ -86,6 +96,12 @@ button {
 
   .save-button {
     margin-bottom:10px;
-    
-    
   }
+
+.input-profile-container input:focus + label,
+.input-profile-container select:focus + label,
+.input-profile-container select:is([value=""]) + label {
+    top: -20px;
+    font-size: 20px;
+    color: #007bff;
+}
