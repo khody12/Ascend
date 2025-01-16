@@ -89,7 +89,6 @@ function Profile() {
     return (
         <div id="edit-page-container">
             <div id="edit-container">
-            <h1>Edit Profile</h1>
             {userProfile ? (
                 <form onSubmit={handleSubmit}>
                     <div class="input-profile-container">

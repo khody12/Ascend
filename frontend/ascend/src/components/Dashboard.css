@@ -3,6 +3,7 @@
 #dashboard-container {
     display:flex;
     justify-content:center;
+    width:100%;
     
 
 }
@@ -22,7 +23,7 @@
 .grid-item {
     background-color:#f9f9f9;
     border:1px solid #ddd;
-    border-radius:8px;
+    border-radius:20px;
     padding:16px;
     text-align:center;
     box-shadow:0 4px 10px rgba(0, 0, 0, 0.1);
@@ -30,12 +31,10 @@
 }
 .grid-item:hover {
     transform: translateY(-10px);
-    box-shadow:0 8px 12px rgba(0, 0, 0, 0.2);
+    box-shadow:0 8px 12px rgba(163, 198, 132, 0.2);
 }
 
-.square {
-    aspect-ratio: 1 / 1;
-}
+
 
 .vertical-rectangle {
     grid-column: 3 / 4;
@@ -51,7 +50,7 @@
     align-items:center;
     position:relative;
     cursor:pointer;
-    
+    background-color:rgb(7, 182, 7);
 
 }
 .wide-rectangle:hover {
@@ -110,4 +109,7 @@
 .wide-rectangle > h3{
     color:black;
 
+}
+h4 {
+    text-align:left;
 }

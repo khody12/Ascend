@@ -111,7 +111,7 @@ function New_workout() {
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
         console.log(workoutSets);
 
-        
+
     }
     // this code groups our workout sets by their exercise
     const groupedSets = workoutSets.reduce((acc, set) => {
@@ -150,6 +150,7 @@ function New_workout() {
                 }
             );
             console.log("workout saved:", response.data)
+            navigate("/dashboard")
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setMessage("Invalid username/password");
@@ -163,7 +164,7 @@ function New_workout() {
     }
 
 
-  // customize this with font awesome later to add in little icons to make it more aesthetic
+ 
     return (
         <div id="workout-page-container">
             {isModalOpen && (
@@ -203,9 +204,13 @@ function New_workout() {
                     </button></div>
                 <h5>{formatTime(time)}</h5>
             </div>
+            
             <div id="workout-container">
+                
                 <div id="sets-container">
-                    {Object.entries(groupedSets).map(([exerciseName, sets], index) => (
+                    
+                    {Object.entries(groupedSets).map(([exerciseName, sets], index) => ( //object.entries essentially creates us key value pairs in the form of 
+                    // [exercisename, sets], where exerciseName gets the name of the exercise, and sets are the sets corresponding to that exercise.
                         <div key={index} className="exercise-group">
                             <h4>{exerciseName}</h4>
                             

@@ -44,29 +44,43 @@ function Dashboard() {
 
         fetchUserProfile();
     }, [authData]);
-
+    const recentWorkouts = userProfile ? userProfile.workouts.slice(userProfile.workouts.length - 4, userProfile.workouts.length) : [];
+    
     if (!authData) {
         navigate("/login")
-        return <p>Please log in to view your dashboard.</p>;
     }
-    const workoutSquares = userProfile ? userProfile.workouts.slice(0, 4) : [];
+    
     return (
         <div id="dashboard-container">
             <div id="grid-container">
                 {userProfile ? (
                     
-                    userProfile.workouts.map((workout, workoutIndex) => (
-                        <div key={workout.id} className="grid-item square">
-                            <h3>{workout.name}</h3>
-                            { workout.workout_sets.map((set, exerciseIndex) => (
-                                <div key={exerciseIndex}>
-                                    <h4 class="exercise-text">{set.exercise.name}</h4>
-                                    <h4 class="exercise-text"> Reps: {set.reps}</h4>
-                                </div>
-                            ))}
-                            <p>{workout.description}</p>
-                        </div>
-                    ))
+                    recentWorkouts.map((workout, workoutIndex) => {
+                        const workoutGroupedSets = workout.workout_sets.reduce((acc, set) => {
+                            const { exercise } = set;
+                            acc[exercise.name] = acc[exercise.name] || [];
+                            acc[exercise.name].push(set);
+                            return acc;
+                        }, {});
+                        return (
+                            <div key={workout.id} className="grid-item square">
+                                <h2>{workout.name}</h2>
+                                { Object.entries(workoutGroupedSets).map(([exerciseName, sets], exerciseIndex) => (
+                                    <div key={exerciseIndex}>
+                                        <h4>{exerciseName}</h4>
+                                        {sets.map((set, idx) => (
+                                            <div className="workout-component" key={idx}>
+                                                <div>{idx + 1}.</div> 
+                                                <div>Reps: {set.reps}</div>  
+                                                <div>{set.weight} lbs</div> 
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                                <p>{workout.description}</p>
+                            </div>
+                        );
+                    })
                 
                 ) : (
                     <p>Loading user profile...</p>
