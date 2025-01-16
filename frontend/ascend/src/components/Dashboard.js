@@ -70,9 +70,9 @@ function Dashboard() {
                                         <h4>{exerciseName}</h4>
                                         {sets.map((set, idx) => (
                                             <div className="workout-component" key={idx}>
-                                                <div>{idx + 1}.</div> 
-                                                <div>Reps: {set.reps}</div>  
-                                                <div>{set.weight} lbs</div> 
+                                                <div className="cell">{idx + 1}.</div> 
+                                                <div className="cell">Reps: {set.reps}</div>  
+                                                <div className="cell">{set.weight} lbs</div> 
                                             </div>
                                         ))}
                                     </div>

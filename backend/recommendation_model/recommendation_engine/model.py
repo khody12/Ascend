@@ -15,7 +15,7 @@ torch.manual_seed(42)
 le_workout = LabelEncoder()
 scaler = MinMaxScaler()
 training_split = int(len(data) * 0.8)
-print("data:", data)
+
 
 
 df = pd.DataFrame(data, columns=["Muscle", "Sleep Score", "Feeling", "Workout Name", "Workout Difficulty", "Relevance Score"])
