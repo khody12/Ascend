@@ -18,10 +18,12 @@
     padding:100px;
     gap:30px;
     margin:0 auto; 
+    background-color:rgb(255, 255, 255);
 }
 
 .grid-item {
-    background-color:#f9f9f9;
+    background-color:rgba(231,230,247,0.4);
+    
     border:1px solid #ddd;
     border-radius:20px;
     padding:16px;
@@ -32,6 +34,7 @@
 .grid-item:hover {
     transform: translateY(-10px);
     box-shadow:0 8px 12px rgba(163, 198, 132, 0.2);
+    background-color:rgba(231,230,247,0.9);
 }
 
 
@@ -118,3 +121,4 @@ h4 {
     text-align:center;
     width:20%;
 }
+.workout-component {}

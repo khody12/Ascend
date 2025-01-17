@@ -30,7 +30,8 @@ const Login = () => {
 
                 setAuthData({
                     token: data.token,
-                    userId: data.id,   
+                    userId: data.id,
+                    username: data.username
                 })
 
                 localStorage.setItem("token", data.token);

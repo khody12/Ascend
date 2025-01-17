@@ -21,8 +21,14 @@ export function AuthProvider({ children }) {
         }
     }, [authData]);
 
+    const clear = () => {
+        console.log("Clearing profile")
+        setAuthData(null);
+        localStorage.clear();
+    };
+
     return (
-        <AuthContext.Provider value={{ authData, setAuthData }}>
+        <AuthContext.Provider value={{ authData, setAuthData, clear }}>
             {children}
         </AuthContext.Provider>
     );

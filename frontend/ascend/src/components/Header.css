@@ -3,7 +3,7 @@
     padding-bottom: 0px;
 }
 .nav {
-    background-color: #e0f1ee; /* Background color for the header */
+    background-color: #f6eef7; /* Background color for the header */
     padding: 10px 20px; /* Space inside the header */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for aesthetics */
     width: 100%; /* Make sure nav spans the full width */
@@ -23,6 +23,7 @@
 
 .nav-list li {
     margin: 0 0px; /* Add spacing between links */
+    
 }
 .nav-logo {
     display:flex;
@@ -41,10 +42,12 @@
     text-decoration: none; /* Remove underline */
     font-weight: bold;
     font-size: 16px;
+    
 }
 
 .nav-list a:visited {
     color:inherit;
     text-decoration: none;
 }
+
 

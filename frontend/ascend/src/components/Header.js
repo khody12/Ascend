@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import "./Header.css"
 import { Link } from "react-router-dom";
-
+import {AuthContext} from "../AuthContext";
 
 function Header({ username }) {
+    const { authData } = useContext(AuthContext)
     
     return (
         <header className="app-header">
@@ -12,13 +13,13 @@ function Header({ username }) {
 
                     <Link to="/login">Home</Link>
                     <Link to="/Dashboard">Dashboard</Link>
-                    {!username && (
+                    {!authData && (
                     <Link to="/Login">Login</Link>
                     )}
-                    {username && (
+                    {authData && (
                         
                         <Link to="/profile" className="username-link">
-                            {username}
+                            {authData.username}
                         </Link>
                         
                     )}
@@ -28,4 +29,4 @@ function Header({ username }) {
     )
 }
 
-export default Header
+export default Header;

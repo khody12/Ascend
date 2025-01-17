@@ -39,6 +39,8 @@ function Dashboard() {
                 } catch (error) {
                     console.error('Error fetching user profile:', error);
                 }
+            } else {
+                navigate("/login")
             }
         };
 
@@ -46,9 +48,7 @@ function Dashboard() {
     }, [authData]);
     const recentWorkouts = userProfile ? userProfile.workouts.slice(userProfile.workouts.length - 4, userProfile.workouts.length) : [];
     
-    if (!authData) {
-        navigate("/login")
-    }
+    
     
     return (
         <div id="dashboard-container">
@@ -83,7 +83,7 @@ function Dashboard() {
                     })
                 
                 ) : (
-                    <p>Loading user profile...</p>
+                    <p></p>
                 )}
 
                 <div className="grid-item vertical-rectangle">

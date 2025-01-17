@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Profile() {
     const navigate = useNavigate();
+    const { clear } = useContext(AuthContext);
     const { authData } = useContext(AuthContext);
     const [userProfile, setUserProfile] = useState(null);
     
@@ -60,6 +61,17 @@ function Profile() {
             [name]: value, // update the specific field identified by 'name'
         }));
     }
+    // the e here is basically the element that triggered the event.
+    const logout = (e) => {
+        console.log(authData)
+        console.log("hello")
+        clear();
+        
+        
+        navigate("/login")
+
+
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -88,125 +100,138 @@ function Profile() {
 
     return (
         <div id="edit-page-container">
-            <div id="edit-container">
             {userProfile ? (
-                <form onSubmit={handleSubmit}>
-                    <div class="input-profile-container">
-                        
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder = " "
-                            value={userProfile.username}
-                            onChange={handleChange}
-                            readOnly={!isEditing} // Toggle read-only
-                        />
-                        <label>Username</label>
-                        
+                <>
+                <div className="log-out-container">
+                    <div>
+                        <h1>Welcome {userProfile.first_name}</h1>
+                        <button className="sign-out-button" type="button" onClick={() => logout()}>Sign out</button>
                     </div>
-                    <div class="input-profile-container">
-                        
-                        <input
-                            type="text"
-                            name="first_name"
-                            placeholder = " "
-                            value={userProfile.first_name || ""} // Handle empty fields
-                            onChange={handleChange}
-                            readOnly={!isEditing}
-                        />
-                        <label>First Name</label>
-                       
-                    </div>
-                    <div class="input-profile-container">
-                        
-                        <input
-                            type="text"
-                            name="last_name"
-                            placeholder = " "
-                            value={userProfile.last_name || ""}
-                            onChange={handleChange}
-                            readOnly={!isEditing}
-                        />
-                        <label>Last Name</label>
-                        
-                    </div>
-                    <div class="input-profile-container">
-                        
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder = " "
-                            value={userProfile.email || ""}
-                            onChange={handleChange}
-                            readOnly={!isEditing}
-                        />
-                        <label>Email</label>
-                        
-                    </div>
-                    <div class="input-profile-container">
-                    
-                        <select 
-                            id="gender-dropdown"
-                            name="user_gender"
-                            value={userProfile.user_gender || ""}
-                            onChange={handleChange}
-                            disabled={!isEditing}>
-                            <option value="" disabled>Select your gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="Other">Other</option>
+                
+                </div>
+                <div id="edit-container">
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-profile-container">
                             
-                        </select>
-                        <label>Gender</label>
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder = " "
+                                value={userProfile.username}
+                                onChange={handleChange}
+                                readOnly={!isEditing} // Toggle read-only
+                            />
+                            <label>Username</label>
+                            
+                        </div>
+                        <div className="input-profile-container">
+                            
+                            <input
+                                type="text"
+                                name="first_name"
+                                placeholder = " "
+                                value={userProfile.first_name || ""} // Handle empty fields
+                                onChange={handleChange}
+                                readOnly={!isEditing}
+                            />
+                            <label>First Name</label>
                         
-                    </div>
-                    <div class="input-profile-container">
+                        </div>
+                        <div className="input-profile-container">
+                            
+                            <input
+                                type="text"
+                                name="last_name"
+                                placeholder = " "
+                                value={userProfile.last_name || ""}
+                                onChange={handleChange}
+                                readOnly={!isEditing}
+                            />
+                            <label>Last Name</label>
+                            
+                        </div>
+                        <div className="input-profile-container">
+                            
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder = " "
+                                value={userProfile.email || ""}
+                                onChange={handleChange}
+                                readOnly={!isEditing}
+                            />
+                            <label>Email</label>
+                            
+                        </div>
+                        <div className="input-profile-container">
                         
-                        <input
-                            type="text"
-                            name="user_weight"
-                            placeholder = " "
-                            value={userProfile.user_weight || ""}
-                            onChange={handleChange}
-                            readOnly={!isEditing}
-                        />
-                        <label>Weight</label>   
-                    </div>
-                    <div class="input-profile-container">
-                        <input
-                            type="text"
-                            name="user_height"
-                            placeholder = " "
-                            value={userProfile.user_height || ""}
-                            onChange={handleChange}
-                            readOnly={!isEditing}
-                        />
-                        <label>Height</label>
-                    </div>
-                    {isEditing ? (
-                        <>
-                            <button className="save-button" type="submit">Save</button>
+                            <select 
+                                id="gender-dropdown"
+                                name="user_gender"
+                                value={userProfile.user_gender || ""}
+                                onChange={handleChange}
+                                disabled={!isEditing}>
+                                <option value="" disabled>Select your gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="Other">Other</option>
+                                
+                            </select>
+                            <label>Gender</label>
+                            
+                        </div>
+                        <div className="input-profile-container">
+                            
+                            <input
+                                type="text"
+                                name="user_weight"
+                                placeholder = " "
+                                value={userProfile.user_weight || ""}
+                                onChange={handleChange}
+                                readOnly={!isEditing}
+                            />
+                            <label>Weight</label>   
+                        </div>
+                        <div className="input-profile-container">
+                            <input
+                                type="text"
+                                name="user_height"
+                                placeholder = " "
+                                value={userProfile.user_height || ""}
+                                onChange={handleChange}
+                                readOnly={!isEditing}
+                            />
+                            <label>Height</label>
+                        </div>
+                        {isEditing ? (
+                            <>
+                                <button className="save-button" type="submit">Save</button>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsEditing(false)} // Exit edit mode
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        ) : (
                             <button
                                 type="button"
-                                onClick={() => setIsEditing(false)} // Exit edit mode
+                                onClick={() => setIsEditing(true)} // Enable edit mode, we use this () => notation so that it would not immediately execute during rendering phase
+                                // we want to define a function that will only execute setIsEditing(true) when the event actually occurs.
                             >
-                                Cancel
+                                Edit
                             </button>
-                        </>
-                    ) : (
-                        <button
-                            type="button"
-                            onClick={() => setIsEditing(true)} // Enable edit mode
-                        >
-                            Edit
-                        </button>
-                    )}
-                </form>
+                        )}
+                    </form>
+                </div>
+                </>
             ) : (
-                <p>Loading...</p>
+                <p></p>
             )}
-            </div>
+            
+            
         </div>
+        
     );
 
 }
