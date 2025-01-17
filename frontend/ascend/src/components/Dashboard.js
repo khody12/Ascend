@@ -47,6 +47,10 @@ function Dashboard() {
         fetchUserProfile();
     }, [authData]);
     const recentWorkouts = userProfile ? userProfile.workouts.slice(userProfile.workouts.length - 4, userProfile.workouts.length) : [];
+
+    const openWorkoutModal = () => {
+
+    }
     
     
     
@@ -64,7 +68,16 @@ function Dashboard() {
                         }, {});
                         return (
                             <div key={workout.id} className="grid-item square">
-                                <h2>{workout.name}</h2>
+                                <div className="info-bar">
+                                    <h2>{workout.name}</h2>
+                                    <div className="graph-icon">
+                                        <i 
+                                            class="fa-solid fa-chart-simple" 
+                                            style={{fontSize:"25px", cursor:"pointer"}}
+                                            onClick={openWorkoutModal}
+                                        ></i>
+                                    </div>
+                                </div>
                                 { Object.entries(workoutGroupedSets).map(([exerciseName, sets], exerciseIndex) => (
                                     <div key={exerciseIndex}>
                                         <h4>{exerciseName}</h4>
