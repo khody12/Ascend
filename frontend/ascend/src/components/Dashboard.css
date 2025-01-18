@@ -34,7 +34,7 @@
 .grid-item:hover {
     transform: translateY(-10px);
     box-shadow:0 8px 12px rgba(163, 198, 132, 0.2);
-    background-color:rgba(231,230,247,0.9);
+    background-color:rgba(231,230,247,0.7);
 }
 
 
@@ -124,8 +124,9 @@ h4 {
 .info-bar {
     display:flex;
     flex-direction:row;
-    justify-content:space-evenly;
+    justify-content:flex-start;
     align-items:center;
+    gap:10px;
 }
 
 .info-bar > h2 {

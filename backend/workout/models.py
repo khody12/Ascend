@@ -20,7 +20,7 @@ class WorkoutSet(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     reps = models.PositiveIntegerField()
     weight  = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    rest_time = models.PositiveIntegerField(blank=True, null=True)
+    
 
     
 
