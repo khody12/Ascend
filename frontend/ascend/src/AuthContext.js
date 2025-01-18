@@ -7,7 +7,8 @@ export function AuthProvider({ children }) {
         // Load saved data from localStorage on initial load
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
-        return token && userId ? { token, userId } : null;
+        const username = localStorage.getItem('username')
+        return token && userId && username ? { token, userId, username } : null;
     });
 
     // Save authData to localStorage whenever it changes
@@ -15,9 +16,11 @@ export function AuthProvider({ children }) {
         if (authData) {
             localStorage.setItem('token', authData.token);
             localStorage.setItem('userId', authData.userId);
+            localStorage.setItem('username', authData.username)
         } else {
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
+            localStorage.removeItem('username')
         }
     }, [authData]);
 
