@@ -21,6 +21,8 @@ training_split = int(len(data) * 0.8)
 df = pd.DataFrame(data, columns=["Muscle", "Sleep Score", "Feeling", "Workout Name", "Workout Difficulty", "Relevance Score"])
 for col in ["Sleep Score", "Feeling", "Workout Difficulty", "Relevance Score"]:
     df[col] = pd.to_numeric(df[col], errors="coerce")
+workout_names = df["Workout Name"].tolist()
+
 
 #df = df.sample(frac=1) # shuffle our rows so trains equally on all muscle groups.
 
@@ -79,11 +81,17 @@ print(df[df.isna().any(axis=1)])
 rows_with_sleep_9 = df[df["Sleep Score"] == 9]
 print(rows_with_sleep_9)
 
-
+#grid search
+# param_grid = {
+#     "learning_rate": [0.01, 0.001],
+#     "neurons_per_layer": [4, 8, 16],
+#     "num_layers": [2, 3, 4]
+# }
+#best parameters
 param_grid = {
-    "learning_rate": [0.01, 0.001],
-    "neurons_per_layer": [4, 8, 16],
-    "num_layers": [2, 3, 4]
+    "learning_rate":[0.001],
+    "neurons_per_layer":[16],
+    "num_layers":[4]
 }
 
 # class RelevanceModel(nn.Module):
@@ -131,7 +139,7 @@ def train_model(params, X_train, y_train, X_test, y_test, epochs=1000):
     loss_fn = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    epochs = 2500
+    
     for epoch in range(epochs):
         model.train()
         y_probs = model(X_train)
@@ -162,7 +170,10 @@ def train_model(params, X_train, y_train, X_test, y_test, epochs=1000):
 
                     if epoch % 100 == 0:
                         print(f"Epoch: {epoch} | Loss: {loss}| Test loss: {test_loss} ")
+    torch.save(model.state_dict(), "workout_model.pth")
     return test_loss.item()
+
+   
 
         
     
@@ -174,9 +185,11 @@ best_params = None
 best_loss = float("inf")
 
 # Grid search loop
+
 for param_set in param_combinations:
     params = dict(zip(param_grid.keys(), param_set))
     print(f"Testing parameters: {params}")
+    
     test_loss = train_model(params, X_train, y_train, X_test, y_test)
     print(f"Test loss: {test_loss}")
 
@@ -184,8 +197,13 @@ for param_set in param_combinations:
         best_loss = test_loss
         best_params = params
 
+
 print(f"Best parameters: {best_params}")
 print(f"Best test loss: {best_loss}")
+
+
+
+
                 
 
 
