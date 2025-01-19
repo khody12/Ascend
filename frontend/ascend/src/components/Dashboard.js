@@ -72,8 +72,10 @@ function Dashboard() {
                                 <div className="info-bar">
                                     
                                     <h2>{workout.name}</h2>
-                                    <div><i class="fa-regular fa-clock"></i></div>
-                                    <div>{workout.elapsed_time}</div>
+                                    <div>
+                                        <div><i class="fa-regular fa-clock"></i></div>
+                                        <div>{workout.elapsed_time}</div>
+                                    </div>
                                     
                                     <div className="graph-icon">
                                         <i 
