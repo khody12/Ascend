@@ -6,6 +6,7 @@ import Registration from "./components/Registration"
 import Dashboard from "./components/Dashboard"
 import Profile from "./components/Profile"
 import New_workout from "./components/New_workout"
+import Workouts from "./components/all_workouts"
 import { AuthProvider } from "./AuthContext";
 import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/new_workout" element={<New_workout />} />
+        <Route path="/all_workouts" element={<Workouts />} />
       </Routes>
     </div>
     

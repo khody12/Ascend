@@ -44,8 +44,8 @@
     grid-row: 1 / span 3;
 }
 
-.wide-rectangle {
-    grid-column:1 / span 2;
+.new-workout {
+    grid-column:1;
     grid-row: 3 / 4;
     display:flex;
     flex-direction:row;
@@ -53,14 +53,17 @@
     align-items:center;
     position:relative;
     cursor:pointer;
+    
     background-color:rgb(7, 182, 7);
+    background-color:rgba(198,210,237, 1)
 
 }
-.wide-rectangle:hover {
-    background-color:rgb(33, 212, 9);
+
+.new-workout:hover {
+    background-color:rgb(198, 210, 250,1);
 }
 
-.wide-rectangle::before {
+.new-workout::before {
     content: "+"; /* The plus sign */
     
     font-size: 48px;
@@ -70,10 +73,10 @@
     opacity: 0; /* Initially hidden */
     transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; /* Smooth fade-in */
 }
-.wide-rectangle:hover::before {
+.new-workout:hover::before {
     opacity: 1;
 }
-.wide-rectangle > h3 {
+.new-workout > h3 {
     margin:0;
     flex-grow: 1;
     text-align:center;
@@ -109,9 +112,8 @@
 .exercise-text::after {
     transition: width 0.3s ease, opacity 0.3s ease;
 } 
-.wide-rectangle > h3{
+.new-workout > h3{
     color:black;
-
 }
 h4 {
     text-align:left;
@@ -131,5 +133,43 @@ h4 {
 
 .info-bar > h2 {
     padding-right:10px;
+}
+
+.past-workouts {
+    grid-column:2;
+    grid-row: 3 / 4;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    position:relative;
+    cursor:pointer;
+    
+    background-color:rgb(7, 182, 7);
+    background-color:rgb(227, 208, 216,1);
+
+}
+
+.past-workouts:hover {
+    background-color:rgb(227, 208, 216,1);
+}
+
+.past-workouts::before {
+    
+    font-size: 48px;
+    margin-left:8px;
+    font-weight: bold;
+    color: #ffffff;
+    opacity: 0; /* Initially hidden */
+    transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; /* Smooth fade-in */
+}
+.past-workouts:hover::before {
+    opacity: 1;
+}
+.past-workouts > h3 {
+    margin:0;
+    flex-grow: 1;
+    text-align:center;
+    color:black;
 }
 

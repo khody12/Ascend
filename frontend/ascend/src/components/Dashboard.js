@@ -32,7 +32,7 @@ function Dashboard() {
                         // all this data is now available within the userProfile variable
                         //userProfile.email, userProfile.first_name etc. 
                         console.log("profile response from API: ", profile);
-                        console.log(profile.workouts[0].workout_sets)
+                        
                     } else {
                         console.error('Failed to fetch user profile.', response.status, await response.text());
                     }
@@ -46,6 +46,7 @@ function Dashboard() {
 
         fetchUserProfile();
     }, [authData]);
+
     const recentWorkouts = userProfile ? userProfile.workouts.slice(userProfile.workouts.length - 4, userProfile.workouts.length) : [];
 
     const openWorkoutModal = () => {
@@ -108,8 +109,15 @@ function Dashboard() {
                     <p>some graphs or whatever</p>
                 </div>
                 <Link to="/new_workout" style={{display: 'contents'}}>
-                    <div className="grid-item wide-rectangle">
-                        <h3>New workout</h3>
+                    <div className="grid-item new-workout">
+                        <h3>New Workout</h3>
+                    </div>
+                </Link>
+                
+                <Link to="/all_workouts" /* display contents will make it so that link doesnt afffect the lay out
+                    */style={{display:'contents'}}> 
+                    <div className="grid-item past-workouts">
+                        <h3>Past Workouts</h3>
                     </div>
                 </Link>
             </div>
