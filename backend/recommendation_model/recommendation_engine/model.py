@@ -94,116 +94,60 @@ param_grid = {
     "num_layers":[4]
 }
 
-# class RelevanceModel(nn.Module):
-#     def __init__(self):
-#         super().__init__()
-#         self.layer_1 = nn.Linear(in_features=4, out_features=8)
-#         self.layer_2 = nn.Linear(in_features=8, out_features=8)
-#         self.layer_3 = nn.Linear(in_features=8, out_features=1)
-#         self.relu = nn.ReLU()
-        
-#     def forward(self, x):
-#         x = self.relu(self.layer_1(x))
-#         x = self.relu(self.layer_2(x))
-#         x = self.layer_3(x)
-#         return x
-
-
-# optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
-
-def train_model(params, X_train, y_train, X_test, y_test, epochs=1000):
-    # Unpack parameters
-    learning_rate = params["learning_rate"]
-    neurons_per_layer = params["neurons_per_layer"]
-    num_layers = params["num_layers"]
+learning_rate = param_grid["learning_rate"][0]
+neurons_per_layer = param_grid["neurons_per_layer"][0]
+num_layers = param_grid["num_layers"][0]
 
     # Define the model dynamically based on the hyperparameters
-    class RelevanceModel(nn.Module):
-        def __init__(self):
-            super().__init__()
-            self.layers = nn.ModuleList()
-            self.layers.append(nn.Linear(in_features=4, out_features=neurons_per_layer))
-            for _ in range(num_layers - 1):
-                self.layers.append(nn.Linear(in_features=neurons_per_layer, out_features=neurons_per_layer))
-            self.layers.append(nn.Linear(in_features=neurons_per_layer, out_features=1))
-            self.relu = nn.ReLU()
-        
-        def forward(self, x):
-            for layer in self.layers[:-1]:
-                x = self.relu(layer(x))
-            x = self.layers[-1](x)
-            return x
-
-    # Initialize model, loss, and optimizer
-    model = RelevanceModel().to("cpu")
-    loss_fn = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-
+class RelevanceModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layers = nn.ModuleList()
+        self.layers.append(nn.Linear(in_features=4, out_features=neurons_per_layer))
+        for _ in range(num_layers - 1):
+            self.layers.append(nn.Linear(in_features=neurons_per_layer, out_features=neurons_per_layer))
+        self.layers.append(nn.Linear(in_features=neurons_per_layer, out_features=1))
+        self.relu = nn.ReLU()
     
-    for epoch in range(epochs):
-        model.train()
-        y_probs = model(X_train)
+    def forward(self, x):
+        for layer in self.layers[:-1]:
+            x = self.relu(layer(x))
+        x = self.layers[-1](x)
+        return x
 
-        loss = loss_fn(y_probs, y_train)
+# Initialize model, loss, and optimizer
+model = RelevanceModel().to("cpu")
+loss_fn = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+epochs = 1500
 
-        optimizer.zero_grad()
+for epoch in range(epochs):
+    model.train()
+    y_probs = model(X_train)
 
-        loss.backward()
-        optimizer.step()
+    loss = loss_fn(y_probs, y_train)
 
-        model.eval()
-        with torch.no_grad():
-            y_preds = model(X_test)
-            test_loss = loss_fn(y_preds, y_test)
-        
-        if epoch % 100 == 0:
-            with torch.inference_mode():
-                    y_preds = model(X_test)
-                    test_loss = loss_fn(y_preds, y_test)
+    optimizer.zero_grad()
 
-                    # print("Predictions:", test_y_probs.squeeze().tolist())  # Print predicted values
-                    # print("True Values:", y_test.squeeze().tolist())  
-                    y_pred_denormalized = y_preds * (y_max - y_min) + y_min
-                    y_test_denormalized = y_test * (y_max - y_min) + y_min
-                    test_loss_original = torch.mean((y_pred_denormalized - y_test_denormalized) ** 2)
-                
+    loss.backward()
+    optimizer.step()
 
-                    if epoch % 100 == 0:
-                        print(f"Epoch: {epoch} | Loss: {loss}| Test loss: {test_loss} ")
-    torch.save(model.state_dict(), "workout_model.pth")
-    return test_loss.item()
-
-   
-
-        
+    model.eval()
+    with torch.no_grad():
+        y_preds = model(X_test)
+        test_loss = loss_fn(y_preds, y_test)
     
-from itertools import product
+    if epoch % 100 == 0:
+        with torch.inference_mode():
+                y_preds = model(X_test)
+                test_loss = loss_fn(y_preds, y_test)
 
-# Generate all combinations of hyperparameters
-param_combinations = list(product(*param_grid.values()))
-best_params = None
-best_loss = float("inf")
+                # print("Predictions:", test_y_probs.squeeze().tolist())  # Print predicted values
+                # print("True Values:", y_test.squeeze().tolist())  
+                y_pred_denormalized = y_preds * (y_max - y_min) + y_min
+                y_test_denormalized = y_test * (y_max - y_min) + y_min
+                test_loss_original = torch.mean((y_pred_denormalized - y_test_denormalized) ** 2)
+            
 
-# Grid search loop
-
-for param_set in param_combinations:
-    params = dict(zip(param_grid.keys(), param_set))
-    print(f"Testing parameters: {params}")
-    
-    test_loss = train_model(params, X_train, y_train, X_test, y_test)
-    print(f"Test loss: {test_loss}")
-
-    if test_loss < best_loss:
-        best_loss = test_loss
-        best_params = params
-
-
-print(f"Best parameters: {best_params}")
-print(f"Best test loss: {best_loss}")
-
-
-
-
-                
-
-
+                if epoch % 100 == 0:
+                    print(f"Epoch: {epoch} | Loss: {loss}| Test loss: {test_loss} ")
