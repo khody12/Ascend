@@ -173,3 +173,53 @@ h4 {
     color:black;
 }
 
+@media (max-width:1200px) {
+    #grid-container {
+        display:grid;
+        grid-template-columns: 1fr !important;
+        grid-template-rows:auto;
+        width:100%;
+        gap:16px;
+        padding:100px;
+        gap:20px;
+        
+        background-color:rgb(255, 255, 255);
+    }
+
+    .vertical-rectangle {
+        grid-column: 1;
+        grid-row: 2;
+    }
+    
+    .new-workout {
+        grid-column:1;
+        grid-row: 1;
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+        position:relative;
+        cursor:pointer;
+        
+        background-color:rgb(7, 182, 7);
+        background-color:rgba(198,210,237, 1)
+    
+    }
+    .past-workouts {
+        grid-column:1;
+        grid-row: 6;
+        display:flex;
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+        position:relative;
+        cursor:pointer;
+        
+        background-color:rgb(7, 182, 7);
+        background-color:rgb(227, 208, 216,1);
+    
+    }
+
+
+}
+

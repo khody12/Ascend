@@ -2,14 +2,29 @@
 
 #all-workouts-container{
     width:100%;
+    display:flex;
+    justify-content:center;
 }
 
 .all-workouts-grid {
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows:auto;
-    width:100%;
+    width:90%;
     padding:50px;
     gap:30px;
-    
+
+}
+@media (max-width:1200px) {
+    .all-workouts-grid {
+        display:grid;
+        grid-template-columns: 1fr !important;
+        grid-template-rows:auto;
+        width:90%;
+        gap:16px;
+        padding:40px;
+        gap:20px;
+        
+        background-color:rgb(255, 255, 255);
+    }
 }
