@@ -45,8 +45,6 @@ df["Muscle"] = le_workout.fit_transform(df["Muscle"])
 X = df[["Muscle", "Sleep Score", "Feeling", "Workout Difficulty"]]
 
 
-
-
 print(df.dtypes)
 X_scaled = scaler.fit_transform(X) # this basically changes our data from ranging from differences like 0-100, to 0-1. every one of our numbers will be within that range leading to more consistency. matches label ranegs.
 
@@ -115,39 +113,85 @@ class RelevanceModel(nn.Module):
         x = self.layers[-1](x)
         return x
 
-# Initialize model, loss, and optimizer
-model = RelevanceModel().to("cpu")
-loss_fn = nn.MSELoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-epochs = 1500
+# Initialize model, loss, and optimizer, skipping if we do not need to train. 
+if False:
+    model = RelevanceModel().to("cpu")
+    loss_fn = nn.MSELoss()
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+    epochs = 1500
 
-for epoch in range(epochs):
-    model.train()
-    y_probs = model(X_train)
+    for epoch in range(epochs):
+        model.train()
+        y_probs = model(X_train)
 
-    loss = loss_fn(y_probs, y_train)
+        loss = loss_fn(y_probs, y_train)
 
-    optimizer.zero_grad()
+        optimizer.zero_grad()
 
-    loss.backward()
-    optimizer.step()
+        loss.backward()
+        optimizer.step()
 
-    model.eval()
-    with torch.no_grad():
-        y_preds = model(X_test)
-        test_loss = loss_fn(y_preds, y_test)
+        model.eval()
+        with torch.no_grad():
+            y_preds = model(X_test)
+            test_loss = loss_fn(y_preds, y_test)
+        
+        if epoch % 100 == 0:
+            with torch.inference_mode():
+                    y_preds = model(X_test)
+                    test_loss = loss_fn(y_preds, y_test)
+
+                    # print("Predictions:", test_y_probs.squeeze().tolist())  # Print predicted values
+                    # print("True Values:", y_test.squeeze().tolist())  
+                    y_pred_denormalized = y_preds * (y_max - y_min) + y_min
+                    y_test_denormalized = y_test * (y_max - y_min) + y_min
+                    test_loss_original = torch.mean((y_pred_denormalized - y_test_denormalized) ** 2)
+                
+
+                    if epoch % 100 == 0:
+                        print(f"Epoch: {epoch} | Loss: {loss}| Test loss: {test_loss} ")
+
+
+df = pd.read_csv("test.csv", names=["Muscle Group", "Exercise Name", "Workout Difficulty"])
+
+
+le = LabelEncoder()
+df['Muscle Group Encoded'] = le.fit_transform(df['Muscle Group'])
+df["Workout Difficulty"] = pd.to_numeric(df["Workout Difficulty"], errors="coerce")
+
+loaded_model = RelevanceModel()
+
+loaded_model.load_state_dict(torch.load("workout_model.pth"))
+loaded_model.eval()
+
+sleep_score = 85
+feeling = 4
+muscle_group = "Chest"
+
+
+
+def recommend_exercises(muscle_group, sleep_score, feeling, top_n=3):
+    muscle_group_encoded = le.transform([muscle_group])[0]
+
+    filtered_exercises = df[df['Muscle Group'] == muscle_group]
+
+    recs = []
+
+    for _, row in filtered_exercises.iterrows():
+
+        difficulty = row['Workout Difficulty']
+        feature_vector = torch.tensor(scaler.transform([[muscle_group_encoded, sleep_score, feeling, difficulty]]), dtype=torch.float32)
+
+        with torch.no_grad():
+            relevance_score = loaded_model(feature_vector).item()
+
+        recs.append((row["Exercise Name"], relevance_score))
     
-    if epoch % 100 == 0:
-        with torch.inference_mode():
-                y_preds = model(X_test)
-                test_loss = loss_fn(y_preds, y_test)
+    recs = sorted(recs, key=lambda x: x[1], reverse=True)
+    print("recs:", recs)
 
-                # print("Predictions:", test_y_probs.squeeze().tolist())  # Print predicted values
-                # print("True Values:", y_test.squeeze().tolist())  
-                y_pred_denormalized = y_preds * (y_max - y_min) + y_min
-                y_test_denormalized = y_test * (y_max - y_min) + y_min
-                test_loss_original = torch.mean((y_pred_denormalized - y_test_denormalized) ** 2)
-            
+    return recs[:top_n]
+top_recs = recommend_exercises(muscle_group, sleep_score, feeling)
 
-                if epoch % 100 == 0:
-                    print(f"Epoch: {epoch} | Loss: {loss}| Test loss: {test_loss} ")
+for exercise, score in top_recs:
+    print(f"Exercise: {exercise}, Relevance Score: {score}")
