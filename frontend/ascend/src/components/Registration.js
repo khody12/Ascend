@@ -44,11 +44,15 @@ const Registration = () => {
                 setAuthData({
                     token: data.token,
                     userId: data.id,
+                    username: data.username, 
                 })
                 
                 localStorage.setItem("token", data.token); 
                 localStorage.setItem("userId", data.id); // primary key for data retrieval in the future. 
+
+                console.log("attempign to set username: ", data.username)
                 localStorage.setItem("username", data.username);
+                console.log(localStorage.getItem("username"))
 
                 console.log("Successfully registered, navigating to /dashboard...");
                 console.log("Navigation completed.");

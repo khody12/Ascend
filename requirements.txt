@@ -1,12 +1,9 @@
 django
 djangorestframework
-postgresql
+psycopg2-binary
 requests
 node
 django-cors-headers
-react
-axios
-react-router-dom
 scikit-learn
 pandas
-pytorch
+torch
