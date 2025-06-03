@@ -10,6 +10,7 @@ class User(AbstractUser):
     user_gender = models.CharField(choices=[('male', 'Male'), ('female', 'Female')], null=True, blank=True)
     lifetime_weight_lifted = models.DecimalField(default=0, max_digits=12, decimal_places=1)
     
+    
     favorite_exercises = models.ManyToManyField(Exercise, blank=True)
 
 

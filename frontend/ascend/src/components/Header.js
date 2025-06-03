@@ -14,7 +14,7 @@ export default function Header() {
             // with the current URL in the browser's address bar. 
             // This isActive allows us to have this nice little blue underline that moves depending on which page were on. 
             <NavLink to={to} className={({ isActive }) =>
-                `relative px-3 py-2 text-base font-medium transition-colors duration-300 ${isActive ? 'text-cyan-500' : 'text-slate-600 hover:text-cyan-500'}`
+                `relative px-3 py-1 text-lg font-medium transition-colors duration-300 ${isActive ? 'text-cyan-500' : 'text-slate-600 hover:text-cyan-500'}`
             }>
                 {({ isActive }) => (
                     <>
@@ -24,7 +24,7 @@ export default function Header() {
                         
                         {isActive && (
                             <motion.div
-                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500"
+                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-600"
                                 layoutId="underline" // This creates the magic-move animation
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -46,7 +46,7 @@ export default function Header() {
         >
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
                 {/* Left Side: Logo/Brand */}
-                <Link to="/" className="text-2xl font-bold text-slate-800">
+                <Link to="/" className="text-2xl font-bold text-slate-900">
                     Ascend
                 </Link>
 
@@ -60,12 +60,12 @@ export default function Header() {
                 {/* on the right side we access our profile info. */}
                 <div className="flex items-center space-x-4">
                     {authData ? (
-                        <NavItem to="/profile" className="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-cyan-500 transition-colors duration-300">
+                        <NavItem to="/profile" className="flex items-center space-x-2 text-base font-medium text-slate-900 hover:text-cyan-700 transition-colors duration-300">
                             <FiUser/>
                             <span>{authData.username}</span>
                         </NavItem>
                     ) : (
-                        <NavItem to="/login" className="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-cyan-500 transition-colors duration-300">
+                        <NavItem to="/login" className="flex items-center space-x-2 text-base font-medium text-slate-900 hover:text-cyan-700 transition-colors duration-300">
                             <FiLogIn/>
                             <span>Login</span>
                         </NavItem>

@@ -30,6 +30,32 @@ const InputField = ({ id, label, type, value, onChange, required = true, autoCom
     );
 };
 
+const SelectField = ({ id, label, value, onChange, options, required = true }) => {
+    return (
+        <div>
+            <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
+                {label}
+            </label>
+            <select
+                id={id}
+                name={id}
+                value={value}
+                onChange={onChange}
+                required={required}
+                className="mt-1 block w-full pl-3 pr-5 py-2 text-base border border-gray-300 bg-white rounded-md shadow-sm 
+                           focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+            >
+                {/* We map over the options array to create the <option> elements */}
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>
+                        {option.label}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+};
+
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -43,9 +69,15 @@ const Registration = () => {
     const [confirm_password, setConfirmPassword] = useState("");
     const [user_weight, setUserWeight] = useState("");
     const [user_height, setUserHeight] = useState("");
-    const [user_gender, setUserGender] = useState("");
+    const [user_gender, setUserGender] = useState("O");
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    const genderOptions = [
+        { value: 'O', label: 'Select...' }, // A placeholder option
+        { value: 'M', label: 'Male' },
+        { value: 'F', label: 'Female' },
+    ];
 
 
     // --- Your handleSubmit function remains largely the same, with added isLoading state ---
@@ -155,7 +187,7 @@ const Registration = () => {
                                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-4 gap-y-6">
                                     <InputField id="user_weight" label="Weight (lbs)" type="number" value={user_weight} onChange={(e) => setUserWeight(e.target.value)} />
                                     <InputField id="user_height" label="Height (inches)" type="number" value={user_height} onChange={(e) => setUserHeight(e.target.value)} />
-                                    <InputField id="user_gender" label="Gender" type="text" value={user_gender} onChange={(e) => setUserGender(e.target.value)} />
+                                    <SelectField id="user_gender" label="Gender" value={user_gender} options={genderOptions} onChange={(e) => setUserGender(e.target.value)} />
                                 </div>
 
                                 <div>
@@ -180,6 +212,8 @@ const Registration = () => {
                         </div>
 
                         {/* Column 2: Info / Image */}
+                        { /* when we use hidden in a divs className, this will just hide the div when we are on a mobile device */ }
+                        
                         <div className="hidden md:flex flex-col items-center justify-center p-8 bg-slate-0 rounded-lg">
                              <img src={relaxImage} alt="Relax and Ascend" className="w-full max-w-sm mb-8 rounded-lg"/>
                              <h2 className="text-2xl font-bold text-slate-800 mb-3 text-center">Discover new ways to train </h2>
