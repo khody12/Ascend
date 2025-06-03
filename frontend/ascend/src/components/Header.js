@@ -18,7 +18,10 @@ export default function Header() {
             }>
                 {({ isActive }) => (
                     <>
-                        {children}
+                        <span className="flex items-center space-x-2">
+                            {children}
+                        </span>
+                        
                         {isActive && (
                             <motion.div
                                 className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500"
@@ -36,7 +39,7 @@ export default function Header() {
 
     return (
         <motion.header 
-            className="w-full bg-slate-100/80 backdrop-blur-lg border-b border-slate-300/80 sticky top-0 z-50"
+            className="w-full bg-green-50 backdrop-blur-lg border-b border-slate-300/80 sticky top-0 z-50"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -57,15 +60,15 @@ export default function Header() {
                 {/* on the right side we access our profile info. */}
                 <div className="flex items-center space-x-4">
                     {authData ? (
-                        <Link to="/profile" className="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-cyan-500 transition-colors duration-300">
+                        <NavItem to="/profile" className="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-cyan-500 transition-colors duration-300">
                             <FiUser/>
                             <span>{authData.username}</span>
-                        </Link>
+                        </NavItem>
                     ) : (
-                        <Link to="/login" className="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-cyan-500 transition-colors duration-300">
+                        <NavItem to="/login" className="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-cyan-500 transition-colors duration-300">
                             <FiLogIn/>
                             <span>Login</span>
-                        </Link>
+                        </NavItem>
                     )}
                 </div>
             </nav>
