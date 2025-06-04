@@ -14,7 +14,7 @@ export default function Header() {
             // with the current URL in the browser's address bar. 
             // This isActive allows us to have this nice little blue underline that moves depending on which page were on. 
             <NavLink to={to} className={({ isActive }) =>
-                `relative px-3 py-1 text-lg font-medium transition-colors duration-300 ${isActive ? 'text-cyan-500' : 'text-slate-600 hover:text-cyan-500'}`
+                `relative px-3 py-1 text-lg font-medium transition-colors duration-300 ${isActive ? 'text-blue-300' : 'text-white hover:text-blue-400'}`
             }>
                 {({ isActive }) => (
                     <>
@@ -39,16 +39,21 @@ export default function Header() {
 
     return (
         <motion.header 
-            className="w-full bg-green-50 backdrop-blur-lg border-b border-slate-300/80 sticky top-0 z-50"
+            className="w-full bg-gray-900 backdrop-blur-lg border-b border-slate-300/80 sticky top-0 z-50"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
         >
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
                 {/* Left Side: Logo/Brand */}
-                <Link to="/" className="text-2xl font-bold text-slate-900">
-                    Ascend
-                </Link>
+                
+                <div className="flex">
+                    <img src="ascend-logo.png" className="mx-auto w-10 h-10"></img>
+                    <Link to="/" className="text-2xl font-bold text-white ml-2">
+                        Ascend
+                    </Link>
+                </div>
+                
 
                 {/* Center: Main Navigation */}
                 <div className="flex items-center space-x-4">
