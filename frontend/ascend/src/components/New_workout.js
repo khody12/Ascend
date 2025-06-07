@@ -1,6 +1,6 @@
-import "./New_workout.css";
 
-import React, { useState, useContext, useEffect } from "react";
+
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import axios from "axios";
 
 import { AuthContext } from "../AuthContext";
@@ -18,7 +18,6 @@ function New_workout() {
     const [workoutTitle, setWorkoutTitle] = useState("");
     const [workoutComment, setWorkoutComment] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [message, setMessage] = useState("");
 
 
@@ -28,6 +27,7 @@ function New_workout() {
         return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
     };
     const alterTimer = () => setIsRunning(!isRunning);
+
     const resetTimer = () => {
         setIsRunning(false);
         setTime(0);
@@ -42,6 +42,20 @@ function New_workout() {
             .join(":")
     }
 
+    // use memo takes in a function tthat performs some calculation typically and also a dependency array that the calculations depend on
+    // it will only recalculate when the values change, which is important for performance. 
+    const workoutSummary = useMemo(() => {
+        let totalSets = workoutSets.length;
+        let totalReps = 0;
+        let totalVolume = 0;
+
+        workoutSets.forEach(set => {
+            totalReps += parseInt(set.reps) || 0;
+            totalVolume += (parseInt(set.reps) || 0) * (parseInt(set.weight) || 0);
+        })
+        return { totalSets, totalReps, totalVolume }; // these are the variables that workoutSummary will hold. 
+    }, [workoutSets]);
+
     useEffect(() => { // get exercise data from API.
         const fetchExercises = async () => {
             if (authData){
@@ -55,7 +69,6 @@ function New_workout() {
                         },
                         
                     });
-
                     if (response.ok) {
                         console.log("response good");
                         const exercises = await response.json(); // api will send back exercises
@@ -73,40 +86,47 @@ function New_workout() {
     useEffect(() => {
         let timer;
 
-            if (isRunning) {
-                timer = setInterval(() => {
-                    setTime((prevTime) => prevTime + 1);
-
-                }, 1000);
-            }
-            return () => {clearInterval(timer)};
+        if (isRunning) {
+            timer = setInterval(() => {
+                setTime((prevTime) => prevTime + 1);
+            }, 1000);
+        }
+        return () => {clearInterval(timer)};
 
 
     }, [isRunning])
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        // getting name and value from changed input.
+        const { name, value } = e.target; // const name = e.target.name, const value = e.target.value;
+        // if exercise was changed, we have a different process.
         if (name === "exercise") {
             const selectedExercise = exercises.find((ex) => ex.id === parseInt(value));
             setSelectedExercise(selectedExercise);
             setCurrentSet({ ...currentSet, exercise: selectedExercise });
         } else {
-            setCurrentSet({ ...currentSet, [name]: value});
+            setCurrentSet({ ...currentSet, [name]: value}); // this ... operator creates a new react state, copies everything from the previous state
+            // which is currentSet, but it changes what we specify, so we might change exercise with SelectedExercise, and we change the value for the key name with value. 
         }
     }
 
     const handleAddSet = (e) => {
         e.preventDefault();
+        
 
         if (!selectedExercise || !currentSet.reps || !currentSet.weight) {
             console.log("fill it all out!")
             setMessage("Please fill out all fields before adding a set.");
             return;
+        } else if (currentSet.reps < 0 || currentSet.weight < 0) {
+            console.log("The weight or reps is less than zero, try again.")
+            setMessage("Invalid number for weight or reps.")
+            return;
         }
 
         
         console.log("adding set");
-        
+        setMessage(null); // setMessage to null as basic error checking has been done so we shouldn't have an error at this point. 
         setWorkoutSets([...workoutSets, currentSet]);
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
         console.log(workoutSets);
@@ -166,90 +186,168 @@ function New_workout() {
 
  
     return (
-        <div id="workout-page-container">
+        <div className="bg-black text-gray-100 font-sans h-screen flex flex-col">
             {isModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h3>Save Workout</h3>
+                // Mmodal container
+                <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+                    {/* modal content */}
+                    <div className="bg-neutral-800 border border-neutral-700 rounded-lg p-6 w-full max-w-md flex flex-col gap-4">
+                        <h3 className="text-xl font-semibold text-center">Save Workout</h3>
                         <input
                             type="text"
-                            placeholder="Workout Title"
+                            placeholder="Workout Title (e.g. Push Day)"
                             value={workoutTitle}
                             onChange={(e) => setWorkoutTitle(e.target.value)}
+                            className="bg-neutral-700 border border-neutral-600 rounded-md p-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                         />
                         <input
                             type="text"
-                            placeholder="Comments"
+                            placeholder="Comments (optional)"
                             value={workoutComment}
                             onChange={(e) => setWorkoutComment(e.target.value)}
+                            className="bg-neutral-700 border border-neutral-600 rounded-md p-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                         />
-                        <div className="modal-buttons">
-                            <button onClick={() => setIsModalOpen(false)}><i class="fa-solid fa-xmark"></i></button>
-                            <button onClick={saveWorkout}><i class="fa-solid fa-check"></i></button>
+                        {/* buttons */}
+                        <div className="flex items-center justify-end gap-3 mt-2">
+                            <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-neutral-600 rounded-md hover:bg-neutral-500 transition-colors">
+                                <i className="fa-solid fa-xmark"></i> Cancel
+                            </button>
+                            <button onClick={saveWorkout} className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
+                                <i className="fa-solid fa-check"></i> Save
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            <div className="workout-info-header">
-                <div id="end-workout">
-                    <button className="end-button"
-                    onClick={openModal}>
-                        <i class="fa-solid fa-check"></i>
+            {/* timer and controls */}
+            <div className="flex justify-between items-center p-4 bg-neutral-900 border-b border-neutral-800 flex-shrink-0">
+                <h5 className="text-3xl font-semibold font-mono tracking-wider">{formatTime(time)}</h5>
+                <div className="flex items-center gap-3">
+                    <button onClick={alterTimer} className="w-12 h-12 flex items-center justify-center text-xl bg-neutral-700 rounded-full hover:bg-yellow-500/20 hover:text-yellow-400 transition-colors">
+                         {/* toggle between play and pause icons */}
+                        {isRunning ? <i className="fas fa-pause"></i> : <i className="fas fa-play"></i>}
+                    </button>
+                    <button onClick={openModal} className="w-12 h-12 flex items-center justify-center text-xl bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors">
+                        <i className="fa-solid fa-check"></i>
                     </button>
                 </div>
-                <div id="pause-workout">
-                    <button className="pause-button">
-                        <i className="fas fa-pause"></i>
-                    </button></div>
-                <h5>{formatTime(time)}</h5>
             </div>
             
-            <div id="workout-container">
+            {/* main workout area */}
+            <div className="flex-grow flex flex-row overflow-hidden">
                 
-                <div id="sets-container">
-                    
-                    {Object.entries(groupedSets).map(([exerciseName, sets], index) => ( //object.entries essentially creates us key value pairs in the form of 
-                    // [exercisename, sets], where exerciseName gets the name of the exercise, and sets are the sets corresponding to that exercise.
-                        <div key={index} className="exercise-group">
-                            <h4>{exerciseName}</h4>
-                            
-                            {sets.map((set, idx) => (
-                                <div className="workout-component" key={idx}>
-                                    <div>{idx + 1}.</div> <div>Reps: {set.reps}</div>  <div>{set.weight} lbs</div> 
+                {/* Scrollable container for the sets */}
+                <div className="flex-grow flex flex-col overflow-hidden">
+                    <div className="flex-grow p-4 space-y-4 overflow-y-auto">
+                        
+                        {Object.entries(groupedSets).map(([exerciseName, sets], index) => (
+                            //Exercise group card
+                            <div key={index} className="bg-neutral-800 rounded-lg p-5">
+                                <h4 className="text-xl font-semibold text-blue-500 border-b border-neutral-700 pb-3 mb-3">
+                                    {exerciseName}
+                                </h4>
+                                {/* container for the list of sets with dividers between them */}
+                                <div className="divide-y divide-neutral-700">
+                                    {sets.map((set, idx) => (
+                                        // Individual set row
+                                        <div className="flex items-center justify-between py-3" key={idx}>
+                                            <div className="text-neutral-400 font-bold w-8">{idx + 1}.</div>
+                                            <div className="flex-1">Reps: <span className="font-semibold text-white">{set.reps}</span></div>
+                                            <div className="flex-1 text-right"><span className="font-semibold text-white">{set.weight}</span> lbs</div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                            
-                        </div>
-                    ))}
-                </div>
-                <div id="add-new-workout">
-                    <select name="exercise"
-                    id="exercise-dropdown" 
-                    value={selectedExercise?.id || ""} 
-                    onChange={handleInputChange}>
-                        <option value=""> Select an exercise</option>
-                        {exercises.map((exercise) =>(
-                            <option key={exercise.id} value={exercise.id}>
-                                {exercise.name}
-                            </option>
+                            </div>
                         ))}
-                    </select>
-                    <input
-                    type="number"
-                    name="reps"
-                    placeholder="reps"
-                    value={currentSet.reps}
-                    onChange={handleInputChange}/>
-                    <input
-                    type="number"
-                    name="weight"
-                    placeholder="Weight"
-                    value={currentSet.weight}
-                    onChange={handleInputChange}/>
-                    <button onClick={handleAddSet}>+</button>
+                        {/* message for when no sets have been added yet */}
+                        {workoutSets.length === 0 && (
+                            <div className="text-center text-neutral-500 pt-16">
+                                <p className="text-lg">Your workout is empty.</p>
+                                <p>Add your first set below!</p>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* bottom bar for adding a new set */}
+                    <div className="flex-shrink-0 p-3 bg-neutral-900 border-t border-neutral-800 p-8">
+                        {/* Error message display*/}
+                        {message && <p className="text-red-500 text-sm text-center pb-2">{message}</p>}
+                        <div className="flex items-center gap-3">
+                            <select name="exercise"
+                                value={selectedExercise?.id || ""} 
+                                onChange={handleInputChange}
+                                className="bg-neutral-700 border border-neutral-600 rounded-md p-3 w-full text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none flex-grow"
+                            >
+                                <option value="">Select an exercise</option>
+                                {exercises.map((exercise) =>(
+                                    <option key={exercise.id} value={exercise.id}>
+                                        {exercise.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <input
+                                type="number" name="reps" placeholder="Reps" value={currentSet.reps} onChange={handleInputChange}
+                                className="bg-neutral-700 border border-neutral-600 rounded-md p-3 w-24 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                            />
+                            <input
+                                type="number" name="weight" placeholder="Weight" value={currentSet.weight} onChange={handleInputChange}
+                                className="bg-neutral-700 border border-neutral-600 rounded-md p-3 w-24 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                            />
+                            <button onClick={handleAddSet} className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-3xl font-light hover:bg-blue-700 transition-colors flex-shrink-0">
+                                +
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
+                <div className="hidden md:block md:col-span-1 h-full bg-neutral-900 p-4 flex flex-col gap-6 overflow-y-auto">
+                    
+                    {/* Widget 1: Live Summary */}
+                    <div className="bg-neutral-800 p-5 rounded-lg flex-shrink-0 p-4 m-4">
+                        <h4 className="text-lg font-semibold text-blue-500 mb-4 p-4">Your Workout</h4>
+                        <div className="space-y-3">
+                            <div className="flex justify-between">
+                                <span className="text-neutral-400">Total Volume</span>
+                                <span className="font-semibold">{workoutSummary.totalVolume.toLocaleString()} lbs</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-neutral-400">Total Sets</span>
+                                <span className="font-semibold">{workoutSummary.totalSets}</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-neutral-400">Total Reps</span>
+                                <span className="font-semibold">{workoutSummary.totalReps}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Widget 2: Exercise context */}
+                    <div className="bg-neutral-800 p-5 rounded-lg p-4 m-4">
+                        <h4 className="text-lg font-semibold text-blue-500 mb-4">
+                            {selectedExercise ? selectedExercise.name : "Exercise Info"}
+                        </h4>
+                        {selectedExercise ? (
+                            <div className="space-y-3 text-sm">
+                                <p className="text-neutral-300">Showing history and tips for the selected exercise.</p>
+                                {/* TODO, need to fetch history. */}
+                                <div className="border-t border-neutral-700 pt-3">
+                                    <p className="font-bold">Last time:</p>
+                                    <p className="text-neutral-400">3 sets of 12 @ 50 lbs</p>
+                                </div>
+                                <div className="border-t border-neutral-700 pt-3">
+                                    <p className="font-bold">Personal Record:</p>
+                                    <p className="text-neutral-400">1 rep @ 80 lbs</p>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className="text-neutral-500">History and Stats: </p>
+                        )}
+                    </div>
+
+                    {/* Widget 3: in house ML recommendation */ }
+                    {/* Widget 4: ai insights from 4o mini */ }
+                </div>
             </div>
         </div>
         
@@ -259,13 +357,3 @@ function New_workout() {
 export default New_workout;
 
 
-{/*             <div id="sets-container">
-                    <h2>Current sets</h2>
-                    <div id="set-list">
-                        {workoutSets.map((set, index) => (
-                            <div id="set" key={index}>
-                                {set.exercise.name} - {set.reps} reps at {set.weight} lbs
-                            </div>
-                        ))}
-                    </div>
-                </div> */}

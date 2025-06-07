@@ -47,7 +47,7 @@ export default function Header() {
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-4">
                 {/* Left Side: Logo/Brand */}
                 
-                <div className="flex">
+                <div className="flex items-center">
                     <img src="ascend-logo.png" className="mx-auto w-10 h-10"></img>
                     <Link to="/" className="text-2xl font-bold text-white ml-2">
                         Ascend

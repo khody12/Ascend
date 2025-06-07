@@ -204,7 +204,7 @@ function Dashboard() {
                 <section className="mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <StatCard title="Workouts This Week" value={workoutsThisWeek} icon={<FaDumbbell />} color="bg-green-600" />
                     <StatCard title="Total Workouts" value={totalWorkouts} icon={<FaListUl />} color="bg-indigo-600" />
-                    <StatCard title="Active Streak" value="Placeholder-todo" icon={<FaChartLine />} color="bg-cyan-700" /> {/* Placeholder */}
+                    <StatCard title="Active Streak" value="Placeholder-todo" icon={<FaChartLine />} color="bg-orange-500" /> {/* Placeholder */}
                 </section>
 
                 {/* main content grid */}
