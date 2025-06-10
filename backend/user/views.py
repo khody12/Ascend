@@ -91,6 +91,8 @@ class ExerciseListAPIView(generics.ListAPIView):
 class ExerciseAPIView(generics.RetrieveAPIView):
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
 
 
