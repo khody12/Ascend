@@ -13,16 +13,18 @@ from exercise.models import Exercise
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+# token authentication = who are you?
+# isAuthenticated is for permissions, can you access this? are you allowed to do X?
 
 class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
+        serializer = self.get_serializer(data=request.data) #creates instance of UserLoginSerializer, populates it with data from requests body, so username & password
+        if serializer.is_valid(): # if both fields are there and look good, we proceed. 
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
-            user = authenticate(username=username, password=password)
-            print(user)
+            user = authenticate(username=username, password=password) # goes into postgres database and checks if we have a match. 
+             # print(user)
             if user:
                 token, created = Token.objects.get_or_create(user=user)
                 return Response({"token": token.key, "id":user.id, "username": username, "message": "Login successful!"}, status=status.HTTP_200_OK) 
@@ -38,10 +40,6 @@ class UserCreationAPIView(generics.CreateAPIView):
     authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
 
     def create(self, request, *args, **kwargs):
-        # print("incoming data:", request.data)
-        # request.data["user_height"] = 50
-        # request.data["user_weight"] = 50
-        # print(request.data)
 
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
@@ -89,6 +87,14 @@ class ExerciseListAPIView(generics.ListAPIView):
     serializer_class = ExerciseSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+class ExerciseAPIView(generics.RetrieveAPIView):
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer
+    
+
+
+
     
     
 

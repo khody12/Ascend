@@ -5,6 +5,8 @@ import datetime
 from django.utils import timezone
 # Create your models here.
 
+# workouts belong to only one user. it gets created then tied to that user. instead of that being a fundamental part of the user class.
+
 class Workout(models.Model):
     name = models.CharField(max_length=100)
     comment = models.TextField(blank=True, null=True) # user can comment how they felt, yada yada

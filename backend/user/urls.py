@@ -9,4 +9,6 @@ urlpatterns = [
     path('api/user/<int:userId>/', views.UserDashboardAPIView.as_view()),
     path('user/create-workout/', views.CreateWorkoutAPIView.as_view()),
     path('api/exercises/', views.ExerciseListAPIView.as_view()),
+    
+
 ]

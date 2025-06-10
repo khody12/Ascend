@@ -19,6 +19,7 @@ function New_workout() {
     const [workoutComment, setWorkoutComment] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [message, setMessage] = useState("");
+    const [exerciseData, setExerciseData] = useState("");
 
 
     const formatTime = (seconds) => {
@@ -58,7 +59,7 @@ function New_workout() {
 
     useEffect(() => { // get exercise data from API.
         const fetchExercises = async () => {
-            if (authData){
+            if (authData) {
                 try {
                     console.log("fetching exercises");
                     const response = await fetch("http://127.0.0.1:8000/api/exercises/", {
@@ -70,7 +71,7 @@ function New_workout() {
                         
                     });
                     if (response.ok) {
-                        console.log("response good");
+                        console.log("Fetched exercises");
                         const exercises = await response.json(); // api will send back exercises
                         setUserExercises(exercises)
                     }
@@ -80,8 +81,35 @@ function New_workout() {
             }
         }
         fetchExercises();
-    }, [authData]); // this array he is called dependency array and basically react will rerun useEffect fucniton only if one
+    }, [authData]);
+     // this array he is called dependency array and basically react will rerun useEffect fucniton only if one
     // of these dependencies change.
+
+    // useEffect(() => {
+    //     const fetchExerciseData = async () => {
+    //         if (authData) {
+    //             try{
+    //                 const response = await fetch("http://127.0.0.1:8000/api/exerciseData/", {
+    //                     method: 'GET',
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Token ${authData.token}`,
+    //                     },
+    //                 });
+    //                 if (response.ok) {
+    //                     console.log("fetched exercise data");
+    //                     const exerciseData = await response.json();
+    //                     setExerciseData(exerciseData)
+    //                 }
+                    
+    //             } catch (error) {
+    //                 console.error("Error fetching stats:", error)
+    //             } 
+
+    //         }
+    //     }
+
+    // }, [selectedExercise]) // everytime the selected exercise changes, we need to show the stats for it.
 
     useEffect(() => {
         let timer;
@@ -101,6 +129,8 @@ function New_workout() {
         const { name, value } = e.target; // const name = e.target.name, const value = e.target.value;
         // if exercise was changed, we have a different process.
         if (name === "exercise") {
+            // find() in js is used to search for the first elem in an array that satisfies the conditon. 
+            //it applies a callback funciton to each element and if the callback returns a truthy value for an elem, that elem is returned.
             const selectedExercise = exercises.find((ex) => ex.id === parseInt(value));
             setSelectedExercise(selectedExercise);
             setCurrentSet({ ...currentSet, exercise: selectedExercise });
@@ -113,7 +143,6 @@ function New_workout() {
     const handleAddSet = (e) => {
         e.preventDefault();
         
-
         if (!selectedExercise || !currentSet.reps || !currentSet.weight) {
             console.log("fill it all out!")
             setMessage("Please fill out all fields before adding a set.");
@@ -147,9 +176,10 @@ function New_workout() {
     // this is what we will send as a post at the very end, this creates our workout, and exits us out of the
     //workout interface
     const openModal = (e) => {
-        e.preventDefault()
+        e.preventDefault() // prevent reload.
         setIsModalOpen(true);
     }
+    
     const saveWorkout = async (e) => {
         e.preventDefault(); // prevents browser from reloading a page when we submit an exercise.
         const payload = {
@@ -337,7 +367,7 @@ function New_workout() {
                                 </div>
                                 <div className="border-t border-neutral-700 pt-3">
                                     <p className="font-bold">Personal Record:</p>
-                                    <p className="text-neutral-400">1 rep @ 80 lbs</p>
+                                    <p className="text-neutral-400">{exerciseData.personal_record}</p>
                                 </div>
                             </div>
                         ) : (
