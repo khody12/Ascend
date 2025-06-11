@@ -3,13 +3,13 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, ExerciseSerializer
+from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, ExerciseSerializer, ExerciseRecordSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User
-from exercise.models import Exercise
+from exercise.models import Exercise, ExerciseRecord
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -89,10 +89,26 @@ class ExerciseListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
 class ExerciseAPIView(generics.RetrieveAPIView):
-    queryset = Exercise.objects.all()
-    serializer_class = ExerciseSerializer
+    
+    serializer_class = ExerciseRecordSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ExerciseRecord.objects.filter(user=self.request.user)
+    def get_object(self):
+        queryset = self.get_queryset()
+        exercise_pk = self.kwargs['exercise_pk'] # exercise_pk matches whats in the urls.
+
+        try:
+            # Look for the specific record linked to the exercise_pk
+            obj = queryset.get(exercise__pk=exercise_pk)
+            return obj
+        except ExerciseRecord.DoesNotExist:
+            # We explicitly raise the exception so DRF can handle it.
+            raise
+
+    
     
 
 

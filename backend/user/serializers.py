@@ -1,10 +1,11 @@
 
 from user.models import User
 from workout.models import Workout, WorkoutSet
-from exercise.models import Exercise, Tag
-
+from exercise.models import Exercise, Tag, ExerciseRecord
+from django.db.models import F
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from django.utils import timezone
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True, write_only=True)
@@ -90,6 +91,9 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
             print("Exercise Data:", exercise_data, "Tags Data:", tags_data)
 
             exercise, created = Exercise.objects.get_or_create(**exercise_data)
+            # the ** basically unpacks the dictionary, within we might have like 'name': 'bench press', and it just unpacks this.
+            # exercise will hold the object we found or created, while created is a boolean, True if we created a new object.
+
             print(f"Exercise {'Created' if created else 'Retrieved'}:", exercise)
             
             for tag_data in tags_data:
@@ -102,6 +106,23 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
                                       reps=set_data['reps'],
                                       weight=set_data['weight'],
                                       )
+            
+            record, created = ExerciseRecord.objects.get_or_create(
+                user=user,
+                exercise=exercise
+            )
+
+            # Update the lifetime reps safely to avoid race conditions
+            record.lifetime_reps = F('lifetime_reps') + set_data['reps']
+            
+            # Check for a new personal record
+            if set_data['weight'] > record.personal_record:
+                record.personal_record = set_data['weight']
+                record.date_of_pr = timezone.now().date()
+            
+            # Save the updated record
+            record.save()
+            
         print("validated Data for workout,", validated_data)
         
 
@@ -120,5 +141,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
                   'user_weight', 'user_height', 'user_gender', 'lifetime_weight_lifted']
+        
+class ExerciseRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExerciseRecord
+        fields = ['id', 'user', 'exercise', 'personal_record', 'lifetime_reps', 'date_of_pr']
         
 

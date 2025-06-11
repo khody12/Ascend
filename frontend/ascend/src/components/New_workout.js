@@ -82,34 +82,38 @@ function New_workout() {
         }
         fetchExercises();
     }, [authData]);
-     // this array he is called dependency array and basically react will rerun useEffect fucniton only if one
+    //this array he is called dependency array and basically react will rerun useEffect fucniton only if one
     // of these dependencies change.
 
-    // useEffect(() => {
-    //     const fetchExerciseData = async () => {
-    //         if (authData) {
-    //             try{
-    //                 const response = await fetch("http://127.0.0.1:8000/api/exerciseData/", {
-    //                     method: 'GET',
-    //                     headers: {
-    //                         'Content-Type': 'application/json',
-    //                         'Authorization': `Token ${authData.token}`,
-    //                     },
-    //                 });
-    //                 if (response.ok) {
-    //                     console.log("fetched exercise data");
-    //                     const exerciseData = await response.json();
-    //                     setExerciseData(exerciseData)
-    //                 }
+    useEffect(() => {
+        const fetchExerciseData = async () => {
+            if (authData && selectedExercise.id) {
+                console.log(selectedExercise.id)
+                try{
+                    const response = await fetch(`http://127.0.0.1:8000/api/exerciseStats/${selectedExercise.id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Token ${authData.token}`,
+                        },
+                    });
+                    if (response.ok) {
+                        console.log("fetched exercise data");
+                        const exerciseData = await response.json();
+                        setExerciseData(exerciseData)
+                        console.log("data:", exerciseData)
+                    }
                     
-    //             } catch (error) {
-    //                 console.error("Error fetching stats:", error)
-    //             } 
+                } catch (error) {
+                    console.error("Error fetching stats:", error)
+                } 
 
-    //         }
-    //     }
+            }
+        }
+        fetchExerciseData();
+        
 
-    // }, [selectedExercise]) // everytime the selected exercise changes, we need to show the stats for it.
+    }, [selectedExercise.id]) // everytime the selected exercise changes, we need to show the stats for it.
 
     useEffect(() => {
         let timer;
@@ -363,7 +367,7 @@ function New_workout() {
                                 {/* TODO, need to fetch history. */}
                                 <div className="border-t border-neutral-700 pt-3">
                                     <p className="font-bold">Last time:</p>
-                                    <p className="text-neutral-400">3 sets of 12 @ 50 lbs</p>
+                                    <p className="text-neutral-400">{exerciseData.date_of_pr}</p>
                                 </div>
                                 <div className="border-t border-neutral-700 pt-3">
                                     <p className="font-bold">Personal Record:</p>
