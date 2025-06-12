@@ -210,7 +210,7 @@ function Dashboard() {
                 {/* main content grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* left col ; recent workouts & actions */}
-                    <div className="lg:col-span-2 space-y-8">
+                    <div className="lg:col-span-1 space-y-8">
                         {/* actions */}
                         <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <Link 
@@ -247,7 +247,7 @@ function Dashboard() {
                     </div>
 
                     {/* right col,  Stats / Graph */}
-                    <aside className="lg:col-span-1">
+                    <aside className="lg:col-span-2">
                         <h2 className="text-3xl font-semibold mb-6 text-white">Your Progress</h2>
                         <div 
                             ref={d3ChartRef} 

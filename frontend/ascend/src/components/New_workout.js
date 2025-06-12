@@ -87,7 +87,7 @@ function New_workout() {
 
     useEffect(() => {
         const fetchExerciseData = async () => {
-            if (authData && selectedExercise.id) {
+            if (authData && selectedExercise?.id) {
                 console.log(selectedExercise.id)
                 try{
                     const response = await fetch(`http://127.0.0.1:8000/api/exerciseStats/${selectedExercise.id}`, {
@@ -113,7 +113,7 @@ function New_workout() {
         fetchExerciseData();
         
 
-    }, [selectedExercise.id]) // everytime the selected exercise changes, we need to show the stats for it.
+    }, [selectedExercise]) // everytime the selected exercise changes, we need to show the stats for it.
 
     useEffect(() => {
         let timer;
@@ -313,7 +313,7 @@ function New_workout() {
                                 onChange={handleInputChange}
                                 className="bg-neutral-700 border border-neutral-600 rounded-md p-3 w-full text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none flex-grow"
                             >
-                                <option value="">Select an exercise</option>
+                                <option value="0">Select an exercise</option>
                                 {exercises.map((exercise) =>(
                                     <option key={exercise.id} value={exercise.id}>
                                         {exercise.name}

@@ -3,7 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, ExerciseSerializer, ExerciseRecordSerializer
+from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, ExerciseSerializer
+
+from exercise.serializers import ExerciseSerializer, ExerciseRecordSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response

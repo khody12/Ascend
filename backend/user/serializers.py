@@ -6,6 +6,7 @@ from django.db.models import F
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.utils import timezone
+from exercise.serializers import ExerciseSerializer
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True, write_only=True)
@@ -39,16 +40,16 @@ class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=150)
     password = serializers.CharField(max_length=128, write_only=True)
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ['id', 'name']
+# class TagSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Tag
+#         fields = ['id', 'name']
 
-class ExerciseSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True)
-    class Meta:
-        model = Exercise
-        fields = ['id', 'name', 'tags']
+# class ExerciseSerializer(serializers.ModelSerializer):
+#     tags = TagSerializer(many=True)
+#     class Meta:
+#         model = Exercise
+#         fields = ['id', 'name', 'tags']
 
 
 class WorkoutSetSerializer(serializers.ModelSerializer):
@@ -142,9 +143,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
                   'user_weight', 'user_height', 'user_gender', 'lifetime_weight_lifted']
         
-class ExerciseRecordSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExerciseRecord
-        fields = ['id', 'user', 'exercise', 'personal_record', 'lifetime_reps', 'date_of_pr']
+# class ExerciseRecordSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ExerciseRecord
+#         fields = ['id', 'user', 'exercise', 'personal_record', 'lifetime_reps', 'date_of_pr']
         
 
