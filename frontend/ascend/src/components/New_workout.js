@@ -272,7 +272,7 @@ function New_workout() {
             <div className="flex-grow flex flex-row overflow-hidden">
                 
                 {/* Scrollable container for the sets */}
-                <div className="flex-grow flex flex-col overflow-hidden">
+                <div className="flex-grow flex flex-col overflow-hidden w-3/4">
                     <div className="flex-grow p-4 space-y-4 overflow-y-auto">
                         
                         {Object.entries(groupedSets).map(([exerciseName, sets], index) => (
@@ -335,7 +335,7 @@ function New_workout() {
                     </div>
                 </div>
 
-                <div className="hidden md:block md:col-span-1 h-full bg-neutral-900 p-4 flex flex-col gap-6 overflow-y-auto">
+                <div className="hidden md:block md:col-span-1 h-full bg-neutral-900 p-4 flex flex-col gap-6 overflow-y-auto w-1/4">
                     
                     {/* Widget 1: Live Summary */}
                     <div className="bg-neutral-800 p-5 rounded-lg flex-shrink-0 p-4 m-4">
@@ -363,15 +363,14 @@ function New_workout() {
                         </h4>
                         {selectedExercise ? (
                             <div className="space-y-3 text-sm">
-                                <p className="text-neutral-300">Showing history and tips for the selected exercise.</p>
-                                {/* TODO, need to fetch history. */}
+                                <p className="text-neutral-300">History</p>
                                 <div className="border-t border-neutral-700 pt-3">
                                     <p className="font-bold">Last time:</p>
-                                    <p className="text-neutral-400">{exerciseData.date_of_pr}</p>
+                                    <p className="text-neutral-400">{exerciseData.date_of_pr || "No record."}</p>
                                 </div>
                                 <div className="border-t border-neutral-700 pt-3">
                                     <p className="font-bold">Personal Record:</p>
-                                    <p className="text-neutral-400">{exerciseData.personal_record}</p>
+                                    <p className="text-neutral-400">{exerciseData.personal_record || 0}</p>
                                 </div>
                             </div>
                         ) : (
