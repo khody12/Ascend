@@ -334,7 +334,7 @@ function Dashboard() {
                                 <WeightChart data={userWeights} 
                                 onLogWeightClick={() => setIsWeightModalOpen(true)}/>
                             ) : (
-                                <div className="bg-neutral-800 p-4 rounded-lg text-center text-neutral-500">
+                                <div className="bg-gray-700 p-4 rounded-lg text-center text-neutral-500">
                                     <p>Log your weight to see your progress chart here.</p>
                                 </div>
                             )}
