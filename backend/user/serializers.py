@@ -1,5 +1,5 @@
 
-from user.models import User
+from user.models import User, WeightEntry
 from workout.models import Workout, WorkoutSet
 from exercise.models import Exercise, Tag, ExerciseRecord
 from django.db.models import F
@@ -81,7 +81,8 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
         workout_sets_data = validated_data.pop('workout_sets')
         print("Workout Sets Data:", workout_sets_data)
 
-        user = self.context['request'].user
+        user = self.context['request'].user # because were in serializers, we dont have access to request,
+        # but views will send over context, and we can access it there.
         workout = Workout.objects.create(user=user, **validated_data) # create main workout instance
         print("Workout Created:", workout)
         for set_data in workout_sets_data:
@@ -142,10 +143,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
                   'user_weight', 'user_height', 'user_gender', 'lifetime_weight_lifted']
-        
-# class ExerciseRecordSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = ExerciseRecord
-#         fields = ['id', 'user', 'exercise', 'personal_record', 'lifetime_reps', 'date_of_pr']
+
+class WeightEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WeightEntry
+        fields = ['id', 'date', 'weight', 'user']
+        read_only_fields = ['id', 'date', 'user']
+
         
 

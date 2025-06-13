@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.utils import timezone
 # Create your models here.
 from exercise.models import Exercise
 
@@ -12,6 +12,18 @@ class User(AbstractUser):
     
     
     favorite_exercises = models.ManyToManyField(Exercise, blank=True)
+
+class WeightEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="weight_entries")
+    weight = models.DecimalField(max_digits=4, decimal_places=1)
+
+    date_recorded = models.DateField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-date_recorded']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.weight} lbs on {self.date_recorded.strftime('%Y-%m-%d')}"
 
 
 

@@ -108,21 +108,16 @@ const Registration = () => {
 
             if (response.status === 201) {
                 console.log("Registration successful", response.data);
-                const data = response.data;
+                const data = response.data; // we post the data and then the django backend gives us the log-in information 
+                // so we can authenticate ourselves.
 
                 setAuthData({
                     token: data.token,
                     userId: data.id,
                     username: data.username, 
                 });
-                
-                // localStorage is handled by AuthContext, so no need to set items here
-                // console.log("Attempting to set username: ", data.username);
-                // console.log(localStorage.getItem("username"));
-
+            
                 setMessage("Successful registration! Redirecting...");
-                // console.log("Successfully registered, navigating to /dashboard...");
-                
                 setTimeout(() => { // Give a moment for the user to see the success message
                     navigate("/dashboard");
                 }, 1500);

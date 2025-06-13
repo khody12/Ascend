@@ -3,20 +3,32 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, ExerciseSerializer
+from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, WeightEntrySerializer
 
 from exercise.serializers import ExerciseSerializer, ExerciseRecordSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
-from .models import User
+from .models import User, WeightEntry
 from exercise.models import Exercise, ExerciseRecord
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+# Typical journey for these APIViews
+
+#1. Raw request from frontend arrives at django server
+#2. Goes through Django Authentication
+#3. Lookat headers, gets your token if its there, looks up token table in database and finds the matching token object and then returns the User object that is linked to the token.
+#4. now we get self.request.user after user is fetched from the database.. The request is now enriched with the necessary data. 
+
+
+
 # token authentication = who are you?
 # isAuthenticated is for permissions, can you access this? are you allowed to do X?
+
+# isAuthenticated runs after tokenAuthentication and relies on tokenAUthentication to have done its job. 
+# you can have access to a certain view as long as you are authenticated by a token. Thats all it does.
 
 class UserLoginAPIView(GenericAPIView):
     serializer_class = UserLoginSerializer
@@ -58,10 +70,18 @@ class UserCreationAPIView(generics.CreateAPIView):
             "username":user.username,
             "message" : "registration successful!"
         }, status=status.HTTP_201_CREATED)
-    # by default, createAPI View will return serialized data of new object and 
+    # by default, createAPI View will return serialized data of new object, so all the data you needed to actually create a user,
+    # is what would be sent back in the response. 
+    # But we only need some information sent back, i dont need their email and weight yet for example.
+    # But i also need to send with them a token so that the program knows they are authenticated, and that is not part of the object by default
+    # thus we need to override.
 
 class UserDashboardAPIView(generics.RetrieveAPIView):
-    queryset = User.objects.all()
+    # standard behavior of RetrieveAPIView if we don't redefine get_object, is that it would use the pk/slug that it expects to find in the URL.
+    # in this standard case, we would need to define a queryset, typically queryset = User.objects.all(), but since we override, and we have it in self.request.user
+    # we dont need this line.
+    # queryset = User.objects.all(), we don't need this here, because we manually defined the get_object. 
+
     serializer_class = UserDashboardSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated] # only uses who have been authenticated via token authentication have access to this api view
@@ -70,7 +90,7 @@ class UserDashboardAPIView(generics.RetrieveAPIView):
         return self.request.user
 
 class UserProfileAPIView(generics.RetrieveUpdateAPIView):
-    queryset = User.objects.all()
+    # queryset = User.objects.all() again we dont need this line for the same reason as in userdashboard.
     serializer_class = UserProfileSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -109,6 +129,38 @@ class ExerciseAPIView(generics.RetrieveAPIView):
         except ExerciseRecord.DoesNotExist:
             # We explicitly raise the exception so DRF can handle it.
             raise
+
+class WeightEntryView(generics.ListAPIView):
+    serializer_class = WeightEntrySerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return WeightEntry.objects.filter(user=self.request.user)
+    
+class SubmitWeightEntry(generics.CreateAPIView):
+    queryset = WeightEntry.objects.all() # have to be able to map it to any user.
+    serializer_class = WeightEntrySerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer): # because we need to set the foreign key, we need this perform_create
+        serializer.save(user=self.request.user)
+        # perform_create is essentially a method to save the object to the database,
+        # so at this point, a serializer object has been created,
+        # its holding raw data from axios,
+        # serializer runs validation rules thoruhg ser.is_valid
+        # if it succeeds, it creates a private dictionary serializer.validated_data
+        # now at this point its missing user because we don't want the post request to have the user id sent over
+        # we also told the serializer user was read only for security purposes.
+        # now we just save the object, but we also pass in user=self.request.user, filling in that user field
+        
+
+
+
+
+
+
 
     
     

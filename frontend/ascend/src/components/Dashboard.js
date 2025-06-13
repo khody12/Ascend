@@ -3,6 +3,9 @@ import { AuthContext } from '../AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaDumbbell, FaChartLine, FaPlus, FaListUl, FaClock, FaUserCircle } from 'react-icons/fa'; // Example icons
 import Modal from "./Modal"
+import WeightChart from './WeightChart';
+
+
 // You might want to create separate components for these later
 const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
     <div className={`p-6 rounded-xl shadow-lg text-white ${color}`}>
@@ -66,6 +69,7 @@ function Dashboard() {
     const navigate = useNavigate();
     const { authData, logout } = useContext(AuthContext); // logout placeholder for now.
     const [userProfile, setUserProfile] = useState(null);
+    const [userWeights, setUserWeights] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -78,13 +82,17 @@ function Dashboard() {
         navigate('/login');
         setIsLogoutModalOpen(false); // Close modal after logging out
     };
+    const checkIfLoggedIn = () => {
+        if (!authData || !authData.userId || !authData.token) {
+            navigate("/login");
+            return;
+        }
+    }
 
     useEffect(() => {
         const fetchUserProfile = async () => {
-            if (!authData || !authData.userId || !authData.token) {
-                navigate("/login");
-                return;
-            }
+            checkIfLoggedIn();
+
             setLoading(true);
             setError(null);
             try {
@@ -117,7 +125,45 @@ function Dashboard() {
             }
         };
 
+        const fetchUserWeight = async () => {
+            checkIfLoggedIn();
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/user/weightData/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${authData.token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const weights = await response.json();
+                    setUserWeights(weights);
+                    console.log("Weight response from API: ", userWeights);
+
+                } else {
+                    const errorText = await response.text();
+                    console.error('Failed to fetch user weights..', response.status, errorText);
+                    setError(`Failed to load weights: ${response.status}`);
+                    if (response.status === 401) { // Unauthorized
+                        logout(); // Clear auth data and redirect
+                        navigate("/login");
+                    }
+
+                }
+            } catch (err) {
+                console.log('Error fetching user weights', err);
+                setError("error while setting weights.")
+            } finally {
+                setLoading(false);
+            }
+        }
+
         fetchUserProfile();
+        fetchUserWeight();
     }, [authData, navigate, logout]); // Added logout to dependency array
 
     // Example: data for d3 chart.
@@ -257,11 +303,18 @@ function Dashboard() {
                             {/* D3 Chart here via useeffect */}
                         </div>
                         {/* more stats/graphs */}
-                        <div className="mt-8 bg-gray-800 p-6 rounded-xl shadow-lg">
-                            <h4 className="text-lg font-semibold text-white mb-3">Body Weight Trend</h4>
-                            <p className="text-gray-400 text-sm">Graph coming soon...</p>
-                            {/* another placeholder for a different chart or data point */}
+                        <div className="mt-8">
+                            {loading ? (
+                                <p>Loading Chart Data...</p>
+                            ) : userWeights && userWeights.length > 0 ? (
+                                <WeightChart data={userWeights} />
+                            ) : (
+                                <div className="bg-neutral-800 p-4 rounded-lg text-center text-neutral-500">
+                                    <p>Log your weight to see your progress chart here.</p>
+                                </div>
+                            )}
                         </div>
+                        
                     </aside>
                 </div>
 
