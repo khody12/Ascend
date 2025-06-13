@@ -147,8 +147,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class WeightEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = WeightEntry
-        fields = ['id', 'date', 'weight', 'user']
-        read_only_fields = ['id', 'date', 'user']
+        fields = ['id', 'date_recorded', 'weight', 'user']
+        read_only_fields = ['id', 'date_recorded', 'user']
 
         
 

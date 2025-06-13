@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { AuthContext } from '../AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FaDumbbell, FaChartLine, FaPlus, FaListUl, FaClock, FaUserCircle } from 'react-icons/fa'; // Example icons
 import Modal from "./Modal"
 import WeightChart from './WeightChart';
-
+import WeightCheckInModal from './WeightCheckInModal.js';
 
 // You might want to create separate components for these later
 const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
@@ -73,6 +73,8 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+    const [isWeightModalOpen, setIsWeightModalOpen] = useState(false);
+    const location = useLocation();
 
     // D3 Chart placeholder
     const d3ChartRef = useRef(null);
@@ -88,6 +90,16 @@ function Dashboard() {
             return;
         }
     }
+
+    useEffect(() => {
+        // Effect runs when component loads, checks if we navigated here with the special flag we specified in new_workout.js
+        if (location.state?.showWeightPrompt) {// from New_workout.js, we pass in a key value pair, the key is "showWeightPrompt" and its a bool
+            setIsWeightModalOpen(true);
+            navigate(location.pathname, {replace: true, state:{}}); // clearing state so modal doesn't reopen on refresh.
+
+        } 
+
+    }, [location, navigate])
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -307,7 +319,8 @@ function Dashboard() {
                             {loading ? (
                                 <p>Loading Chart Data...</p>
                             ) : userWeights && userWeights.length > 0 ? (
-                                <WeightChart data={userWeights} />
+                                <WeightChart data={userWeights} 
+                                onLogWeightClick={() => setIsWeightModalOpen(true)}/>
                             ) : (
                                 <div className="bg-neutral-800 p-4 rounded-lg text-center text-neutral-500">
                                     <p>Log your weight to see your progress chart here.</p>
@@ -317,6 +330,12 @@ function Dashboard() {
                         
                     </aside>
                 </div>
+                {isWeightModalOpen && 
+                    <WeightCheckInModal 
+                        onClose={() => setIsWeightModalOpen(false)} 
+                        authData={authData} 
+                    />
+                }
 
                 <footer className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-500">
                     <p>© {new Date().getFullYear()} Ascend</p>

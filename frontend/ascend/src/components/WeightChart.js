@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-const WeightChart = ({ data }) => {
+const WeightChart = ({ data, onLogWeightClick }) => {
     // useRef is used to get a reference to the <svg> element in the DOM
     const ref = useRef();
 
@@ -130,7 +130,19 @@ const WeightChart = ({ data }) => {
 
     return (
         <div className="bg-neutral-800 p-4 rounded-lg border border-neutral-700">
-            <h3 className="text-lg font-semibold text-white mb-4">Weight History</h3>
+            {/* Use flexbox to align the title and the new button */}
+            <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-white">Weight History</h3>
+                
+                {/* THIS IS THE NEW BUTTON */}
+                <button 
+                    onClick={onLogWeightClick}
+                    className="text-neutral-400 hover:text-white transition-colors p-1 rounded-full hover:bg-neutral-700"
+                    title="Log new weight entry"
+                >
+                    <i className="fa-solid fa-plus"></i>
+                </button>
+            </div>
             <svg ref={ref} style={{ width: '100%', height: '300px' }}></svg>
         </div>
     );

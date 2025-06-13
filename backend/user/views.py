@@ -136,7 +136,13 @@ class WeightEntryView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return WeightEntry.objects.filter(user=self.request.user)
+        user_weights = WeightEntry.objects.filter(user=self.request.user)
+
+        latest_param = self.request.query_params.get('latest', 'false')
+        if latest_param.lower() == 'true':
+            return user_weights.order_by('-date_recorded')[:1]
+        
+        return user_weights
     
 class SubmitWeightEntry(generics.CreateAPIView):
     queryset = WeightEntry.objects.all() # have to be able to map it to any user.

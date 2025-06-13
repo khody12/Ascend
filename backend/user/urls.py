@@ -10,5 +10,6 @@ urlpatterns = [
     path('user/create-workout/', views.CreateWorkoutAPIView.as_view()),
     path('api/exercises/', views.ExerciseListAPIView.as_view()),
     path('api/exerciseStats/<int:exercise_pk>', views.ExerciseAPIView.as_view()),
-    path('api/user/weightData/', views.WeightEntryView.as_view())
+    path('api/user/weightData/', views.WeightEntryView.as_view()),
+    path('api/user/submitWeightData/', views.SubmitWeightEntry.as_view()),
 ]

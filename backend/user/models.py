@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 # Create your models here.
 from exercise.models import Exercise
-
+from datetime import date
 class User(AbstractUser):
     user_weight = models.DecimalField(default=0, max_digits=4, decimal_places=1, null=True, blank=True)
     user_height = models.DecimalField(default=0, max_digits=3, decimal_places=1, null=True, blank=True)
@@ -17,7 +17,7 @@ class WeightEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="weight_entries")
     weight = models.DecimalField(max_digits=4, decimal_places=1)
 
-    date_recorded = models.DateField(default=timezone.now)
+    date_recorded = models.DateField(default=date.today)
 
     class Meta:
         ordering = ['-date_recorded']

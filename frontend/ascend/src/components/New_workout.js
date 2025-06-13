@@ -185,37 +185,61 @@ function New_workout() {
     }
     
     const saveWorkout = async (e) => {
-        e.preventDefault(); // prevents browser from reloading a page when we submit an exercise.
+        e.preventDefault();
         const payload = {
             name: workoutTitle,
             date: new Date().toISOString().split("T")[0],
             workout_sets: workoutSets,
             elapsed_time: secondsToTimeString(time),
             comment: workoutComment,
-        }; 
-        console.log(payload);
+        };
+
         try {
-            const response = await axios.post("http://127.0.0.1:8000/user/create-workout/", payload,
-                {
-                    headers: {
-                        "Authorization": `Token ${authData.token}`,
-                        "Content-Type": "application/json"
-                    },
+            await axios.post("http://127.0.0.1:8000/user/create-workout/", payload, {
+                headers: {
+                    "Authorization": `Token ${authData.token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+
+            const promptForWeightResponse = await axios.get("http://127.0.0.1:8000/api/user/weightData/?latest=true", {
+                headers: { 'Authorization': `Token ${authData.token}` }
+            });
+
+            let shouldPromptForWeight = true;
+            if (promptForWeightResponse.data && promptForWeightResponse.data.length > 0) {
+                const lastEntryDate = new Date(promptForWeightResponse.data[0].date_recorded);
+                const oneWeekAgo = new Date();
+                oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                if (lastEntryDate > oneWeekAgo) {
+                    shouldPromptForWeight = false;
                 }
-            );
-            console.log("workout saved:", response.data)
-            navigate("/dashboard")
+            }
+            
+            navigate("/dashboard", { state: { showWeightPrompt: shouldPromptForWeight } });
+
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                setMessage("Invalid username/password");
-            } else if (error.response && error.response.status === 400) {
-                setMessage("Please fill in both fields.");
+            console.error("An error occurred during the save workout process:", error.response || error);
+            
+            if (error.response) {
+                // The server responded with a status code outside the 2xx range
+                if (error.response.status === 401) {
+                    setMessage("Authentication failed. Please log in again.");
+                } else if (error.response.status === 400) {
+                    const errorMessage = error.response.data?.detail || "Please check the data you entered.";
+                    setMessage(errorMessage);
+                } else {
+                    setMessage("A server error occurred. Please try again later.");
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                setMessage("Network error. Could not connect to the server.");
             } else {
-                setMessage(error.response?.date.error || "An error occurred.");
+                // Something happened in setting up the request that triggered an Error
+                setMessage("An unexpected error occurred.");
             }
         }
-
-    }
+    };
 
 
  
