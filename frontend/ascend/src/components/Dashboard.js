@@ -5,6 +5,7 @@ import { FaDumbbell, FaChartLine, FaPlus, FaListUl, FaClock, FaUserCircle } from
 import Modal from "./Modal"
 import WeightChart from './WeightChart';
 import WeightCheckInModal from './WeightCheckInModal.js';
+import formatWorkoutDate from '../utils/formatDate.js';
 
 // You might want to create separate components for these later
 const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
@@ -20,46 +21,57 @@ const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
 );
 
 const RecentWorkoutCard = ({ workout }) => {
-    const navigate = useNavigate();
-
-    // Simplified display of exercises for the card
-    const displayedExercises = workout.workout_sets
-        .reduce((acc, set) => {
-            if (!acc.find(ex => ex.name === set.exercise.name)) {
-                acc.push({ name: set.exercise.name, sets: 1 });
-            } else {
-                acc.find(ex => ex.name === set.exercise.name).sets++;
-            }
-            return acc;
-        }, [])
-        .slice(0, 3); // Show first 3 unique exercises
+    // You can define a mapping of exercise types to icons
+    // This is just a basic example; you could make this much more detailed
+    const getIconForWorkout = (workout) => {
+        const lowerCaseName = workout.name.toLowerCase();
+        if (lowerCaseName.includes('push') || lowerCaseName.includes('chest') || lowerCaseName.includes('bench')) return <FaDumbbell />;
+        if (lowerCaseName.includes('pull') || lowerCaseName.includes('back')) return <FaDumbbell style={{ transform: 'rotate(180deg)' }}/>; // Just an example
+        if (lowerCaseName.includes('leg') || lowerCaseName.includes('squat')) return <FaDumbbell style={{ transform: 'rotate(90deg)' }}/>;
+        return <FaDumbbell />; // Default icon
+    };
+    
+    // Use the new date formatting function
+    const formattedDate = formatWorkoutDate(workout.date);
 
     return (
-        <div className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-            <div className="flex justify-between items-start mb-3">
-                <h3 className="text-xl font-semibold text-white">{workout.name}</h3>
-                <span className="text-xs text-gray-400 flex items-center">
-                    <FaClock className="mr-1" /> {workout.elapsed_time}
-                </span>
+        // Main card with new styling and hover effect
+        <div className="bg-gray-800 rounded-2xl p-5 flex gap-5 items-center border border-transparent hover:border-blue-500 transition-all duration-300">
+            
+            {/* Left side: The Icon */}
+            <div className="flex-shrink-0 h-20 w-20 rounded-xl flex items-center justify-center">
+                <div className="text-blue-400 text-4xl">
+                    {getIconForWorkout(workout)}
+                </div>
             </div>
-            <p className="text-sm text-gray-400 mb-1">
-                {new Date(workout.date).toLocaleDateString()} 
-            </p>
-            <div className="mb-4">
-                {displayedExercises.map(ex => (
-                    <p key={ex.name} className="text-sm text-gray-300">
-                        {ex.name} ({ex.sets} sets)
-                    </p>
-                ))}
-                {workout.workout_sets.length > 3 && <p className="text-xs text-gray-500">...and more</p>}
+
+            {/* Right side: The Details */}
+            <div className="flex-grow">
+                {/* Top Row: Title and Duration */}
+                <div className="flex justify-between items-baseline mb-1">
+                    <h3 className="font-bold text-xl text-white tracking-tight">{workout.name}</h3>
+                    <span className="text-sm font-mono text-neutral-400 flex items-center gap-1">
+                        <FaClock /> {workout.elapsed_time}
+                    </span>
+                </div>
+                
+                {/* Bottom Row: Date and Exercises */}
+                <div className="flex justify-between items-end">
+                    <div>
+                        <p className="text-sm font-semibold text-blue-400">{formattedDate}</p>
+                        <p className="text-xs text-neutral-400 mt-1">
+                            {workout.workout_sets.length} total sets
+                        </p>
+                    </div>
+                    {/* The button is now more subtle but still clearly a button */}
+                    <button 
+                        onClick={() => alert(`Viewing details for ${workout.name}`)}
+                        className="text-xs bg-neutral-700 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded-full transition-colors duration-200"
+                    >
+                        Details
+                    </button>
+                </div>
             </div>
-            {/* Placeholder for now */}
-            <button 
-                onClick={() => alert(`Viewing details for ${workout.name}`)} 
-                className="w-full text-center mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out"
-            >
-                View Details
-            </button>
         </div>
     );
 };
