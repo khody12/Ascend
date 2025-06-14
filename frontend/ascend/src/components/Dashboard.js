@@ -8,18 +8,7 @@ import WeightCheckInModal from './WeightCheckInModal.js';
 import formatWorkoutDate from '../utils/formatDate.js';
 import * as d3 from 'd3';
 import VolumeChart from './VolumeChart.js';
-// You might want to create separate components for these later
-// const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
-//     <div className={`p-6 rounded-xl shadow-lg text-white ${color}`}>
-//         <div className="flex items-center justify-between">
-//             <div>
-//                 <p className="text-sm font-medium text-blue-100 uppercase">{title}</p>
-//                 <p className="text-3xl font-bold">{value}</p>
-//             </div>
-//             {icon && <div className="text-4xl opacity-80">{icon}</div>}
-//         </div>
-//     </div>
-// );
+
 
 const StatPill = ({ title, value, icon }) => (
     <div className="flex items-center gap-3 bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/60 rounded-full px-4 py-2 text-sm">
@@ -90,7 +79,7 @@ function Dashboard() {
     const navigate = useNavigate();
     const { authData, logout } = useContext(AuthContext); // logout placeholder for now.
     const [userProfile, setUserProfile] = useState(null);
-    const [userWeights, setUserWeights] = useState(null);
+    // const [userWeights, setUserWeights] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -164,46 +153,8 @@ function Dashboard() {
                 setLoading(false);
             }
         };
-
-        const fetchUserWeight = async () => {
-            checkIfLoggedIn();
-            setLoading(true);
-            setError(null);
-
-            try {
-                const response = await fetch('http://127.0.0.1:8000/api/user/weightData/', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${authData.token}`,
-                    },
-                });
-
-                if (response.ok) {
-                    const weights = await response.json();
-                    setUserWeights(weights);
-                    console.log("Weight response from API: ", userWeights);
-
-                } else {
-                    const errorText = await response.text();
-                    console.error('Failed to fetch user weights..', response.status, errorText);
-                    setError(`Failed to load weights: ${response.status}`);
-                    if (response.status === 401) { // Unauthorized
-                        logout(); // Clear auth data and redirect
-                        navigate("/login");
-                    }
-
-                }
-            } catch (err) {
-                console.log('Error fetching user weights', err);
-                setError("error while setting weights.")
-            } finally {
-                setLoading(false);
-            }
-        }
-
         fetchUserProfile();
-        fetchUserWeight();
+        
     }, [authData, navigate, logout]); // Added logout to dependency array
 
     // Example: data for d3 chart.
@@ -363,8 +314,8 @@ function Dashboard() {
                         <div className="mt-8">
                             {loading ? (
                                 <p>Loading Chart Data...</p>
-                            ) : userWeights && userWeights.length > 0 ? (
-                                <WeightChart data={userWeights} 
+                            ) : userProfile.weight_entries && userProfile.weight_entries.length > 0 ? (
+                                <WeightChart data={userProfile.weight_entries} 
                                 onLogWeightClick={() => setIsWeightModalOpen(true)}/>
                             ) : (
                                 <div className="bg-gray-700 p-4 rounded-lg text-center text-neutral-500">

@@ -130,13 +130,7 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
 
         return workout
 
-class UserDashboardSerializer(serializers.ModelSerializer):
-    workouts = WorkoutReadSerializer(many=True)
-    favorite_exercises = ExerciseSerializer(many=True)
-    
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'workouts', 'favorite_exercises']
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -149,6 +143,16 @@ class WeightEntrySerializer(serializers.ModelSerializer):
         model = WeightEntry
         fields = ['id', 'date_recorded', 'weight', 'user']
         read_only_fields = ['id', 'date_recorded', 'user']
+
+class UserDashboardSerializer(serializers.ModelSerializer):
+    # these 3 things right here, workout, 
+    workouts = WorkoutReadSerializer(many=True) # not in the user model, so we need to add this here.
+    favorite_exercises = ExerciseSerializer(many=True) # by default we would just get the keys to the exercise objects, so we would like to do a nested serialization.
+    weight_entries = WeightEntrySerializer(many=True) # also not in user model. 
+    
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'workouts', 'favorite_exercises', 'weight_entries']
 
         
 
