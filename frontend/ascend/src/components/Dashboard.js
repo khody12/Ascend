@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef, useMemo } from 'react';
 import { AuthContext } from '../AuthContext';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { FaDumbbell, FaChartLine, FaPlus, FaListUl, FaClock, FaUserCircle } from 'react-icons/fa'; // Example icons
@@ -6,7 +6,8 @@ import Modal from "./Modal"
 import WeightChart from './WeightChart';
 import WeightCheckInModal from './WeightCheckInModal.js';
 import formatWorkoutDate from '../utils/formatDate.js';
-
+import * as d3 from 'd3';
+import VolumeChart from './VolumeChart.js';
 // You might want to create separate components for these later
 const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
     <div className={`p-6 rounded-xl shadow-lg text-white ${color}`}>
@@ -102,6 +103,27 @@ function Dashboard() {
             return;
         }
     }
+
+    const weeklyVolumeData = useMemo(() => {
+        if (!userProfile?.workouts) {
+            return []; // Return empty array if there's no data
+        }
+    
+        // Use d3.timeMonday.floor to group workouts by the start of their week
+        const volumeByWeek = d3.group(userProfile.workouts, w => d3.timeMonday.floor(new Date(w.date)));
+    
+        const formattedData = Array.from(volumeByWeek, ([date, workouts]) => {
+            // For each week, calculate the total volume
+            const totalVolume = d3.sum(workouts, w => 
+                d3.sum(w.workout_sets, s => s.reps * s.weight)
+            );
+            return { week: date, totalVolume: totalVolume };
+        });
+    
+        // Sort the data chronologically
+        return formattedData.sort((a, b) => a.week - b.week);
+    
+    }, [userProfile]);
 
     useEffect(() => {
         // Effect runs when component loads, checks if we navigated here with the special flag we specified in new_workout.js
@@ -319,13 +341,16 @@ function Dashboard() {
                     {/* right col,  Stats / Graph */}
                     <aside className="lg:col-span-2">
                         <h2 className="text-3xl font-semibold mb-6 text-white">Your Progress</h2>
-                        <div 
-                            ref={d3ChartRef} 
-                            id="d3-chart-container" 
-                            className="bg-gray-800 p-6 rounded-xl shadow-lg min-h-[300px] flex items-center justify-center"
-                        >
-                            {/* D3 Chart here via useeffect */}
-                        </div>
+                        {/* The new Volume Chart */}
+                        {loading ? (
+                            <p>Loading Volume Data...</p>
+                        ) : weeklyVolumeData && weeklyVolumeData.length > 0 ? (
+                            <VolumeChart data={weeklyVolumeData} />
+                        ) : (
+                            <div className="bg-neutral-800 p-4 rounded-lg text-center text-neutral-500">
+                                <p>Complete a workout to see your volume trend.</p>
+                            </div>
+                        )}
                         {/* more stats/graphs */}
                         <div className="mt-8">
                             {loading ? (
