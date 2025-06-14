@@ -9,15 +9,23 @@ import formatWorkoutDate from '../utils/formatDate.js';
 import * as d3 from 'd3';
 import VolumeChart from './VolumeChart.js';
 // You might want to create separate components for these later
-const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
-    <div className={`p-6 rounded-xl shadow-lg text-white ${color}`}>
-        <div className="flex items-center justify-between">
-            <div>
-                <p className="text-sm font-medium text-blue-100 uppercase">{title}</p>
-                <p className="text-3xl font-bold">{value}</p>
-            </div>
-            {icon && <div className="text-4xl opacity-80">{icon}</div>}
-        </div>
+// const StatCard = ({ title, value, icon, color = "bg-blue-600" }) => (
+//     <div className={`p-6 rounded-xl shadow-lg text-white ${color}`}>
+//         <div className="flex items-center justify-between">
+//             <div>
+//                 <p className="text-sm font-medium text-blue-100 uppercase">{title}</p>
+//                 <p className="text-3xl font-bold">{value}</p>
+//             </div>
+//             {icon && <div className="text-4xl opacity-80">{icon}</div>}
+//         </div>
+//     </div>
+// );
+
+const StatPill = ({ title, value, icon }) => (
+    <div className="flex items-center gap-3 bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/60 rounded-full px-4 py-2 text-sm">
+        <div className="text-green-400">{icon}</div>
+        <span className="text-neutral-300 font-medium">{title}:</span>
+        <span className="text-white font-bold">{value}</span>
     </div>
 );
 
@@ -91,27 +99,13 @@ function Dashboard() {
 
     // D3 Chart placeholder
     const d3ChartRef = useRef(null);
-    //logout is place holder.
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-        setIsLogoutModalOpen(false); // Close modal after logging out
-    };
-    const checkIfLoggedIn = () => {
-        if (!authData || !authData.userId || !authData.token) {
-            navigate("/login");
-            return;
-        }
-    }
 
     const weeklyVolumeData = useMemo(() => {
         if (!userProfile?.workouts) {
             return []; // Return empty array if there's no data
         }
-    
         // Use d3.timeMonday.floor to group workouts by the start of their week
         const volumeByWeek = d3.group(userProfile.workouts, w => d3.timeMonday.floor(new Date(w.date)));
-    
         const formattedData = Array.from(volumeByWeek, ([date, workouts]) => {
             // For each week, calculate the total volume
             const totalVolume = d3.sum(workouts, w => 
@@ -220,6 +214,19 @@ function Dashboard() {
         }
     }, [userProfile, d3ChartRef]);
 
+    //logout is place holder.
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+        setIsLogoutModalOpen(false); // Close modal after logging out
+    };
+    const checkIfLoggedIn = () => {
+        if (!authData || !authData.userId || !authData.token) {
+            navigate("/login");
+            return;
+        }
+    }
+
 
     if (loading) {
         return (
@@ -243,14 +250,14 @@ function Dashboard() {
             </div>
         );
     }
-
-    if (!userProfile) { // Should be covered by loading/error but as a fallback
-        return <div className="min-h-screen bg-gray-900 text-white p-4">No user profile data.</div>;
-    }
+    // few error states 
     
-    const recentWorkouts = userProfile.workouts?.slice(-3).reverse() || []; // Get last 3, newest first
-    const totalWorkouts = userProfile.workouts?.length || 0;
-    // additional stats can be created here.
+    if (loading) return <div className="min-h-screen bg-neutral-900 flex items-center justify-center text-white"><FaDumbbell className="text-blue-500 text-5xl animate-spin mr-4" /> Loading...</div>;
+    if (error) return <div className="min-h-screen bg-neutral-900 flex items-center justify-center text-red-400">Error: {error}</div>;
+    if (!userProfile) return <div className="min-h-screen bg-neutral-900 flex items-center justify-center text-neutral-500">No profile data found.</div>;
+    // data for the stat pills.
+    const recentWorkouts = userProfile?.workouts?.slice(-3).reverse() || []; // Get last 3, newest first
+    const totalWorkouts = userProfile?.workouts?.length || 0;
     const workoutsThisWeek = userProfile.workouts?.filter(w => {
         const workoutDate = new Date(w.date); // Assuming 'created_at'
         const today = new Date();
@@ -258,6 +265,7 @@ function Dashboard() {
         return workoutDate >= oneWeekAgo;
     }).length || 0;
 
+    
 
     return (
         <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
@@ -294,9 +302,9 @@ function Dashboard() {
 
                 {/* quick stats Row */}
                 <section className="mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <StatCard title="Workouts This Week" value={workoutsThisWeek} icon={<FaDumbbell />} color="bg-green-600" />
-                    <StatCard title="Total Workouts" value={totalWorkouts} icon={<FaListUl />} color="bg-indigo-600" />
-                    <StatCard title="Active Streak" value="Placeholder-todo" icon={<FaChartLine />} color="bg-orange-500" /> {/* Placeholder */}
+                    <StatPill title="Workouts This Week" value={workoutsThisWeek} icon={<FaDumbbell />} color="bg-green-600" />
+                    <StatPill title="Total Workouts" value={totalWorkouts} icon={<FaListUl />} color="bg-indigo-600" />
+                    <StatPill title="Active Streak" value="Placeholder-todo" icon={<FaChartLine />} color="bg-orange-500" /> {/* Placeholder */}
                 </section>
 
                 {/* main content grid */}
