@@ -11,7 +11,7 @@ function New_workout() {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
     const { authData } = useContext(AuthContext);
-    const [workoutSets, setWorkoutSets] = useState([]);
+    const [workoutExercises, setWorkoutExercises] = useState([]);
     const [selectedExercise, setSelectedExercise] = useState("");
     const [currentSet, setCurrentSet] = useState({reps: "", weight: "", exercise: ""});
     const [exercises, setUserExercises] = useState([]);
@@ -46,16 +46,16 @@ function New_workout() {
     // use memo takes in a function tthat performs some calculation typically and also a dependency array that the calculations depend on
     // it will only recalculate when the values change, which is important for performance. 
     const workoutSummary = useMemo(() => {
-        let totalSets = workoutSets.length;
+        let totalSets = workoutExercises.length;
         let totalReps = 0;
         let totalVolume = 0;
 
-        workoutSets.forEach(set => {
+        workoutExercises.forEach(set => {
             totalReps += parseInt(set.reps) || 0;
             totalVolume += (parseInt(set.reps) || 0) * (parseInt(set.weight) || 0);
         })
         return { totalSets, totalReps, totalVolume }; // these are the variables that workoutSummary will hold. 
-    }, [workoutSets]);
+    }, [workoutExercises]);
 
     useEffect(() => { // get exercise data from API.
         const fetchExercises = async () => {
@@ -160,14 +160,14 @@ function New_workout() {
         
         console.log("adding set");
         setMessage(null); // setMessage to null as basic error checking has been done so we shouldn't have an error at this point. 
-        setWorkoutSets([...workoutSets, currentSet]);
+        setWorkoutExercises([...workoutExercises, currentSet]);
         setCurrentSet({reps: "", weight: "", exercise: selectedExercise});
-        console.log(workoutSets);
+        console.log(workoutExercises);
 
 
     }
     // this code groups our workout sets by their exercise
-    const groupedSets = workoutSets.reduce((acc, set) => {
+    const groupedSets = workoutExercises.reduce((acc, set) => {
         const { exercise } = set;
         acc[exercise.name] = acc[exercise.name] || [];
         acc[exercise.name].push(set);
@@ -189,7 +189,7 @@ function New_workout() {
         const payload = {
             name: workoutTitle,
             date: new Date().toISOString().split("T")[0],
-            workout_sets: workoutSets,
+            workout_sets: workoutExercises,
             elapsed_time: secondsToTimeString(time),
             comment: workoutComment,
         };
@@ -319,7 +319,7 @@ function New_workout() {
                             </div>
                         ))}
                         {/* message for when no sets have been added yet */}
-                        {workoutSets.length === 0 && (
+                        {workoutExercises.length === 0 && (
                             <div className="text-center text-neutral-500 pt-16">
                                 <p className="text-lg">Your workout is empty.</p>
                                 <p>Add your first set below!</p>

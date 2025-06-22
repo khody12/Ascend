@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics, permissions, authentication
 from rest_framework.generics import GenericAPIView
-from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, CreateWorkoutSerializer, WeightEntrySerializer
+from user.serializers import UserLoginSerializer, UserRegistrationSerializer, UserDashboardSerializer, UserProfileSerializer, basicUserProfileSerializer, CreateWorkoutSerializer, WeightEntrySerializer
 
 from exercise.serializers import ExerciseSerializer, ExerciseRecordSerializer
 from django.contrib.auth import authenticate
@@ -14,6 +14,9 @@ from .models import User, WeightEntry
 from exercise.models import Exercise, ExerciseRecord
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
+from rest_framework.views import APIView
+#from agent.multi_tool_agent.agent import workout_recommendation_agent
 
 # Typical journey for these APIViews
 
@@ -160,7 +163,16 @@ class SubmitWeightEntry(generics.CreateAPIView):
         # now at this point its missing user because we don't want the post request to have the user id sent over
         # we also told the serializer user was read only for security purposes.
         # now we just save the object, but we also pass in user=self.request.user, filling in that user field
-        
+
+class GetWorkoutRecommendationsAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        user_id = request.user.id
+        agent = workout_recommendation_agent(user_id)
+
+
+
 
 
 

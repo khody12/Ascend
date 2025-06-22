@@ -268,7 +268,7 @@ function Dashboard() {
                                 to="/new_workout"
                                 className="flex items-center justify-center text-lg bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 px-4 rounded-xl shadow-lg transition duration-150 ease-in-out transform hover:scale-105"
                             >
-                                <FaPlus className="mr-3 text-2xl" /> Start New Workout
+                                <FaPlus className="mr-3 text-2xl" /> New Workout
                             </Link>
                             <Link 
                                 to="/all_workouts"

@@ -1,12 +1,18 @@
 
 from user.models import User, WeightEntry
-from workout.models import Workout, WorkoutSet
+from workout.models import WorkoutSession, WorkoutExercise
 from exercise.models import Exercise, Tag, ExerciseRecord
 from django.db.models import F
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.utils import timezone
 from exercise.serializers import ExerciseSerializer
+
+
+# for get requests, the view queries a certain object from the database, and the serializer will turn that model into a dictionary, which DRF turns into JSON
+
+# for post requests, Front end will send JSON to the API, DRF will parse it into a python dict, and the serializer basically takes it and validates it. 
+# it checks that the json meets the necessary fields to build that object
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=True, write_only=True)
@@ -56,7 +62,7 @@ class WorkoutSetSerializer(serializers.ModelSerializer):
     exercise = ExerciseSerializer()
 
     class Meta:
-        model = WorkoutSet
+        model = WorkoutExercise
         fields = ['id','exercise', 'reps', 'weight']
 
 
@@ -64,7 +70,7 @@ class WorkoutReadSerializer(serializers.ModelSerializer):
     workout_sets = WorkoutSetSerializer(many=True)
 
     class Meta:
-        model = Workout
+        model = WorkoutSession
         fields = ['id', 'name', 'date', 'workout_sets', 'elapsed_time', 'comment']
 
 
@@ -72,7 +78,7 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
     workout_sets = WorkoutSetSerializer(many=True, required=False)
 
     class Meta:
-        model = Workout
+        model = WorkoutSession
         fields = ['id', 'name', 'date', 'workout_sets', 'elapsed_time', 'comment']
     
     def create(self, validated_data): # we need to override create because we are saving the workout at 
@@ -83,7 +89,7 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
 
         user = self.context['request'].user # because were in serializers, we dont have access to request,
         # but views will send over context, and we can access it there.
-        workout = Workout.objects.create(user=user, **validated_data) # create main workout instance
+        workout = WorkoutSession.objects.create(user=user, **validated_data) # create main workout instance
         print("Workout Created:", workout)
         for set_data in workout_sets_data:
             print("setdata:", set_data)
@@ -103,7 +109,7 @@ class CreateWorkoutSerializer(serializers.ModelSerializer):
                 tag, created = Tag.objects.get_or_create(**tag_data)
                 print(f"Tag {'Created' if created else 'Retrieved'}:", tag)
                 exercise.tags.add(tag)
-            WorkoutSet.objects.create(workout=workout,
+            WorkoutExercise.objects.create(workout=workout,
                                       exercise=exercise,
                                       reps=set_data['reps'],
                                       weight=set_data['weight'],
@@ -137,12 +143,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'date_joined', 
                   'user_weight', 'user_height', 'user_gender', 'lifetime_weight_lifted']
+class basicUserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name']
 
 class WeightEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = WeightEntry
         fields = ['id', 'date_recorded', 'weight', 'user']
-        read_only_fields = ['id', 'date_recorded', 'user']
+        read_only_fields = ['id', 'date_recorded', 'user'] # both user and date_recorded not sent over the POST request
+        # date_recorded has a default within the model, so it will just be automatically set to that default when the object is created.
 
 class UserDashboardSerializer(serializers.ModelSerializer):
     # these 3 things right here, workout, 

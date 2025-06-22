@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import Header from "./components/Header"
-import './App.css';
+// import './App.css';
 import Login from "./components/Login"
 import Registration from "./components/Registration"
 import Dashboard from "./components/Dashboard"

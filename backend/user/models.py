@@ -17,7 +17,8 @@ class WeightEntry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="weight_entries")
     weight = models.DecimalField(max_digits=4, decimal_places=1)
 
-    date_recorded = models.DateField(default=date.today)
+    date_recorded = models.DateField(default=date.today) # this is the default automatic value.
+    # POST request will not be sending over the date, because it will just set itself to the current date. 
 
     class Meta:
         ordering = ['-date_recorded']

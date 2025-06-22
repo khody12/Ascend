@@ -1,6 +1,6 @@
 
 from user.models import User
-from workout.models import Workout, WorkoutSet
+from workout.models import WorkoutSession, WorkoutExercise
 from exercise.models import Exercise, Tag, ExerciseRecord
 from django.db.models import F
 from rest_framework import serializers
